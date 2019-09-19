@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class PantallaFichajes extends javax.swing.JFrame {
 
+    String ultimoNombre="";
     /**
      * Creates new form PantallaFichajes
      */
@@ -121,7 +122,9 @@ public class PantallaFichajes extends javax.swing.JFrame {
     private void idTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTarjetaActionPerformed
         nombreProfesor.setText(idTarjeta.getText());
         System.out.println(idTarjeta.getText());
+        ultimoNombre=idTarjeta.getText();
         idTarjeta.setText("");
+        borrarNombres();
         
     }//GEN-LAST:event_idTarjetaActionPerformed
 
@@ -193,14 +196,15 @@ public class PantallaFichajes extends javax.swing.JFrame {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                while (true) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(3000);
+                        if(ultimoNombre.equals(nombreProfesor.getText())){
+                            nombreProfesor.setText("");
+                        }
                         //relojPantalla.setText(formateador.format(LocalDateTime.now()));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }
             }
         };
         Thread hilo2 = new Thread(runnable);
