@@ -19,10 +19,11 @@ public class PantallaFichajes extends javax.swing.JFrame {
      */
     public PantallaFichajes() {
         this.setUndecorated(true);
+        activaReloj();
         initComponents();
         
         jLabel1.setText("Control horario Colegio San José");
-        activaReloj();
+        
         
         this.setExtendedState(MAXIMIZED_BOTH);
         //idTarjeta.requestFocus();
@@ -53,7 +54,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
 
         relojPantalla.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         relojPantalla.setForeground(new java.awt.Color(255, 255, 255));
-        relojPantalla.setText("RELOJ");
+        relojPantalla.setText(" ");
 
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
