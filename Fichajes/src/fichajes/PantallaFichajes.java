@@ -175,14 +175,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                boolean sem=true;
                 while (true) {
-                    if(sem){
-                        sem=false;
-                    }else{
-                        sem=true;
-                    }
-                    //idTarjeta.setVisible(sem);
                     try {
                         Thread.sleep(1000);
                         relojPantalla.setText(formateador.format(LocalDateTime.now()));
@@ -194,5 +187,24 @@ public class PantallaFichajes extends javax.swing.JFrame {
         };
         Thread hilo = new Thread(runnable);
         hilo.start();
+    }
+    
+    private void borrarNombres(){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                        //relojPantalla.setText(formateador.format(LocalDateTime.now()));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        Thread hilo2 = new Thread(runnable);
+        hilo2.start();
+        
     }
 }
