@@ -23,7 +23,7 @@ public class ConectorBD {
         dataSource.setUser(ConectorBD.usuario);
         dataSource.setPassword(ConectorBD.contrasenia);
         dataSource.setDatabaseName(ConectorBD.baseDatos);
-        dataSource.setServerName("localhost");
+        dataSource.setServerName("192.168.1.42");
         //dataSource.setServerName("CDCDELLCONSER");
 
         Connection conexion = dataSource.getConnection();

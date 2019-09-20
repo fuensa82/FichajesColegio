@@ -38,13 +38,7 @@ public class FichajeBD {
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
-            //Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            try {
-                conexion.close();
-            } catch (SQLException ex) {
-                //Logger.getLogger(GestionAuditorioBD.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            ex.printStackTrace();
         }
         return "Error";
     }
