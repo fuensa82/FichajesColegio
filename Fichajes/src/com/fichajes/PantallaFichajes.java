@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fichajes;
+package com.fichajes;
 
+import com.basedatos.FichajeBD;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -64,7 +65,6 @@ public class PantallaFichajes extends javax.swing.JFrame {
             }
         });
 
-        idTarjeta.setText("jTextField1");
         idTarjeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idTarjetaActionPerformed(evt);
@@ -73,7 +73,6 @@ public class PantallaFichajes extends javax.swing.JFrame {
 
         nombreProfesor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         nombreProfesor.setForeground(new java.awt.Color(255, 255, 255));
-        nombreProfesor.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,7 +103,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
                 .addComponent(relojPantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombreProfesor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(idTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -120,12 +119,11 @@ public class PantallaFichajes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void idTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTarjetaActionPerformed
+        FichajeBD.putFichaje(idTarjeta.getText());
         nombreProfesor.setText(idTarjeta.getText());
-        System.out.println(idTarjeta.getText());
-        ultimoNombre=idTarjeta.getText();
+        System.out.println(idTarjeta.getText());        
+        borrarNombres(idTarjeta.getText());
         idTarjeta.setText("");
-        borrarNombres();
-        
     }//GEN-LAST:event_idTarjetaActionPerformed
 
     /**
@@ -192,13 +190,13 @@ public class PantallaFichajes extends javax.swing.JFrame {
         hilo.start();
     }
     
-    private void borrarNombres(){
+    private void borrarNombres(String text){
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                     try {
                         Thread.sleep(3000);
-                        if(ultimoNombre.equals(nombreProfesor.getText())){
+                        if(text.equals(nombreProfesor.getText())){
                             nombreProfesor.setText("");
                         }
                         //relojPantalla.setText(formateador.format(LocalDateTime.now()));
