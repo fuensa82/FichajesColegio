@@ -20,6 +20,8 @@ import java.util.GregorianCalendar;
 public class PantallaFichajes extends javax.swing.JFrame {
 
     public static String ERROR_PROFESOR_NULL="La tarjeta no está asiganada";
+    private int tiempoError=10000;
+    private int tiempoCorrecto=3000;
     /**
      * Creates new form PantallaFichajes
      */
@@ -29,8 +31,6 @@ public class PantallaFichajes extends javax.swing.JFrame {
         initComponents();
         this.getContentPane().setBackground(Color.BLACK);
         jLabel1.setText("Control horario Colegio San José");
-        
-        
         this.setExtendedState(MAXIMIZED_BOTH);
         //idTarjeta.requestFocus();
     }
@@ -133,7 +133,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
         ProfesorBean profesor=FichajeBD.putFichaje(idTarjeta.getText());
         if(profesor==null){
             nombreProfesor.setText(ERROR_PROFESOR_NULL);
-            borrarNombres(ERROR_PROFESOR_NULL,10000);
+            borrarNombres(ERROR_PROFESOR_NULL,tiempoError);
             idTarjeta.setText("");
             estadoEntrada.setText("Error");
             estadoEntrada.setForeground(Color.red);
@@ -154,7 +154,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
             estadoEntrada.setForeground(Color.GREEN);
         }
         System.out.println(idTarjeta.getText());        
-        borrarNombres(profesor.getNombre()+" "+profesor.getApellidos(),9000);
+        borrarNombres(profesor.getNombre()+" "+profesor.getApellidos(),tiempoCorrecto);
         idTarjeta.setText("");
     }//GEN-LAST:event_idTarjetaActionPerformed
 
@@ -230,14 +230,14 @@ public class PantallaFichajes extends javax.swing.JFrame {
      * @param millis Milisegundos que se espera antes de borrar el texto
      */
     private void borrarNombres(String text, int millis){
-        System.out.println("Nombre a comprobar: "+text);
+        //System.out.println("Nombre a comprobar: "+text);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                     try {
                         Thread.sleep(millis);
-                        System.out.println("Tiempo cumplido. Nombre del label: "+nombreProfesor.getText());
-                        System.out.println("                 Texto a borrar: "+text);
+                        //System.out.println("Tiempo cumplido. Nombre del label: "+nombreProfesor.getText());
+                        //System.out.println("                 Texto a borrar: "+text);
                         if(text.equals(nombreProfesor.getText())){
                             nombreProfesor.setText("");
                             estadoEntrada.setText("");
