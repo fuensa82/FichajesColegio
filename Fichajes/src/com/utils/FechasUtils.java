@@ -5,7 +5,10 @@
  */
 package com.utils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class FechasUtils {
 
@@ -31,6 +34,22 @@ public class FechasUtils {
             return null;
         }
         return fecha.substring(6, 10) + "-" + fecha.substring(3, 5) + "-" + fecha.substring(0, 2);
+    }
+    /**
+     * Devuelve la fecha de hoy pero en formado para mysql, es decir, la fecha de hoy
+     * en formato aaaa-mm-dd
+     * @return 
+     */
+    public static String fechaHoyParaMysql(){
+        return FechasUtils.fechaParaMysql(FechasUtils.fechaActualString());
+    }
+    /**
+     * Devuelve la fecha actual en formato hh:mm:ss
+     * @return 
+     */
+    public static String horaAhora(){
+        DateTimeFormatter formateador = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return formateador.format(LocalDateTime.now());
     }
 
     /**
@@ -127,5 +146,14 @@ public class FechasUtils {
             throw new Exception("Error al convertir el mes "+mes+" a número");
         }
             
+    }
+
+    public static String getFechaString(GregorianCalendar c) {
+        return c.get(GregorianCalendar.DAY_OF_MONTH)+"/"+
+                (1+c.get(GregorianCalendar.MONTH))+"/"+
+                c.get(GregorianCalendar.YEAR)+" "+
+                c.get(GregorianCalendar.HOUR_OF_DAY)+":"+
+                c.get(GregorianCalendar.MINUTE)+":"
+                +c.get(GregorianCalendar.SECOND);
     }
 }

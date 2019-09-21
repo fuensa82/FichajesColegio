@@ -6,9 +6,12 @@
 package com.fichajes;
 
 import com.basedatos.FichajeBD;
+import com.beans.ProfesorBean;
+import com.utils.FechasUtils;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -16,7 +19,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class PantallaFichajes extends javax.swing.JFrame {
 
-    String ultimoNombre="";
+    public static String ERROR_PROFESOR_NULL="La tarjeta no está asiganada";
     /**
      * Creates new form PantallaFichajes
      */
@@ -46,6 +49,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         idTarjeta = new javax.swing.JTextField();
         nombreProfesor = new javax.swing.JLabel();
+        estadoEntrada = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -74,20 +78,25 @@ public class PantallaFichajes extends javax.swing.JFrame {
         nombreProfesor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         nombreProfesor.setForeground(new java.awt.Color(255, 255, 255));
 
+        estadoEntrada.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        estadoEntrada.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nombreProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(idTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(idTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(estadoEntrada))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -100,7 +109,9 @@ public class PantallaFichajes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(relojPantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(relojPantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(estadoEntrada))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombreProfesor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
@@ -119,10 +130,29 @@ public class PantallaFichajes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void idTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTarjetaActionPerformed
-        FichajeBD.putFichaje(idTarjeta.getText());
-        nombreProfesor.setText(idTarjeta.getText());
+        ProfesorBean profesor=FichajeBD.putFichaje(idTarjeta.getText());
+        if(profesor==null){
+            nombreProfesor.setText(ERROR_PROFESOR_NULL);
+            borrarNombres(ERROR_PROFESOR_NULL,10000);
+            idTarjeta.setText("");
+            return;
+        }
+        nombreProfesor.setText(profesor.getNombre()+" "+profesor.getApellidos());
+        if(!profesor.isDentro()){
+            estadoEntrada.setText("Salida");
+            GregorianCalendar c=new GregorianCalendar();
+            c.setTimeInMillis(profesor.getCurrentTimeMillis());
+            estadoEntrada.setText("Salida "+FechasUtils.getFechaString(c));
+            estadoEntrada.setForeground(Color.RED);
+        }else{
+            GregorianCalendar c=new GregorianCalendar();
+            c.setTimeInMillis(profesor.getCurrentTimeMillis());
+            estadoEntrada.setText("Entrada "+FechasUtils.getFechaString(c));
+            //estadoEntrada.setText("Entrada");
+            estadoEntrada.setForeground(Color.GREEN);
+        }
         System.out.println(idTarjeta.getText());        
-        borrarNombres(idTarjeta.getText());
+        borrarNombres(profesor.getNombre()+" "+profesor.getApellidos(),9000);
         idTarjeta.setText("");
     }//GEN-LAST:event_idTarjetaActionPerformed
 
@@ -164,6 +194,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel estadoEntrada;
     private javax.swing.JTextField idTarjeta;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -190,14 +221,24 @@ public class PantallaFichajes extends javax.swing.JFrame {
         hilo.start();
     }
     
-    private void borrarNombres(String text){
+    /**
+     * Borra el texto del label donde aparece el nombre si coincide con el text que se pasa como
+     * parametro. Lo borra pasado los milisegundos que pongamos en millis
+     * @param text
+     * @param millis Milisegundos que se espera antes de borrar el texto
+     */
+    private void borrarNombres(String text, int millis){
+        System.out.println("Nombre a comprobar: "+text);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(millis);
+                        System.out.println("Tiempo cumplido. Nombre del label: "+nombreProfesor.getText());
+                        System.out.println("                 Texto a borrar: "+text);
                         if(text.equals(nombreProfesor.getText())){
                             nombreProfesor.setText("");
+                            estadoEntrada.setText("");
                         }
                         //relojPantalla.setText(formateador.format(LocalDateTime.now()));
                     } catch (InterruptedException e) {
