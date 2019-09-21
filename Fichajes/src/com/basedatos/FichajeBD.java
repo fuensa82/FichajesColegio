@@ -45,8 +45,9 @@ public class FichajeBD {
             profesor.setApellidos(resultado.getString(3));
             profesor.setIdTarjeta(resultado.getInt(4));
             
-            consulta = conexion.prepareStatement("SELECT COUNT(*) FROM fichajes WHERE fecha=?");
+            consulta = conexion.prepareStatement("SELECT COUNT(*) FROM fichajes WHERE fecha=? and idProfesor=?");
             consulta.setString(1, FechasUtils.fechaHoyParaMysql());
+            consulta.setString(2, ""+profesor.getIdProfesor());
             resultado = consulta.executeQuery();
             resultado.next();
             int numFicahjesHoy=resultado.getInt(1);

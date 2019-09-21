@@ -135,6 +135,8 @@ public class PantallaFichajes extends javax.swing.JFrame {
             nombreProfesor.setText(ERROR_PROFESOR_NULL);
             borrarNombres(ERROR_PROFESOR_NULL,10000);
             idTarjeta.setText("");
+            estadoEntrada.setText("Error");
+            estadoEntrada.setForeground(Color.red);
             return;
         }
         nombreProfesor.setText(profesor.getNombre()+" "+profesor.getApellidos());

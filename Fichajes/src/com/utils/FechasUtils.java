@@ -13,9 +13,11 @@ import java.util.GregorianCalendar;
 public class FechasUtils {
 
     /**
-     * Dada una fecha en formato MySQL (aaaa-mm-dd) genera la fecha estandar española (dd-mm-aaaa)
+     * Dada una fecha en formato MySQL (aaaa-mm-dd) genera la fecha estandar
+     * española (dd-mm-aaaa)
+     *
      * @param fecha
-     * @return 
+     * @return
      */
     public static String fecha(String fecha) {
         if ((fecha == null) || (fecha.equalsIgnoreCase("")) || (fecha.equals("0000-00-00"))) {
@@ -26,8 +28,10 @@ public class FechasUtils {
 
     /**
      * Prepara una fecha para poder ser utilizada en MySQL
+     *
      * @param fecha Fecha en formado dd-mm-aaaa
-     * @return Devuelve la fecha para poder ser usada en MySQL, es decir, en formado aaaa-mm-dd
+     * @return Devuelve la fecha para poder ser usada en MySQL, es decir, en
+     * formado aaaa-mm-dd
      */
     public static String fechaParaMysql(String fecha) {
         if ((fecha == null) || (fecha.equalsIgnoreCase(""))) {
@@ -35,27 +39,33 @@ public class FechasUtils {
         }
         return fecha.substring(6, 10) + "-" + fecha.substring(3, 5) + "-" + fecha.substring(0, 2);
     }
+
     /**
-     * Devuelve la fecha de hoy pero en formado para mysql, es decir, la fecha de hoy
-     * en formato aaaa-mm-dd
-     * @return 
+     * Devuelve la fecha de hoy pero en formado para mysql, es decir, la fecha
+     * de hoy en formato aaaa-mm-dd
+     *
+     * @return
      */
-    public static String fechaHoyParaMysql(){
+    public static String fechaHoyParaMysql() {
         return FechasUtils.fechaParaMysql(FechasUtils.fechaActualString());
     }
+
     /**
      * Devuelve la fecha actual en formato hh:mm:ss
-     * @return 
+     *
+     * @return
      */
-    public static String horaAhora(){
+    public static String horaAhora() {
         DateTimeFormatter formateador = DateTimeFormatter.ofPattern("HH:mm:ss");
         return formateador.format(LocalDateTime.now());
     }
 
     /**
-     * Combierte una fecha en formado AAAA-MM-DD a entero para poder ser ordenada o comparada 
+     * Combierte una fecha en formado AAAA-MM-DD a entero para poder ser
+     * ordenada o comparada
+     *
      * @param fecha Fecha en formado AAAA-MM-DD
-     * @return 
+     * @return
      */
     public static int numeroFechaAAAAMMDD(String fecha) {
         if ((fecha == null) || (fecha.equalsIgnoreCase(""))) {
@@ -67,9 +77,11 @@ public class FechasUtils {
     }
 
     /**
-     * Combierte una fecha en formado DD-MM-AAAA a entero para poder ser ordenada o comparada 
+     * Combierte una fecha en formado DD-MM-AAAA a entero para poder ser
+     * ordenada o comparada
+     *
      * @param fecha fecha en formado DD-MM-AAAA
-     * @return 
+     * @return
      */
     public static int numeroFechaDDMMAAAA(String fecha) {
         if ((fecha == null) || (fecha.equalsIgnoreCase(""))) {
@@ -80,20 +92,21 @@ public class FechasUtils {
         int num = Integer.parseInt(aux);
         return num;
     }
-    
-    public static String dameAnoFechaActual(){
-        String hoy=FechasUtils.fechaActualString();
-        return hoy.substring(hoy.lastIndexOf("-")+1);
+
+    public static String dameAnoFechaActual() {
+        String hoy = FechasUtils.fechaActualString();
+        return hoy.substring(hoy.lastIndexOf("-") + 1);
     }
-    
-    public static String dameMesFechaActual(){
-        String hoy=FechasUtils.fechaActualString();
-        return hoy.substring(hoy.indexOf("-")+1, hoy.indexOf("-")+3);
+
+    public static String dameMesFechaActual() {
+        String hoy = FechasUtils.fechaActualString();
+        return hoy.substring(hoy.indexOf("-") + 1, hoy.indexOf("-") + 3);
     }
 
     /**
      * Devuelve la fecha de hoy en formado dd-mm-aaaa
-     * @return 
+     *
+     * @return
      */
     public static String fechaActualString() {
         Calendar c = Calendar.getInstance();
@@ -116,44 +129,59 @@ public class FechasUtils {
         }
         return dia + "-" + mes + "-" + anio;
     }
-    
-    public static String getNumMes(String mes) throws Exception{
-        if("Enero".equalsIgnoreCase(mes)){
+
+    public static String getNumMes(String mes) throws Exception {
+        if ("Enero".equalsIgnoreCase(mes)) {
             return "01";
-        }else if("Febrero".equalsIgnoreCase(mes)){
+        } else if ("Febrero".equalsIgnoreCase(mes)) {
             return "02";
-        }else if("Marzo".equalsIgnoreCase(mes)){
+        } else if ("Marzo".equalsIgnoreCase(mes)) {
             return "03";
-        }else if("Abril".equalsIgnoreCase(mes)){
+        } else if ("Abril".equalsIgnoreCase(mes)) {
             return "04";
-        }else if("Mayo".equalsIgnoreCase(mes)){
+        } else if ("Mayo".equalsIgnoreCase(mes)) {
             return "05";
-        }else if("Junio".equalsIgnoreCase(mes)){
+        } else if ("Junio".equalsIgnoreCase(mes)) {
             return "06";
-        }else if("Julio".equalsIgnoreCase(mes)){
+        } else if ("Julio".equalsIgnoreCase(mes)) {
             return "07";
-        }else if("Agosto".equalsIgnoreCase(mes)){
+        } else if ("Agosto".equalsIgnoreCase(mes)) {
             return "08";
-        }else if("Septiembre".equalsIgnoreCase(mes)){
+        } else if ("Septiembre".equalsIgnoreCase(mes)) {
             return "09";
-        }else if("Octubre".equalsIgnoreCase(mes)){
+        } else if ("Octubre".equalsIgnoreCase(mes)) {
             return "10";
-        }else if("Noviembre".equalsIgnoreCase(mes)){
+        } else if ("Noviembre".equalsIgnoreCase(mes)) {
             return "11";
-        }else if("Diciembre".equalsIgnoreCase(mes)){
+        } else if ("Diciembre".equalsIgnoreCase(mes)) {
             return "12";
-        }else{
-            throw new Exception("Error al convertir el mes "+mes+" a número");
+        } else {
+            throw new Exception("Error al convertir el mes " + mes + " a número");
         }
-            
+
+    }
+
+    public static String rellenaIzquierda(String texto, String relleno, int longitud) {
+        String aux = "";
+        for (int i = 0; i < longitud; i++) {
+            aux += relleno;
+        }
+        System.out.println("Para rellenar: "+aux);
+        aux+=texto;
+        System.out.println("Texto completo: "+aux);
+        System.out.println("texto recortado: "+aux.substring(aux.length()-longitud));
+        return aux.substring(aux.length()-longitud);
+
     }
 
     public static String getFechaString(GregorianCalendar c) {
-        return c.get(GregorianCalendar.DAY_OF_MONTH)+"/"+
-                (1+c.get(GregorianCalendar.MONTH))+"/"+
-                c.get(GregorianCalendar.YEAR)+" "+
-                c.get(GregorianCalendar.HOUR_OF_DAY)+":"+
-                c.get(GregorianCalendar.MINUTE)+":"
-                +c.get(GregorianCalendar.SECOND);
+        return c.get(GregorianCalendar.DAY_OF_MONTH) + "/"
+                + FechasUtils.rellenaIzquierda(""+(1 + c.get(GregorianCalendar.MONTH)),"0",2) + "/"
+                + c.get(GregorianCalendar.YEAR) + " "
+                + FechasUtils.rellenaIzquierda(""+c.get(GregorianCalendar.HOUR_OF_DAY), "0", 2) + ":"
+                + FechasUtils.rellenaIzquierda(""+c.get(GregorianCalendar.MINUTE), "0", 2) + ":"
+                + FechasUtils.rellenaIzquierda(""+c.get(GregorianCalendar.SECOND), "0", 2);
+                //+ c.get(GregorianCalendar.MINUTE) + ":"
+                //+ c.get(GregorianCalendar.SECOND);
     }
 }
