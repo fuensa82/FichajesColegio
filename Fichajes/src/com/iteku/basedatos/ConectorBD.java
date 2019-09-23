@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.basedatos;
+package com.iteku.basedatos;
 
 //import com.mysql.jdbc.jdbc2.optional.MysqlDataSourc;
 import com.mysql.cj.jdbc.MysqlDataSource;
@@ -15,7 +15,7 @@ public class ConectorBD {
 
     private static String baseDatos="colsan";
     private static String usuario="root";
-    private static String contrasenia="Hijo34Luna";
+    private static String contrasenia="";
 
     
     public static Connection getConnection() throws NamingException, SQLException {
@@ -23,7 +23,6 @@ public class ConectorBD {
         dataSource.setUser(ConectorBD.usuario);
         dataSource.setPassword(ConectorBD.contrasenia);
         dataSource.setDatabaseName(ConectorBD.baseDatos);
-        //dataSource.setServerName("192.168.1.42");
         dataSource.setServerName("localhost");
         //dataSource.setServerName("CDCDELLCONSER");
 

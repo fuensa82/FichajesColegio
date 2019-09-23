@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.basedatos;
+package com.iteku.basedatos;
 
-import com.beans.ProfesorBean;
-import com.utils.FechasUtils;
+import com.iteku.beans.ProfesorBean;
+import com.iteku.utils.FechasUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

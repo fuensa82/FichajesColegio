@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fichajes;
+package com.iteku.fichajes;
 
-import com.basedatos.FichajeBD;
-import com.beans.ProfesorBean;
-import com.utils.FechasUtils;
+import com.iteku.basedatos.FichajeBD;
+import com.iteku.beans.ProfesorBean;
+import com.iteku.utils.FechasUtils;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -133,10 +133,11 @@ public class PantallaFichajes extends javax.swing.JFrame {
         ProfesorBean profesor=FichajeBD.putFichaje(idTarjeta.getText(),System.currentTimeMillis());
         if(profesor==null){
             nombreProfesor.setText(ERROR_PROFESOR_NULL);
-            borrarNombres(ERROR_PROFESOR_NULL,tiempoError);
+            
             idTarjeta.setText("");
             estadoEntrada.setText("Error");
             estadoEntrada.setForeground(Color.red);
+            borrarNombres(ERROR_PROFESOR_NULL,estadoEntrada.getText(),tiempoError);
             return;
         }
         nombreProfesor.setText(profesor.getNombre()+" "+profesor.getApellidos());
@@ -154,7 +155,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
             estadoEntrada.setForeground(Color.GREEN);
         }
         System.out.println(idTarjeta.getText());        
-        borrarNombres(profesor.getNombre()+" "+profesor.getApellidos(),tiempoCorrecto);
+        borrarNombres(profesor.getNombre()+" "+profesor.getApellidos(),estadoEntrada.getText(),tiempoCorrecto);
         idTarjeta.setText("");
     }//GEN-LAST:event_idTarjetaActionPerformed
 
@@ -229,7 +230,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
      * @param text
      * @param millis Milisegundos que se espera antes de borrar el texto
      */
-    private void borrarNombres(String text, int millis){
+    private void borrarNombres(String text, String mensaje, int millis){
         //System.out.println("Nombre a comprobar: "+text);
         Runnable runnable = new Runnable() {
             @Override
@@ -238,7 +239,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
                         Thread.sleep(millis);
                         //System.out.println("Tiempo cumplido. Nombre del label: "+nombreProfesor.getText());
                         //System.out.println("                 Texto a borrar: "+text);
-                        if(text.equals(nombreProfesor.getText())){
+                        if(text.equals(nombreProfesor.getText()) && mensaje.equals(estadoEntrada.getText())){
                             nombreProfesor.setText("");
                             estadoEntrada.setText("");
                         }
