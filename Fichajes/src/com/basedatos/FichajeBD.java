@@ -65,8 +65,13 @@ public class FichajeBD {
         }
         return profesor;
     }
-
-    public static ProfesorBean putFichaje(String idTarjeta) {
+    /**
+     * 
+     * @param idTarjeta
+     * @param entrada
+     * @return 
+     */
+    public static ProfesorBean putFichaje(String idTarjeta, long time) {
         ProfesorBean profesor=FichajeBD.getProfesor(idTarjeta);
         if(profesor==null){
             return null;
@@ -76,14 +81,14 @@ public class FichajeBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`   ) VALUES (?, ?, ?, ?,2)");
-            Long time=System.currentTimeMillis();
+                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`entrada`) VALUES (?, ?, ?, ?,2,?)");
+            //Long time=System.currentTimeMillis();
             profesor.setCurrentTimeMillis(time);
             insert1.setString(1, ""+time);
             insert1.setString(2, FechasUtils.fechaHoyParaMysql());
             insert1.setString(3, FechasUtils.horaAhora());
             insert1.setString(4, ""+profesor.getIdProfesor());
-
+            insert1.setString(5, ""+profesor.isDentro());
             insert1.executeUpdate();
 
             return profesor; //Correcto

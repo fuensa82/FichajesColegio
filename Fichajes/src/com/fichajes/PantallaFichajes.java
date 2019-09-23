@@ -130,7 +130,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void idTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTarjetaActionPerformed
-        ProfesorBean profesor=FichajeBD.putFichaje(idTarjeta.getText());
+        ProfesorBean profesor=FichajeBD.putFichaje(idTarjeta.getText(),System.currentTimeMillis());
         if(profesor==null){
             nombreProfesor.setText(ERROR_PROFESOR_NULL);
             borrarNombres(ERROR_PROFESOR_NULL,tiempoError);

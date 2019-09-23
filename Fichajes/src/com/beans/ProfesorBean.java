@@ -24,7 +24,10 @@ public class ProfesorBean {
     public void setCurrentTimeMillis(long currentTimeMillis) {
         this.currentTimeMillis = currentTimeMillis;
     }
-
+/**
+ * Indica si el profesor que marca está saliendo o entrado. True para entrando y false para saliendo.
+ * @return 
+ */
     public boolean isDentro() {
         return dentro;
     }
