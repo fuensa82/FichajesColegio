@@ -6,6 +6,7 @@
 package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionFichajeBD;
+import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -134,7 +135,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         });
     }
     private void cargarListaProfesores() {
-        ArrayList<ProfesorBean> listaSesiones=GestionFichajeBD.;
+        ArrayList<ProfesorBean> listaProfesores=GestionProfesoresBD.getListaProfesores();
         DefaultTableModel datosTabla=(DefaultTableModel) tActividades.getModel();
         for (int i = datosTabla.getRowCount(); i >0 ; i--) {
             filasTabla=0;

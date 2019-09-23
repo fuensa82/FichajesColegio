@@ -57,7 +57,7 @@ public class GestionProfesoresBD {
         WHERE idProfesor=1
         ORDER BY idFichaje DESC LIMIT 1
      */
-    public static boolean gestEstadoProfesor(idProfesor){
-        
+    public static boolean gestEstadoProfesor(String idProfesor){
+        return true;
     }
 }
