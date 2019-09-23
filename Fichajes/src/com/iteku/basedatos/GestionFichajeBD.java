@@ -11,13 +11,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
  *
  * @author vPalomo
  */
-public class FichajeBD {
+public class GestionFichajeBD {
 
     /**
      * Busca los datos del profesor que coincide con la tarjeta pasada
@@ -72,7 +75,7 @@ public class FichajeBD {
      * @return 
      */
     public static ProfesorBean putFichaje(String idTarjeta, long time) {
-        ProfesorBean profesor=FichajeBD.getProfesor(idTarjeta);
+        ProfesorBean profesor=GestionFichajeBD.getProfesor(idTarjeta);
         if(profesor==null){
             return null;
         }
@@ -100,4 +103,6 @@ public class FichajeBD {
         }
         return null;
     }
+    
+    
 }

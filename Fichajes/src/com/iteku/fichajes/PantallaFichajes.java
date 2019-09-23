@@ -5,7 +5,7 @@
  */
 package com.iteku.fichajes;
 
-import com.iteku.basedatos.FichajeBD;
+import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
 import java.awt.Color;
@@ -130,7 +130,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void idTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTarjetaActionPerformed
-        ProfesorBean profesor=FichajeBD.putFichaje(idTarjeta.getText(),System.currentTimeMillis());
+        ProfesorBean profesor=GestionFichajeBD.putFichaje(idTarjeta.getText(),System.currentTimeMillis());
         if(profesor==null){
             nombreProfesor.setText(ERROR_PROFESOR_NULL);
             
