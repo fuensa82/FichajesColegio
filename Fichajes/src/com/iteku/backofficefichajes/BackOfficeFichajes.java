@@ -5,7 +5,6 @@
  */
 package com.iteku.backofficefichajes;
 
-import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
 import java.util.ArrayList;
@@ -35,11 +34,11 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        listaProfesores = new javax.swing.JTable();
+        tProfesores = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        listaProfesores.setModel(new javax.swing.table.DefaultTableModel(
+        tProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -65,17 +64,17 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        listaProfesores.setColumnSelectionAllowed(true);
-        listaProfesores.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(listaProfesores);
-        listaProfesores.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (listaProfesores.getColumnModel().getColumnCount() > 0) {
-            listaProfesores.getColumnModel().getColumn(0).setPreferredWidth(30);
-            listaProfesores.getColumnModel().getColumn(1).setPreferredWidth(40);
-            listaProfesores.getColumnModel().getColumn(2).setPreferredWidth(90);
-            listaProfesores.getColumnModel().getColumn(3).setPreferredWidth(40);
-            listaProfesores.getColumnModel().getColumn(4).setPreferredWidth(30);
-            listaProfesores.getColumnModel().getColumn(5).setPreferredWidth(30);
+        tProfesores.setColumnSelectionAllowed(true);
+        tProfesores.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tProfesores);
+        tProfesores.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tProfesores.getColumnModel().getColumnCount() > 0) {
+            tProfesores.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tProfesores.getColumnModel().getColumn(1).setPreferredWidth(40);
+            tProfesores.getColumnModel().getColumn(2).setPreferredWidth(90);
+            tProfesores.getColumnModel().getColumn(3).setPreferredWidth(40);
+            tProfesores.getColumnModel().getColumn(4).setPreferredWidth(30);
+            tProfesores.getColumnModel().getColumn(5).setPreferredWidth(30);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,32 +130,30 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 new BackOfficeFichajes().setVisible(true);
             }
 
-            
         });
     }
+
     private void cargarListaProfesores() {
         ArrayList<ProfesorBean> listaProfesores=GestionProfesoresBD.getListaProfesores();
-        DefaultTableModel datosTabla=(DefaultTableModel) tActividades.getModel();
+        DefaultTableModel datosTabla=(DefaultTableModel) tProfesores.getModel();
         for (int i = datosTabla.getRowCount(); i >0 ; i--) {
-            filasTabla=0;
+            //filasTabla=0;
             datosTabla.removeRow(i-1);
             
         }
         //datosTabla.addRow(new String[]{"","","","",""});
-        for (int i=0;i<listaSesiones.size();i++){
+        for (int i=0;i<listaProfesores.size();i++){
             datosTabla.addRow(new String[]{
-                listaSesiones.get(i).getDescripcion(),
-                listaSesiones.get(i).getFecha(),
-                listaSesiones.get(i).getHora(),
-                listaSesiones.get(i).getCompania(),
-                ""+PrecioUtils.getPrecioEuros(listaSesiones.get(i).getPrecio()),
-                ""+listaSesiones.get(i).getIdActividad(),
-                ""+listaSesiones.get(i).getIdSesion()
+                ""+listaProfesores.get(i).getIdProfesor(),
+                listaProfesores.get(i).getNombre(),
+                listaProfesores.get(i).getApellidos(),
+                ""+listaProfesores.get(i).getIdTarjeta(),
+                ""+(listaProfesores.get(i).isDentro()?"Dentro":"")
             });
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable listaProfesores;
+    private javax.swing.JTable tProfesores;
     // End of variables declaration//GEN-END:variables
 }

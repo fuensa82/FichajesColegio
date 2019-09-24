@@ -35,6 +35,13 @@ public class ProfesorBean {
     public void setDentro(boolean dentro) {
         this.dentro = dentro;
     }
+    public void setDentro(String dentro) {
+        if(dentro.equals("true")) {
+            this.dentro=true;
+        }else{
+            this.dentro=false;
+        }
+    }
 
     public int getIdProfesor() {
         return idProfesor;

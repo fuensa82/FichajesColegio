@@ -26,18 +26,17 @@ public class GestionProfesoresBD {
             conexion=ConectorBD.getConnection();
             ProfesorBean profesor;
             PreparedStatement consulta = conexion.prepareStatement(
-                    "select idProfesor, nombre, apellidos, idTarjeta");
+                    "select idProfesor, nombre, apellidos, idTarjeta, estado from profesores");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()){
                 profesor=new ProfesorBean();
                 profesor.setIdProfesor(resultado.getInt(1));
                 profesor.setNombre(resultado.getString(2));
                 profesor.setApellidos(resultado.getString(3));
-                
+                profesor.setIdTarjeta(resultado.getInt(4));
+                profesor.setDentro(resultado.getString(5));
                 result.add(profesor);
             }
-            
-            
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {

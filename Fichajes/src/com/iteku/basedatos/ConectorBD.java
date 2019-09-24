@@ -15,7 +15,7 @@ public class ConectorBD {
 
     private static String baseDatos="colsan";
     private static String usuario="root";
-    private static String contrasenia="";
+    private static String contrasenia="Hijo34Luna";
 
     
     public static Connection getConnection() throws NamingException, SQLException {
@@ -23,8 +23,8 @@ public class ConectorBD {
         dataSource.setUser(ConectorBD.usuario);
         dataSource.setPassword(ConectorBD.contrasenia);
         dataSource.setDatabaseName(ConectorBD.baseDatos);
-        dataSource.setServerName("localhost");
-        //dataSource.setServerName("CDCDELLCONSER");
+        //dataSource.setServerName("localhost");
+        dataSource.setServerName("192.168.1.42");
 
         Connection conexion = dataSource.getConnection();
         return conexion;
