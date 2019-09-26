@@ -11,9 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
@@ -47,14 +44,6 @@ public class GestionFichajeBD {
             profesor.setNombre(resultado.getString(2));
             profesor.setApellidos(resultado.getString(3));
             profesor.setIdTarjeta(resultado.getInt(4));
-            
-            consulta = conexion.prepareStatement("SELECT COUNT(*) FROM fichajes WHERE fecha=? and idProfesor=?");
-            consulta.setString(1, FechasUtils.fechaHoyParaMysql());
-            consulta.setString(2, ""+profesor.getIdProfesor());
-            resultado = consulta.executeQuery();
-            resultado.next();
-            int numFicahjesHoy=resultado.getInt(1);
-            profesor.setDentro((numFicahjesHoy%2)==0);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,14 +73,14 @@ public class GestionFichajeBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`entrada`) VALUES (?, ?, ?, ?,2,?)");
+                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`) VALUES (?, ?, ?, ?,2,?)");
             //Long time=System.currentTimeMillis();
             profesor.setCurrentTimeMillis(time);
             insert1.setString(1, ""+time);
             insert1.setString(2, FechasUtils.fechaHoyParaMysql());
             insert1.setString(3, FechasUtils.horaAhora());
             insert1.setString(4, ""+profesor.getIdProfesor());
-            insert1.setString(5, ""+profesor.isDentro());
+            insert1.setString(5, ""+!profesor.isDentro());
             insert1.executeUpdate();
 
             return profesor; //Correcto

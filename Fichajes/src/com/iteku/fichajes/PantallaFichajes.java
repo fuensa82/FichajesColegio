@@ -30,7 +30,7 @@ public class PantallaFichajes extends javax.swing.JFrame {
         activaReloj();
         initComponents();
         this.getContentPane().setBackground(Color.BLACK);
-        jLabel1.setText("Control horario Colegio San José");
+        //jLabel1.setText("Control horario Colegio San José");
         this.setExtendedState(MAXIMIZED_BOTH);
         //idTarjeta.requestFocus();
     }

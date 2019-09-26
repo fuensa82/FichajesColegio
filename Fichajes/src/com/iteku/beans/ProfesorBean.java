@@ -5,6 +5,9 @@
  */
 package com.iteku.beans;
 
+import com.iteku.basedatos.GestionProfesoresBD;
+import com.iteku.utils.FechasUtils;
+
 /**
  *
  * @author Víctor
@@ -14,7 +17,6 @@ public class ProfesorBean {
     private String nombre;
     private String apellidos;
     private int idTarjeta;
-    private boolean dentro;
     private long currentTimeMillis;
 
     public long getCurrentTimeMillis() {
@@ -29,18 +31,7 @@ public class ProfesorBean {
  * @return 
  */
     public boolean isDentro() {
-        return dentro;
-    }
-
-    public void setDentro(boolean dentro) {
-        this.dentro = dentro;
-    }
-    public void setDentro(String dentro) {
-        if(dentro.equals("true")) {
-            this.dentro=true;
-        }else{
-            this.dentro=false;
-        }
+        return GestionProfesoresBD.isDentro(idProfesor);
     }
 
     public int getIdProfesor() {

@@ -166,10 +166,7 @@ public class FechasUtils {
         for (int i = 0; i < longitud; i++) {
             aux += relleno;
         }
-        System.out.println("Para rellenar: "+aux);
         aux+=texto;
-        System.out.println("Texto completo: "+aux);
-        System.out.println("texto recortado: "+aux.substring(aux.length()-longitud));
         return aux.substring(aux.length()-longitud);
 
     }
