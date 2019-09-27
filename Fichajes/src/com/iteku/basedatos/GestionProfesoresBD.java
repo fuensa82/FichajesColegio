@@ -110,6 +110,43 @@ public class GestionProfesoresBD {
         return result;
     }
     
+    public static long getUltimaCurrentTime(int idProfesor, String fecha){
+        //System.out.println("Buscando en fecha "+fecha);
+        long currentTime=0;
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement consulta = conexion.prepareStatement(
+                    "select idFichaje, currentTime "
+                    + "from fichajes "
+                    + "where fecha=? and idProfesor=? "
+                    + "ORDER BY idFichaje DESC LIMIT 1");
+            consulta.setString(1, fecha);
+            consulta.setString(2, ""+idProfesor);
+            ResultSet resultado = consulta.executeQuery();
+            if(!resultado.next()){
+                System.out.println("Id tarjeta no econtrado. "+idProfesor);
+                return 0;
+            }
+            currentTime=resultado.getLong(2);
+            System.out.println("resultado base de datos: "+currentTime);
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return currentTime;
+    }
+    
     public static boolean gestEstadoProfesor(String idProfesor){
         return true;
     }

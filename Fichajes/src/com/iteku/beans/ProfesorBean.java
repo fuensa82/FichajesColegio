@@ -7,6 +7,7 @@ package com.iteku.beans;
 
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.utils.FechasUtils;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -25,6 +26,28 @@ public class ProfesorBean {
 
     public void setCurrentTimeMillis(long currentTimeMillis) {
         this.currentTimeMillis = currentTimeMillis;
+    }
+    public void cargaCurrentTime(){
+        currentTimeMillis=GestionProfesoresBD.getUltimaCurrentTime(idProfesor, FechasUtils.fechaHoyParaMysql());
+    }
+    public String getFechaHoraCurrentTime(){
+        if(isDentro()){
+            GregorianCalendar c=new GregorianCalendar();
+            c.setTimeInMillis(currentTimeMillis);
+            return FechasUtils.getFechaString(c);
+        }else{
+            return "";
+        }
+    }
+    
+    public String getHoraCurrentTime(){
+        if(isDentro()){
+            String fecha=getFechaHoraCurrentTime();
+            return fecha.substring(11);
+        }else{
+            return "";
+        }
+        
     }
 /**
  * Indica si el profesor que marca está saliendo o entrado. True para entrando y false para saliendo.

@@ -65,6 +65,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             }
         });
         tProfesores.setColumnSelectionAllowed(true);
+        tProfesores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tProfesores.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tProfesores);
         tProfesores.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -143,12 +144,16 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         }
         //datosTabla.addRow(new String[]{"","","","",""});
         for (int i=0;i<listaProfesores.size();i++){
+            if(listaProfesores.get(i).isDentro()){
+                listaProfesores.get(i).cargaCurrentTime();
+            }
             datosTabla.addRow(new String[]{
                 ""+listaProfesores.get(i).getIdProfesor(),
                 listaProfesores.get(i).getNombre(),
                 listaProfesores.get(i).getApellidos(),
                 ""+listaProfesores.get(i).getIdTarjeta(),
-                ""+(listaProfesores.get(i).isDentro()?"Dentro":"")
+                ""+(listaProfesores.get(i).isDentro()?"Dentro":"Ausente"),
+                ""+listaProfesores.get(i).getHoraCurrentTime()
             });
         }
     }
