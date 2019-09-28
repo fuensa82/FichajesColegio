@@ -20,6 +20,15 @@ public class ProfesorBean {
     private int idTarjeta;
     private long currentTimeMillis;
 
+    public ProfesorBean(){
+        
+    }
+    public ProfesorBean(String idProfesor,String nombre, String apellidos, String idTarjeta){
+        this.idProfesor=Integer.parseInt(idProfesor);
+        this.nombre=nombre;
+        this.apellidos=apellidos;
+        this.idTarjeta=Integer.parseInt(idTarjeta);
+    }
     public long getCurrentTimeMillis() {
         return currentTimeMillis;
     }

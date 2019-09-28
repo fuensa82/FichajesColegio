@@ -81,7 +81,7 @@ public class GestionProfesoresBD {
             consulta.setString(2, ""+idProfesor);
             ResultSet resultado = consulta.executeQuery();
             if(!resultado.next()){
-                System.out.println("Id tarjeta no econtrado. "+idProfesor);
+                System.out.println("El profesor no está dentro. "+idProfesor);
                 return false;
             }
             String auxDentro=resultado.getString(2);
@@ -125,7 +125,7 @@ public class GestionProfesoresBD {
             consulta.setString(2, ""+idProfesor);
             ResultSet resultado = consulta.executeQuery();
             if(!resultado.next()){
-                System.out.println("Id tarjeta no econtrado. "+idProfesor);
+                System.out.println("No hay currentTime, el profesor no está dentro. "+idProfesor);
                 return 0;
             }
             currentTime=resultado.getLong(2);
@@ -147,7 +147,40 @@ public class GestionProfesoresBD {
         return currentTime;
     }
     
-    public static boolean gestEstadoProfesor(String idProfesor){
-        return true;
+//    public static boolean gestEstadoProfesor(String idProfesor){
+//        return true;
+//    }
+    /**
+     * Actualiza la base de datos con el datos que se pasan en el Bean, se actualizan los datos del id del 
+     * profesor que se pasa como parámetro
+     * @param profesor Debe contener todos los datos (id, nombre, apellidos y tarjeta)
+     * @return 
+     */
+    public static boolean actualizaProfesor(ProfesorBean profesor){
+        if(profesor==null){
+            return false;
+        }
+        
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            //UPDATE `colsan`.`profesores` SET `nombre`='Mercedesa', `apellidos`='Palomo Silvaaa', `idTarjeta`='8652711' WHERE  `idProfesor`=3;
+            PreparedStatement update = conexion.prepareStatement(
+                    "UPDATE profesores SET nombre=?, apellidos=?, idTarjeta=? WHERE idProfesor=?");
+
+            update.setString(1, profesor.getNombre());
+            update.setString(2, profesor.getApellidos());
+            update.setString(3, ""+profesor.getIdTarjeta());
+            update.setString(4, ""+profesor.getIdProfesor());
+            update.executeUpdate();
+
+            return true; //Correcto
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }
