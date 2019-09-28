@@ -204,7 +204,12 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                     .addComponent(jButton1)))
         );
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Actualizar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -279,6 +284,10 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        cargarListaProfesores();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
