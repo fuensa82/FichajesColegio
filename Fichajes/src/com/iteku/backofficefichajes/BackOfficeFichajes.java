@@ -64,8 +64,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tProfesores.setColumnSelectionAllowed(true);
-        tProfesores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tProfesores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         tProfesores.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tProfesores);
         tProfesores.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
