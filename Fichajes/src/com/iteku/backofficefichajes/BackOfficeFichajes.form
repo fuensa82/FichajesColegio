@@ -184,7 +184,7 @@
                               <Component id="jTextNombre" min="-2" pref="140" max="-2" attributes="0"/>
                               <Component id="jTextApellidos" min="-2" pref="356" max="-2" attributes="0"/>
                               <Component id="jTextIdTarjeta" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                              <Component id="jTextNombreCorto" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextNombreCorto" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

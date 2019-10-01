@@ -167,12 +167,13 @@ public class GestionProfesoresBD {
             conexion = ConectorBD.getConnection();
             //UPDATE `colsan`.`profesores` SET `nombre`='Mercedesa', `apellidos`='Palomo Silvaaa', `idTarjeta`='8652711' WHERE  `idProfesor`=3;
             PreparedStatement update = conexion.prepareStatement(
-                    "UPDATE profesores SET nombre=?, apellidos=?, idTarjeta=? WHERE idProfesor=?");
+                    "UPDATE profesores SET nombre=?, apellidos=?, idTarjeta=?, nombreCorto=? WHERE idProfesor=?");
 
             update.setString(1, profesor.getNombre());
             update.setString(2, profesor.getApellidos());
             update.setString(3, ""+profesor.getIdTarjeta());
-            update.setString(4, ""+profesor.getIdProfesor());
+            update.setString(4, profesor.getNombreCorto());
+            update.setString(5, ""+profesor.getIdProfesor());
             update.executeUpdate();
 
             return true; //Correcto
