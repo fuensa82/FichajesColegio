@@ -15,6 +15,7 @@ import java.util.GregorianCalendar;
  */
 public class ProfesorBean {
     private int idProfesor;
+    private String nombreCorto;
     private String nombre;
     private String apellidos;
     private int idTarjeta;
@@ -23,11 +24,20 @@ public class ProfesorBean {
     public ProfesorBean(){
         
     }
-    public ProfesorBean(String idProfesor,String nombre, String apellidos, String idTarjeta){
+    public ProfesorBean(String idProfesor,String nombre, String apellidos, String idTarjeta,String nombreCorto){
         this.idProfesor=Integer.parseInt(idProfesor);
         this.nombre=nombre;
         this.apellidos=apellidos;
         this.idTarjeta=Integer.parseInt(idTarjeta);
+        this.nombreCorto=nombreCorto;
+    }
+
+    public String getNombreCorto() {
+        return nombreCorto;
+    }
+
+    public void setNombreCorto(String nombreCorto) {
+        this.nombreCorto = nombreCorto;
     }
     public long getCurrentTimeMillis() {
         return currentTimeMillis;

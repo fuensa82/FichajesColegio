@@ -72,6 +72,8 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         jTextIdTarjeta = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jTextNombreCorto = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -81,20 +83,20 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
 
         tProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Profesor", "Nombre", "Apellidos", "Tarjeta", "Estado", "Hora Estado"
+                "ID Profesor", "Nombre Corto", "Nombre", "Apellidos", "Tarjeta", "Estado", "Hora Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -105,17 +107,19 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tProfesores.setColumnSelectionAllowed(true);
         tProfesores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         tProfesores.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tProfesores);
         tProfesores.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tProfesores.getColumnModel().getColumnCount() > 0) {
             tProfesores.getColumnModel().getColumn(0).setPreferredWidth(1);
-            tProfesores.getColumnModel().getColumn(1).setPreferredWidth(60);
-            tProfesores.getColumnModel().getColumn(2).setPreferredWidth(120);
-            tProfesores.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tProfesores.getColumnModel().getColumn(4).setPreferredWidth(30);
+            tProfesores.getColumnModel().getColumn(1).setPreferredWidth(40);
+            tProfesores.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tProfesores.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tProfesores.getColumnModel().getColumn(4).setPreferredWidth(60);
             tProfesores.getColumnModel().getColumn(5).setPreferredWidth(30);
+            tProfesores.getColumnModel().getColumn(6).setPreferredWidth(30);
         }
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos profesor seleccionado"));
@@ -130,6 +134,11 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
 
         jTextIdProfesor.setText("jTextField1");
         jTextIdProfesor.setEnabled(false);
+        jTextIdProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextIdProfesorActionPerformed(evt);
+            }
+        });
 
         jTextNombre.setText("jTextField2");
 
@@ -151,6 +160,10 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             }
         });
 
+        jTextNombreCorto.setText("jTextField1");
+
+        jLabel5.setText("Nombre c.:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -160,18 +173,20 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jTextIdProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextIdTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextIdTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextNombreCorto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(36, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -186,19 +201,23 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextIdProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jTextNombreCorto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jTextApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextIdTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextIdTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1)))
@@ -247,12 +266,13 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -271,13 +291,14 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Priemro debe seleccionar una fila con datos");
             return;
         }
-        ProfesorBean p = new ProfesorBean(jTextIdProfesor.getText(), jTextNombre.getText(), jTextApellidos.getText(), jTextIdTarjeta.getText());
+        ProfesorBean p = new ProfesorBean(jTextIdProfesor.getText(), jTextNombre.getText(), jTextApellidos.getText(), jTextIdTarjeta.getText(), jTextNombreCorto.getText());
         if (GestionProfesoresBD.actualizaProfesor(p)) {
             cargarListaProfesores();
             jTextApellidos.setText("");
             jTextIdProfesor.setText("");
             jTextNombre.setText("");
             jTextIdTarjeta.setText("");
+            jTextNombreCorto.setText("");
             seleccionFila = false;
         } else {
             JOptionPane.showMessageDialog(null, "La tarjeta o llave ya está asignada");
@@ -288,6 +309,10 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         cargarListaProfesores();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextIdProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIdProfesorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextIdProfesorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,6 +365,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             }
             datosTabla.addRow(new String[]{
                 "" + listaProfesores.get(i).getIdProfesor(),
+                listaProfesores.get(i).getNombreCorto(),
                 listaProfesores.get(i).getNombre(),
                 listaProfesores.get(i).getApellidos(),
                 "" + listaProfesores.get(i).getIdTarjeta(),
@@ -356,6 +382,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -365,6 +392,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private javax.swing.JTextField jTextIdProfesor;
     private javax.swing.JTextField jTextIdTarjeta;
     private javax.swing.JTextField jTextNombre;
+    private javax.swing.JTextField jTextNombreCorto;
     private javax.swing.JTable tProfesores;
     // End of variables declaration//GEN-END:variables
 
@@ -382,6 +410,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                     jTextNombre.setText("" + listaProfesores.get(indice).getNombre());
                     jTextApellidos.setText("" + listaProfesores.get(indice).getApellidos());
                     jTextIdTarjeta.setText("" + listaProfesores.get(indice).getIdTarjeta());
+                    jTextNombreCorto.setText("" + listaProfesores.get(indice).getNombreCorto());
                 }
             }
         });
@@ -393,5 +422,6 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         jTextIdProfesor.setText("");
         jTextNombre.setText("");
         jTextIdTarjeta.setText("");
+        jTextNombreCorto.setText("");
     }
 }
