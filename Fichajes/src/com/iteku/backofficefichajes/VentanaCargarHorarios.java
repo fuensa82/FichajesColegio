@@ -131,17 +131,18 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 while ((line = in.readLine()) != null) {  
                     System.out.println(line);  
                 }
-                
-                p = Runtime.getRuntime().exec("cmd /C node C:\\Users\\vPalomo\\Proyectos\\Otros\\CargaDeHorarios\\index.js > c:\\pruebas\\prueba.log" );  
+                jFileText.getText();
+                System.out.println("File: "+jFileText.getText());
+                p = Runtime.getRuntime().exec("cmd /C node C:\\Users\\Víctor\\Proyectos\\Colegio\\CargaDeHorarios\\index.js "+jFileText.getText()+" > c:\\pruebas\\prueba.log" );  
                 System.out.println("Lanzando comando node");
                 
                 //Thread.sleep(4000);
-                
+                boolean seguir2=true;
                 new Thread(new Runnable() {
                     public void run() {
                         try{
                             int contador=0;
-                            boolean seguir2=true;
+                            
                             File archivo = new File ("c:\\pruebas\\log.txt");
                             FileReader fr = new FileReader (archivo);
                             BufferedReader br = new BufferedReader(fr);
@@ -154,7 +155,8 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                                             String linea = br.readLine();
                                             System.out.println("Linea: "+linea);
                                             if(linea!=null && linea.equalsIgnoreCase("FIN")){
-                                                //seguir2=false;
+                                                System.out.println("FIN del hilo de la barra");
+                                                jProgressBar1.setValue(100);
                                             }
                                             if(Utils.isNumeric(linea)){
                                                 jProgressBar1.setValue(Integer.parseInt(linea));
