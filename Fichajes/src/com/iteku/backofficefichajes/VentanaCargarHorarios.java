@@ -6,19 +6,12 @@
 package com.iteku.backofficefichajes;
 
 import com.iteku.utils.Utils;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -30,7 +23,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class VentanaCargarHorarios extends javax.swing.JPanel {
 
-    private final boolean seguir2=true;
+    private static String rutaScriptNode="C:\\Users\\vPalomo\\Proyectos\\Otros\\CargaDeHorarios\\index.js";
+    private static String rutaLog="c:\\ControlHorario\\exit.log";
+    private static String ficheroBarra="c:\\ControlHorario\\barra.dat";
     /**
      * Creates new form VentanaCargarHorarios
      */
@@ -53,6 +48,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         jButton1.setText("Examinar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -74,14 +70,12 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
 
         jLabel3.setText("de Cargar los datos de horarios.");
 
+        jTextField1.setText("jTextField1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,6 +93,15 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,36 +120,36 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(!jFileText.getText().equals("")){
             try{
-                Process p = Runtime.getRuntime().exec("cmd /C dir");  
+                /*Process p = Runtime.getRuntime().exec("cmd /C dir");  
                 BufferedReader in = new BufferedReader(  
                                     new InputStreamReader(p.getInputStream()));  
                 String line = null;  
                 while ((line = in.readLine()) != null) {  
                     System.out.println(line);  
-                }
+                }*/
+                Utils.generarFichero(ficheroBarra);
                 jFileText.getText();
                 System.out.println("File: "+jFileText.getText());
-                p = Runtime.getRuntime().exec("cmd /C node C:\\Users\\Víctor\\Proyectos\\Colegio\\CargaDeHorarios\\index.js "+jFileText.getText()+" > c:\\pruebas\\prueba.log" );  
+                Process p = Runtime.getRuntime().exec("cmd /C node "+rutaScriptNode+" "+jFileText.getText()+" > "+rutaLog );  
                 System.out.println("Lanzando comando node");
                 
                 //Thread.sleep(4000);
                 boolean seguir2=true;
                 new Thread(new Runnable() {
                     public void run() {
-                        try{
-                            int contador=0;
-                            
-                            File archivo = new File ("c:\\pruebas\\log.txt");
+                        try{                            
+                            File archivo = new File (ficheroBarra);
                             FileReader fr = new FileReader (archivo);
-                            BufferedReader br = new BufferedReader(fr);
-                            while (seguir2) {
+                            while (!"FIN".equalsIgnoreCase(jTextField1.getText())) {
                                 SwingUtilities.invokeLater(new Runnable() {
                                     public void run() {
                                         try{
@@ -157,6 +160,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                                             if(linea!=null && linea.equalsIgnoreCase("FIN")){
                                                 System.out.println("FIN del hilo de la barra");
                                                 jProgressBar1.setValue(100);
+                                                jTextField1.setText("FIN");
                                             }
                                             if(Utils.isNumeric(linea)){
                                                 jProgressBar1.setValue(Integer.parseInt(linea));
@@ -209,5 +213,8 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private final javax.swing.JProgressBar jProgressBar1 = new javax.swing.JProgressBar();
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    
 }
