@@ -5,6 +5,7 @@
  */
 package com.iteku.basedatos;
 
+import com.iteku.beans.FichaBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
 import java.sql.Connection;
@@ -184,5 +185,41 @@ public class GestionProfesoresBD {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    public static ArrayList<FichaBean> getListaFichasCurso(String idProfesor) {
+        ArrayList<FichaBean> result;
+        result = new ArrayList<>();
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            FichaBean ficha;
+            PreparedStatement consulta = conexion.prepareStatement(
+                    "SELECT idFicha, horaIni, horaFin, idProfesor, dia, tipoHora, curso FROM horarios WHERE idProfesor=? order by dia, horaIni");
+            consulta.setString(1, idProfesor);
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()){
+                ficha=new FichaBean();
+                ficha.setIdFicha(resultado.getInt(1));
+                ficha.setHoraIni(resultado.getString(2));
+                ficha.setHoraFin(resultado.getString(3));
+                ficha.setIdProfesor(resultado.getInt(4));
+                ficha.setDia(resultado.getString(5).charAt(0));
+                ficha.setTipoHora(resultado.getString(6));
+                ficha.setCurso(resultado.getString(7));
+                result.add(ficha);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return result;
     }
 }

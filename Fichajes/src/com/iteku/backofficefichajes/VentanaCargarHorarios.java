@@ -24,7 +24,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class VentanaCargarHorarios extends javax.swing.JPanel {
 
-    private static String rutaScriptNode="C:\\Users\\vPalomo\\Proyectos\\Otros\\CargaDeHorarios\\index.js";
+    //private static String rutaScriptNode="C:\\Users\\vPalomo\\Proyectos\\Otros\\CargaDeHorarios\\index.js";
+    private static String rutaScriptNode="C:\\Users\\Víctor\\Proyectos\\Colegio\\CargaDeHorarios\\index.js";
     private static String rutaLog="c:\\ControlHorario\\exit.log";
     private static String ficheroBarra="c:\\ControlHorario\\barra.dat";
     /**
@@ -157,7 +158,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 Utils.generarFichero(ficheroBarra);
                 jFileText.getText();
                 System.out.println("File: "+jFileText.getText());
-                Process p = Runtime.getRuntime().exec("cmd /C node "+rutaScriptNode+" "+jFileText.getText()+" > "+rutaLog );  
+                Process p = Runtime.getRuntime().exec("cmd /C node "+rutaScriptNode+" "+jFileText.getText()+" 2019-2010 > "+rutaLog );  
                 System.out.println("Lanzando comando node");
                 
                 //Thread.sleep(4000);
@@ -180,6 +181,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                                                 jProgressBar1.setValue(100);
                                                 jTextField1.setText("FIN");
                                                 jButton3.setEnabled(true);
+                                                JOptionPane.showMessageDialog(null, "Carga realizada");
                                             }
                                             if(Utils.isNumeric(linea)){
                                                 jProgressBar1.setValue(Integer.parseInt(linea));

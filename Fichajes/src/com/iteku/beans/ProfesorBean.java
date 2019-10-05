@@ -62,7 +62,7 @@ public class ProfesorBean {
     public String getHoraCurrentTime(){
         if(isDentro()){
             String fecha=getFechaHoraCurrentTime();
-            return fecha.substring(11);
+            return fecha.split(" ")[1];
         }else{
             return "";
         }
