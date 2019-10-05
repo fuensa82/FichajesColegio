@@ -25,6 +25,15 @@ public class FechasUtils {
         }
         return fecha.substring(8, 10) + "-" + fecha.substring(5, 7) + "-" + fecha.substring(0, 4);
     }
+    /**
+     * genera un String que contiene el curso escolar en curso (2020-2021)
+     * @return 
+     */
+    public static String getCursoActual(){
+        String anio1=FechasUtils.dameAnoFechaActual();
+        String result=anio1+"-"+(Integer.parseInt(anio1)+1);
+        return result;
+    }
 
     /**
      * Prepara una fecha para poder ser utilizada en MySQL

@@ -5,6 +5,7 @@
  */
 package com.iteku.backofficefichajes;
 
+import com.iteku.utils.FechasUtils;
 import com.iteku.utils.Utils;
 import java.awt.Window;
 import java.io.BufferedReader;
@@ -33,6 +34,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
      */
     public VentanaCargarHorarios() {
         initComponents();
+        jLabelCurso.setText(FechasUtils.getCursoActual());
     }
 
     /**
@@ -52,6 +54,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        jLabelCurso = new javax.swing.JLabel();
 
         jButton1.setText("Examinar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +86,8 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
             }
         });
 
+        jLabelCurso.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,7 +106,10 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelCurso))
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
@@ -122,7 +130,9 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabelCurso))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(2, 2, 2)
@@ -158,7 +168,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 Utils.generarFichero(ficheroBarra);
                 jFileText.getText();
                 System.out.println("File: "+jFileText.getText());
-                Process p = Runtime.getRuntime().exec("cmd /C node "+rutaScriptNode+" "+jFileText.getText()+" 2019-2010 > "+rutaLog );  
+                Process p = Runtime.getRuntime().exec("cmd /C node "+rutaScriptNode+" "+jFileText.getText()+" "+FechasUtils.getCursoActual()+" > "+rutaLog );  
                 System.out.println("Lanzando comando node");
                 
                 //Thread.sleep(4000);
@@ -239,6 +249,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelCurso;
     private final javax.swing.JProgressBar jProgressBar1 = new javax.swing.JProgressBar();
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
