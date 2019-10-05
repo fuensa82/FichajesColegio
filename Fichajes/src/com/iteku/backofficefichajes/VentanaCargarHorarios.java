@@ -158,7 +158,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
             jTextField1.setText("");
             jButton2.setEnabled(false);
             try{
-                /*Process p = Runtime.getRuntime().exec("cmd /C dir");  
+                /*++Process p = Runtime.getRuntime().exec("cmd /C dir");  
                 BufferedReader in = new BufferedReader(  
                                     new InputStreamReader(p.getInputStream()));  
                 String line = null;  
