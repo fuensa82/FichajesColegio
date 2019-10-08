@@ -5,6 +5,8 @@
  */
 package com.iteku.beans;
 
+import com.iteku.utils.FechasUtils;
+
 /**
  *
  * @author Víctor
@@ -35,6 +37,15 @@ public class HoraExtraBean {
 
     public String getFecha() {
         return fecha;
+    }
+    public String getFechaMysql(){
+        return FechasUtils.fechaParaMysql(fecha);
+    }
+    public String getHoraIniMysql(){
+        return horaIni+":00";
+    }
+    public String getHoraFinMysql(){
+        return horaFin+":00";
     }
 
     public void setFecha(String fecha) {
