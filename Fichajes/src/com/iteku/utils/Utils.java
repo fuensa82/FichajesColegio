@@ -26,6 +26,19 @@ public class Utils {
 
         return resultado;
     }
+    
+    public static String getTipoHora(String texto){
+        if ("Complementaria (C)".equalsIgnoreCase(texto)) {
+            return "C";
+        } else if ("Lectiva (L)".equalsIgnoreCase(texto)) {
+            return "L";
+        } else if ("No lectiva (NL)".equalsIgnoreCase(texto)) {
+            return "NL";
+        }else{ 
+            return "";
+        }
+
+    }
 
     public static void generarFichero(String nFichero) {
         FileWriter fichero = null;

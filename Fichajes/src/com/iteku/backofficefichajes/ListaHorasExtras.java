@@ -10,6 +10,7 @@ import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -27,13 +28,24 @@ public class ListaHorasExtras extends javax.swing.JPanel {
     public ListaHorasExtras(ProfesorBean p) {
         profesor=p;
         initComponents();
+        comboValorDefault();
         cargarListaHoras();
         
     }
 
     private void cargarListaHoras() {
+        String mes=FechasUtils.dameMesFechaActual();
+        cargarListaHoras(Integer.parseInt(mes));
+    }
+        
+    /**
+     * 
+     * @param mes si mes vale 0 carga todas las horas sin tener en cuenta el mes.
+     */
+    private void cargarListaHoras(int mes) {
         ArrayList<HoraExtraBean> listaHoras;
-        listaHoras = GestionHorasExtrasBD.getHorasExtraProfesor(profesor);
+        listaHoras = GestionHorasExtrasBD.getHorasExtraProfesor(profesor,mes);
+
         DefaultTableModel datosTabla = (DefaultTableModel) jTableHoras.getModel();
         for (int i = datosTabla.getRowCount(); i > 0; i--) {
             //filasTabla=0;
@@ -49,7 +61,8 @@ public class ListaHorasExtras extends javax.swing.JPanel {
                 listaHoras.get(i).getHoraIni(),
                 listaHoras.get(i).getHoraFin(),
                 "" + listaHoras.get(i).getMotivo(),
-                "" + listaHoras.get(i).getFechaAlta()
+                "" + listaHoras.get(i).getFechaAlta(),
+                listaHoras.get(i).getTipoHora()
             });
         }
     }
@@ -65,23 +78,24 @@ public class ListaHorasExtras extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableHoras = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         jTableHoras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id Hora Extra", "Fecha", "Hora Inicio", "Hora Fin", "Motivo", "Fecha de alta"
+                "Id", "Fecha", "H. Inicio", "H. Fin", "Motivo", "Fecha de alta", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -92,22 +106,36 @@ public class ListaHorasExtras extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTableHoras.setCellSelectionEnabled(false);
         jTableHoras.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(jTableHoras);
         jTableHoras.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTableHoras.getColumnModel().getColumnCount() > 0) {
-            jTableHoras.getColumnModel().getColumn(0).setPreferredWidth(15);
-            jTableHoras.getColumnModel().getColumn(1).setPreferredWidth(40);
-            jTableHoras.getColumnModel().getColumn(2).setPreferredWidth(35);
-            jTableHoras.getColumnModel().getColumn(3).setPreferredWidth(35);
-            jTableHoras.getColumnModel().getColumn(4).setPreferredWidth(100);
-            jTableHoras.getColumnModel().getColumn(5).setPreferredWidth(50);
+            jTableHoras.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableHoras.getColumnModel().getColumn(1).setPreferredWidth(50);
+            jTableHoras.getColumnModel().getColumn(2).setPreferredWidth(40);
+            jTableHoras.getColumnModel().getColumn(3).setPreferredWidth(40);
+            jTableHoras.getColumnModel().getColumn(4).setPreferredWidth(300);
+            jTableHoras.getColumnModel().getColumn(5).setPreferredWidth(60);
+            jTableHoras.getColumnModel().getColumn(6).setPreferredWidth(60);
         }
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
         jComboBox1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jComboBox1PropertyChange(evt);
+            }
+        });
+
+        jButton1.setText("Ver todos los meses");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -117,18 +145,22 @@ public class ListaHorasExtras extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(222, 222, 222)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -143,10 +175,30 @@ public class ListaHorasExtras extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jComboBox1PropertyChange
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        try {
+            String mes=FechasUtils.getNumMes(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
+            cargarListaHoras(Integer.parseInt(mes));
+        } catch (Exception ex) {
+            Logger.getLogger(ListaHorasExtras.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            cargarListaHoras(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableHoras;
     // End of variables declaration//GEN-END:variables
+
+    private void comboValorDefault() {
+        String mes=FechasUtils.dameMesFechaActual();
+        jComboBox1.setSelectedIndex(Integer.parseInt(mes)-1);
+    }
 }

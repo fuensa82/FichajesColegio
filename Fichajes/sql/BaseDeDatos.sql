@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `fichajes` (
   PRIMARY KEY (`idFichaje`)
 ) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8 COMMENT='Aquí se guardaran los fichajes de todos los profesores, entradas y salidas con sus horas correspondientes';
 
--- Volcando datos para la tabla colsan.fichajes: ~30 rows (aproximadamente)
+-- Volcando datos para la tabla colsan.fichajes: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `fichajes` DISABLE KEYS */;
 INSERT IGNORE INTO `fichajes` (`idFichaje`, `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`, `dentro`) VALUES
 	(156, 1569496839209, '2019-09-26', '13:20:39', 1, 2, _binary 0x7472756500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000),
@@ -775,17 +775,20 @@ CREATE TABLE IF NOT EXISTS `horasextra` (
   `horaIni` time NOT NULL,
   `horaFin` time NOT NULL,
   `motivo` varchar(300) NOT NULL DEFAULT '',
-  `fechaAlta` datetime DEFAULT current_timestamp(),
+  `fechaAlta` datetime NOT NULL DEFAULT current_timestamp(),
+  `tipoHora` varchar(2) NOT NULL,
   PRIMARY KEY (`idHoraExtra`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Aquí se guardaran horas que hacen los profesores sin ser de sus horarios. Cursos, cosas extra, ... en definitiva lo que no esté en el horario lectivo ni en el complementario';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Aquí se guardaran horas que hacen los profesores sin ser de sus horarios. Cursos, cosas extra, ... en definitiva lo que no esté en el horario lectivo ni en el complementario';
 
 -- Volcando datos para la tabla colsan.horasextra: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `horasextra` DISABLE KEYS */;
-INSERT IGNORE INTO `horasextra` (`idHoraExtra`, `idProfesor`, `fecha`, `horaIni`, `horaFin`, `motivo`, `fechaAlta`) VALUES
-	(1, 1, '2019-10-10', '23:19:18', '23:19:20', 'Prueba', '2019-10-09 00:00:00'),
-	(2, 0, '2019-10-01', '11:00:00', '12:30:00', 'Guardia inesperada', '2019-10-09 00:00:00'),
-	(3, 2, '0000-00-00', '14:13:36', '14:13:37', '', '2019-10-09 00:00:00'),
-	(4, 3, '0000-00-00', '14:14:11', '14:14:12', '', '2019-10-09 14:14:14');
+INSERT IGNORE INTO `horasextra` (`idHoraExtra`, `idProfesor`, `fecha`, `horaIni`, `horaFin`, `motivo`, `fechaAlta`, `tipoHora`) VALUES
+	(1, 1, '2019-10-10', '23:19:18', '23:19:20', 'Prueba', '2019-10-09 00:00:00', ''),
+	(2, 0, '2019-10-01', '11:00:00', '12:30:00', 'Guardia inesperada', '2019-10-09 00:00:00', ''),
+	(3, 2, '2018-10-01', '14:13:36', '14:13:37', '', '2019-10-09 00:00:00', ''),
+	(4, 3, '2018-11-01', '14:14:11', '14:14:12', '', '2019-10-09 14:14:14', ''),
+	(5, 151, '2019-10-12', '11:00:00', '12:00:00', 'Uno', '2019-10-09 16:28:26', 'C'),
+	(6, 151, '2019-05-01', '11:00:00', '14:05:00', 'Otras horas', '2019-10-09 16:46:14', 'C');
 /*!40000 ALTER TABLE `horasextra` ENABLE KEYS */;
 
 -- Volcando estructura para tabla colsan.profesores

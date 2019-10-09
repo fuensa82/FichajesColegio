@@ -19,6 +19,15 @@ public class HoraExtraBean {
     private String horaFin;
     private String motivo;
     private String fechaAlta;
+    private String tipoHora;
+
+    public String getTipoHora() {
+        return tipoHora;
+    }
+
+    public void setTipoHora(String tipoHora) {
+        this.tipoHora = tipoHora;
+    }
 
     public String getFechaAlta() {
         return fechaAlta;
