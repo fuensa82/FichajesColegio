@@ -5,10 +5,18 @@
  */
 package com.iteku.utils;
 
+import com.iteku.basedatos.ConectorBD;
+import com.iteku.beans.ProfesorBean;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.naming.NamingException;
 
 public class FechasUtils {
 
@@ -26,12 +34,32 @@ public class FechasUtils {
         return fecha.substring(8, 10) + "-" + fecha.substring(5, 7) + "-" + fecha.substring(0, 4);
     }
     /**
-     * genera un String que contiene el curso escolar en curso (2020-2021)
+     * Busca en la base de datos el ultimo curso dado de alta. Formato 2019-2020
      * @return 
      */
     public static String getCursoActual(){
-        String anio1=FechasUtils.dameAnoFechaActual();
-        String result=anio1+"-"+(Integer.parseInt(anio1)+1);
+        String result="";
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            ProfesorBean profesor;
+            PreparedStatement consulta = conexion.prepareStatement(
+                    "SELECT curso FROM cursos order by curso desc LIMIT 1");
+            ResultSet resultado = consulta.executeQuery();
+            if (resultado.next()){
+                result=resultado.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
         return result;
     }
 

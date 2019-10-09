@@ -106,8 +106,6 @@ public class ListaHorasExtras extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTableHoras.setCellSelectionEnabled(false);
-        jTableHoras.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(jTableHoras);
         jTableHoras.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTableHoras.getColumnModel().getColumnCount() > 0) {

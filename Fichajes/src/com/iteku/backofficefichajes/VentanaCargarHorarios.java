@@ -25,8 +25,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class VentanaCargarHorarios extends javax.swing.JPanel {
 
-    private static String rutaScriptNode="C:\\Users\\vPalomo\\Proyectos\\Otros\\CargaDeHorarios\\index.js";
-    //private static String rutaScriptNode="C:\\Users\\Víctor\\Proyectos\\Colegio\\CargaDeHorarios\\index.js";
+    //private static String rutaScriptNode="C:\\Users\\vPalomo\\Proyectos\\Otros\\CargaDeHorarios\\index.js";
+    private static String rutaScriptNode="C:\\Users\\Víctor\\Proyectos\\Colegio\\CargaDeHorarios\\index.js";
     private static String rutaLog="c:\\ControlHorario\\exit.log";
     private static String ficheroBarra="c:\\ControlHorario\\barra.dat";
     /**
