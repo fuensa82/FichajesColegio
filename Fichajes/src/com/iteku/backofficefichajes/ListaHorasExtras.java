@@ -6,7 +6,6 @@
 package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionHorasExtrasBD;
-import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
