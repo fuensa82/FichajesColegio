@@ -18,6 +18,15 @@ public class HoraExtraBean {
     private String horaIni;
     private String horaFin;
     private String motivo;
+    private String fechaAlta;
+
+    public String getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(String fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
 
     public int getIdHoraExtra() {
         return idHoraExtra;

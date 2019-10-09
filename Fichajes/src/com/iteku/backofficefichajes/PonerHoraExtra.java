@@ -180,7 +180,7 @@ public class PonerHoraExtra extends javax.swing.JPanel {
             hora.setHoraIni(jFormattedHoraIni.getText());
             hora.setHoraFin(jFormattedHoraFin.getText());
             hora.setMotivo(jTextMotivo.getText());
-            boolean result=GestionHorasExtrasBD.ponHorasExtra(hora);
+            boolean result=GestionHorasExtrasBD.ponHorasExtra(hora, profesor);
             if(result){
                 JOptionPane.showMessageDialog(null, "Guardado correctamente");
                 Window w = SwingUtilities.getWindowAncestor(this);

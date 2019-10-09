@@ -10,7 +10,9 @@ import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -20,19 +22,20 @@ import javax.naming.NamingException;
  * @author Víctor
  */
 public class GestionHorasExtrasBD {
-    public static boolean ponHorasExtra(HoraExtraBean hora){
+    public static boolean ponHorasExtra(HoraExtraBean hora, ProfesorBean profesor){
         boolean result=false;
         
         Connection conexion = null;
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`horasextra` (`fecha`, `horaIni`, `horaFin`, `motivo`) VALUES (?, ?, ?, ?);");
+                    "INSERT INTO `colsan`.`horasextra` (`fecha`, `horaIni`, `horaFin`, `motivo`, `idProfesor`) VALUES (?, ?, ?, ?, ?);");
 
             insert1.setString(1, hora.getFechaMysql());
             insert1.setString(2, hora.getHoraIniMysql());
             insert1.setString(3, hora.getHoraFinMysql());
             insert1.setString(4, hora.getMotivo());
+            insert1.setString(5, ""+profesor.getIdProfesor());
             insert1.executeUpdate();
 
             return true; //Correcto
@@ -47,6 +50,41 @@ public class GestionHorasExtrasBD {
             }
         }
         
+        return result;
+    }
+    public static ArrayList<HoraExtraBean> getHorasExtraProfesor(ProfesorBean p){
+        ArrayList<HoraExtraBean> result;
+        result = new ArrayList();
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            HoraExtraBean hora;
+            PreparedStatement consulta = conexion.prepareStatement(
+                    "SELECT idHoraExtra, idProfesor, fecha, horaIni, horaFin, motivo, fechaAlta FROM horasextra WHERE idProfesor=?");
+            consulta.setString(1, ""+p.getIdProfesor());
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()){
+                hora=new HoraExtraBean();
+                hora.setIdHoraExtra(resultado.getInt(1));
+                hora.setIdProfesor(resultado.getInt(2));
+                hora.setFecha(resultado.getString(3));
+                hora.setHoraIni(resultado.getString(4));
+                hora.setHoraFin(resultado.getString(5));
+                hora.setMotivo(resultado.getString(6));
+                hora.setFechaAlta(resultado.getString(7));
+                result.add(hora);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
         return result;
     }
 }
