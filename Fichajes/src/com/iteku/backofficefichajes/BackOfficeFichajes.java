@@ -7,6 +7,7 @@ package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
+import com.iteku.utils.FechasUtils;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             Logger.getLogger(BackOfficeFichajes.class.getName()).log(Level.SEVERE, null, ex);
         }
         listaProfesores = new ArrayList<>();
+        
         initComponents();
         iniciarMisComponentes();
         ponListenerTabla(tProfesores);
@@ -81,6 +83,8 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelCurso = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -272,6 +276,10 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Curso:");
+
+        jLabelCurso.setText("jLabel7");
+
         jMenu1.setText("Archivo");
 
         jMenuItem3.setText("Crear curso nuevo");
@@ -315,11 +323,20 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(189, 189, 189)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelCurso)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabelCurso))
+                .addGap(4, 4, 4)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +403,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Primero debe seleccionar una fila con datos");
             return;
         }
-        JDialog frame = new JDialog(this, "Horario profesor", true);
+        JDialog frame = new JDialog(this, "Horario profesor "+profesorSeleccionado.getNombreCorto(), true);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new HorarioProfesor(jTextIdProfesor.getText()));
@@ -403,7 +420,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Primero debe seleccionar una fila con datos");
             return;
         }
-        JDialog frame = new JDialog(this, "Añadir horas extra", true);
+        JDialog frame = new JDialog(this, "Añadir horas extra a "+profesorSeleccionado.getNombreCorto(), true);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new PonerHoraExtra(profesorSeleccionado));
@@ -419,7 +436,7 @@ if (!seleccionFila) {
             JOptionPane.showMessageDialog(null, "Primero debe seleccionar una fila con datos");
             return;
         }
-        JDialog frame = new JDialog(this, "Lista de horas de un profesor", true);
+        JDialog frame = new JDialog(this, "Lista de horas de "+profesorSeleccionado.getNombreCorto(), true);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new ListaHorasExtras(profesorSeleccionado));
@@ -511,6 +528,8 @@ if (!seleccionFila) {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelCurso;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -548,7 +567,7 @@ if (!seleccionFila) {
     }
 
     private void iniciarMisComponentes() {
-
+        jLabelCurso.setText(FechasUtils.getCursoActual());
         jTextApellidos.setText("");
         jTextIdProfesor.setText("");
         jTextNombre.setText("");

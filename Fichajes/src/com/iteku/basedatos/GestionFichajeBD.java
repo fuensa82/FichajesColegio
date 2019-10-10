@@ -5,12 +5,15 @@
  */
 package com.iteku.basedatos;
 
+import com.iteku.beans.FichaBean;
+import com.iteku.beans.FichajeBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.naming.NamingException;
 
 /**
@@ -93,6 +96,46 @@ public class GestionFichajeBD {
         }
         return null;
     }
+    
+    public static ArrayList<FichajeBean> getListaFichajesProfesor(ProfesorBean profesor, int mes) {
+        ArrayList<FichajeBean> listaResult;
+        listaResult = new ArrayList<>();
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            FichajeBean fichaje;
+            PreparedStatement consulta = conexion.prepareStatement(
+                    "SELECT idFichaje, currentTime, fecha, hora, idProfesor, terminal, dentro, curso FROM fichajes WHERE idProfesor=? and curso=? and MONTH(fecha)=? order by fecha, hora");
+            consulta.setString(1, ""+profesor.getIdProfesor());
+            consulta.setString(2, FechasUtils.getCursoActual());
+            consulta.setString(3, ""+mes);
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()){
+                fichaje=new FichajeBean();
+                fichaje.setIdFichaje(resultado.getInt(1));
+                fichaje.setCurrentTime(resultado.getLong(2));
+                fichaje.setFecha(resultado.getString(3));
+                fichaje.setHora(resultado.getString(4));
+                fichaje.setIdProfesor(resultado.getInt(5));
+                fichaje.setTerminal(resultado.getInt(6));
+                fichaje.setEsEntrada(resultado.getBoolean(7));
+                fichaje.setCurso(resultado.getString(8));
+                listaResult.add(fichaje);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return listaResult;
+    }
+    
     
     
 }
