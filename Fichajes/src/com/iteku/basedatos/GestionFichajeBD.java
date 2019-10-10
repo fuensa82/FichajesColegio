@@ -73,7 +73,7 @@ public class GestionFichajeBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`) VALUES (?, ?, ?, ?,2,?)");
+                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`,`curso`) VALUES (?, ?, ?, ?,2,?,?)");
             //Long time=System.currentTimeMillis();
             profesor.setCurrentTimeMillis(time);
             insert1.setString(1, ""+time);
@@ -81,6 +81,7 @@ public class GestionFichajeBD {
             insert1.setString(3, FechasUtils.horaAhora());
             insert1.setString(4, ""+profesor.getIdProfesor());
             insert1.setString(5, ""+!profesor.isDentro());
+            insert1.setString(6, FechasUtils.getCursoActual());
             insert1.executeUpdate();
 
             return profesor; //Correcto

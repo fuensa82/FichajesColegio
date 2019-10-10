@@ -70,13 +70,15 @@ public class GestionHorasExtrasBD {
             PreparedStatement consulta;
             if(mes==0){
                 consulta = conexion.prepareStatement(
-                    "SELECT idHoraExtra, idProfesor, fecha, horaIni, horaFin, motivo, fechaAlta, tipoHora FROM horasextra WHERE idProfesor=?");
+                    "SELECT idHoraExtra, idProfesor, fecha, horaIni, horaFin, motivo, fechaAlta, tipoHora FROM horasextra WHERE idProfesor=? and curso=?");
                 consulta.setString(1, ""+p.getIdProfesor());
+                consulta.setString(2, FechasUtils.getCursoActual());
             }else{
                 consulta= conexion.prepareStatement(
-                    "SELECT idHoraExtra, idProfesor, fecha, horaIni, horaFin, motivo, fechaAlta, tipoHora FROM horasextra WHERE idProfesor=? and MONTH(fecha)=?");
+                    "SELECT idHoraExtra, idProfesor, fecha, horaIni, horaFin, motivo, fechaAlta, tipoHora FROM horasextra WHERE idProfesor=? and MONTH(fecha)=? and curso=?");
                 consulta.setString(1, ""+p.getIdProfesor());
                 consulta.setString(2, ""+mes);
+                consulta.setString(3, FechasUtils.getCursoActual());
             }            
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()){

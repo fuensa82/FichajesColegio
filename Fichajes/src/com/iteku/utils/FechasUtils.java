@@ -33,31 +33,34 @@ public class FechasUtils {
         }
         return fecha.substring(8, 10) + "-" + fecha.substring(5, 7) + "-" + fecha.substring(0, 4);
     }
+
     /**
      * Busca en la base de datos el ultimo curso dado de alta. Formato 2019-2020
-     * @return 
+     *
+     * @return
      */
-    public static String getCursoActual(){
-        String result="";
+    public static String getCursoActual() {
+        String result = "";
         Connection conexion = null;
         try {
-            conexion=ConectorBD.getConnection();
+            conexion = ConectorBD.getConnection();
             ProfesorBean profesor;
             PreparedStatement consulta = conexion.prepareStatement(
                     "SELECT curso FROM cursos order by curso desc LIMIT 1");
             ResultSet resultado = consulta.executeQuery();
-            if (resultado.next()){
-                result=resultado.getString(1);
+            if (resultado.next()) {
+                result = resultado.getString(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
-            
-        }finally{
+
+        } finally {
             try {
                 //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
+                
             }
         }
         return result;
@@ -203,19 +206,19 @@ public class FechasUtils {
         for (int i = 0; i < longitud; i++) {
             aux += relleno;
         }
-        aux+=texto;
-        return aux.substring(aux.length()-longitud);
+        aux += texto;
+        return aux.substring(aux.length() - longitud);
 
     }
 
     public static String getFechaString(GregorianCalendar c) {
         return c.get(GregorianCalendar.DAY_OF_MONTH) + "/"
-                + FechasUtils.rellenaIzquierda(""+(1 + c.get(GregorianCalendar.MONTH)),"0",2) + "/"
+                + FechasUtils.rellenaIzquierda("" + (1 + c.get(GregorianCalendar.MONTH)), "0", 2) + "/"
                 + c.get(GregorianCalendar.YEAR) + " "
-                + FechasUtils.rellenaIzquierda(""+c.get(GregorianCalendar.HOUR_OF_DAY), "0", 2) + ":"
-                + FechasUtils.rellenaIzquierda(""+c.get(GregorianCalendar.MINUTE), "0", 2) + ":"
-                + FechasUtils.rellenaIzquierda(""+c.get(GregorianCalendar.SECOND), "0", 2);
-                //+ c.get(GregorianCalendar.MINUTE) + ":"
-                //+ c.get(GregorianCalendar.SECOND);
+                + FechasUtils.rellenaIzquierda("" + c.get(GregorianCalendar.HOUR_OF_DAY), "0", 2) + ":"
+                + FechasUtils.rellenaIzquierda("" + c.get(GregorianCalendar.MINUTE), "0", 2) + ":"
+                + FechasUtils.rellenaIzquierda("" + c.get(GregorianCalendar.SECOND), "0", 2);
+        //+ c.get(GregorianCalendar.MINUTE) + ":"
+        //+ c.get(GregorianCalendar.SECOND);
     }
 }

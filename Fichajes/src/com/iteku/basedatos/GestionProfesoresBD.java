@@ -186,7 +186,11 @@ public class GestionProfesoresBD {
         }
         return false;
     }
-
+/**
+ * Genera la fichas de horario de todos los prefesores para el curso en curso.
+ * @param idProfesor
+ * @return 
+ */
     public static ArrayList<FichaBean> getListaFichasCurso(String idProfesor) {
         ArrayList<FichaBean> result;
         result = new ArrayList<>();
@@ -195,8 +199,9 @@ public class GestionProfesoresBD {
             conexion=ConectorBD.getConnection();
             FichaBean ficha;
             PreparedStatement consulta = conexion.prepareStatement(
-                    "SELECT idFicha, horaIni, horaFin, idProfesor, dia, tipoHora, curso FROM horarios WHERE idProfesor=? order by dia, horaIni");
+                    "SELECT idFicha, horaIni, horaFin, idProfesor, dia, tipoHora, curso FROM horarios WHERE idProfesor=? and curso=? order by dia, horaIni");
             consulta.setString(1, idProfesor);
+            consulta.setString(2, FechasUtils.getCursoActual());
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()){
                 ficha=new FichaBean();
