@@ -349,11 +349,19 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        JDialog frame = new JDialog(this, "Cargar fichakes", true);
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
+        frame.getContentPane().add(new ListaFichajesProfesor(profesorSeleccionado));
+        frame.pack();
+        frame.setVisible(true);
+        //this.cambiarSesion(sesionSelecionada);
+        //cargarListaProfesores();
+        frame.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -454,6 +462,8 @@ if (!seleccionFila) {
         frame.pack();
         frame.setVisible(true);
         frame.setVisible(false); 
+        iniciarMisComponentes();
+        cargarListaProfesores();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
@@ -567,7 +577,7 @@ if (!seleccionFila) {
     }
 
     private void iniciarMisComponentes() {
-        jLabelCurso.setText(FechasUtils.getCursoActual());
+        jLabelCurso.setText("".equals(FechasUtils.getCursoActual())?"Debe dar de alta el curso para poder empezar":FechasUtils.getCursoActual());
         jTextApellidos.setText("");
         jTextIdProfesor.setText("");
         jTextNombre.setText("");

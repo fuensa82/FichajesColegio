@@ -118,7 +118,7 @@ public class GestionFichajeBD {
                 fichaje.setHora(resultado.getString(4));
                 fichaje.setIdProfesor(resultado.getInt(5));
                 fichaje.setTerminal(resultado.getInt(6));
-                fichaje.setEsEntrada(resultado.getBoolean(7));
+                fichaje.setEsEntrada("true".equals(resultado.getString(7).trim())?true:false);
                 fichaje.setCurso(resultado.getString(8));
                 listaResult.add(fichaje);
             }

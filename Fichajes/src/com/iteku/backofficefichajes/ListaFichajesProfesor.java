@@ -26,6 +26,9 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
     public ListaFichajesProfesor(ProfesorBean profesor) {
         this.profesor=profesor;
         initComponents();
+        comboValorDefault();
+        String mes=FechasUtils.dameMesFechaActual();
+        cargarListaFichajes(Integer.parseInt(mes));
     }
 
     /**
@@ -116,7 +119,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         try {
             String mes=FechasUtils.getNumMes(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
-            //cargarListaHoras(Integer.parseInt(mes));
+            cargarListaFichajes(Integer.parseInt(mes));
         } catch (Exception ex) {
             //Logger.getLogger(ListaHorasExtras.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -136,6 +139,10 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
         cargarListaFichajes(Integer.parseInt(mes));
     }
         
+    private void comboValorDefault() {
+        String mes=FechasUtils.dameMesFechaActual();
+        jComboBox1.setSelectedIndex(Integer.parseInt(mes)-1);
+    }
     /**
      * 
      * @param mes si mes vale 0 carga todas las horas sin tener en cuenta el mes.
