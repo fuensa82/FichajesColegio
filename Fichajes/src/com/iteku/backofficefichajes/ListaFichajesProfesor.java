@@ -162,7 +162,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
             
             datosTabla.addRow(new String[]{
                 ""+listaFichajes.get(i).getIdFichaje(),
-                listaFichajes.get(i).getFecha(),
+                FechasUtils.fecha(listaFichajes.get(i).getFecha()),
                 listaFichajes.get(i).isEsEntrada()?listaFichajes.get(i).getHora():"",
                 !listaFichajes.get(i).isEsEntrada()?listaFichajes.get(i).getHora():"",
                 ""+listaFichajes.get(i).getTerminal()
