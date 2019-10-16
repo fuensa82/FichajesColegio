@@ -5,9 +5,17 @@
  */
 package com.iteku.backofficefichajes;
 
+import com.iteku.basedatos.GestionFichajeBD;
+import com.iteku.basedatos.GestionHorasExtrasBD;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.FichajeBean;
+import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
+import com.iteku.utils.FechasUtils;
+import com.iteku.utils.Utils;
+import java.awt.Window;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -18,20 +26,20 @@ public class MttoFichajes extends javax.swing.JPanel {
     private boolean nuevo;
     private FichajeBean fichaje;
     private ProfesorBean profesor;
+
     /**
      * Creates new form MttoFichajes
      */
-    public MttoFichajes(FichajeBean fichaje) {
-        this.fichaje=fichaje;
-        if(fichaje==null){
-            nuevo=true;
-        }else{
-            nuevo=false;
+    public MttoFichajes(FichajeBean fichaje, ProfesorBean profesor) {
+        this.profesor = profesor;
+        this.fichaje = fichaje;
+        if (fichaje == null) {
+            nuevo = true;
+        } else {
+            nuevo = false;
         }
         initComponents();
-        if(!nuevo){
-            cargarDatos();
-        }
+        cargarDatos();
     }
 
     /**
@@ -56,6 +64,8 @@ public class MttoFichajes extends javax.swing.JPanel {
         jTextAreaMotivo = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jLabel1.setText("Profesor:");
 
@@ -83,6 +93,20 @@ public class MttoFichajes extends javax.swing.JPanel {
 
         jLabelNombre.setText("jLabel8");
 
+        jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,7 +124,6 @@ public class MttoFichajes extends javax.swing.JPanel {
                             .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelNombre)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jFormattedTextFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -109,8 +132,15 @@ public class MttoFichajes extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jFormattedHora, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6)))))
+                                .addComponent(jLabel6))
+                            .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(104, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,12 +167,57 @@ public class MttoFichajes extends javax.swing.JPanel {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Window w = SwingUtilities.getWindowAncestor(this);
+                w.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if("".equalsIgnoreCase(jFormattedTextFecha.getText())){
+            JOptionPane.showMessageDialog(null, "Debe escribir una fecha en formato dd/mm/aaaa");
+            return;
+        }else if("".equals(jFormattedHora.getText())){
+            JOptionPane.showMessageDialog(null, "Debe escribir una hora de inicio en formato hh:mm");
+            return;
+        }else if("".equals(jTextAreaMotivo.getText())){
+            JOptionPane.showMessageDialog(null, "Debe escribir un motivo para el cambio");
+            return;
+        }else{
+            FichajeBean fichajeBean=new FichajeBean();
+   
+            
+            fichajeBean.setCurso(FechasUtils.getCursoActual());
+            fichajeBean.setFecha(jFormattedTextFecha.getText());
+            fichajeBean.setHora(jFormattedHora.getText());
+            fichajeBean.setEsEntrada(jComboBoxTipoFichaje.getSelectedIndex()==0?true:false);
+            fichajeBean.setIdProfesor(profesor.getIdProfesor());
+            fichajeBean.setMotivo(jTextAreaMotivo.getText());
+            fichajeBean.setTerminal(0);
+            
+            boolean result=GestionFichajeBD.putFichaje(fichajeBean);
+            if(result){
+                JOptionPane.showMessageDialog(null, "Guardado correctamente");
+                Window w = SwingUtilities.getWindowAncestor(this);
+                w.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "Error guardando las horas.");
+                return;
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBoxTipoFichaje;
     private javax.swing.JFormattedTextField jFormattedHora;
     private javax.swing.JFormattedTextField jFormattedTextFecha;
@@ -159,8 +234,15 @@ public class MttoFichajes extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void cargarDatos() {
-        jLabelNombre.setText(GestionProfesoresBD.getProfesor(""+fichaje.getIdFichaje()).getNombre());
-        jFormattedHora.setText(fichaje.getHora());
-        jFormattedTextFecha.setText(fichaje.getFecha());
+        jLabelNombre.setText(profesor.getNombre());
+        if (!nuevo) {
+            jFormattedHora.setText(fichaje.getHora());
+            jFormattedTextFecha.setText(FechasUtils.fecha(fichaje.getFecha(), "/"));
+            if (fichaje.isEsEntrada()) {
+                jComboBoxTipoFichaje.setSelectedIndex(0);
+            } else {
+                jComboBoxTipoFichaje.setSelectedIndex(1);
+            }
+        }
     }
 }

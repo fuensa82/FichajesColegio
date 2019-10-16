@@ -97,6 +97,36 @@ public class GestionFichajeBD {
         return null;
     }
     
+    public static boolean putFichaje(FichajeBean fichaje) {
+
+        boolean result=false;
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement insert1 = conexion.prepareStatement(
+                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`,`curso`, `motivo`) VALUES (?, ?, ?, ?,?,?,?,?)");
+            //Long time=System.currentTimeMillis();
+            //profesor.setCurrentTimeMillis(time);
+            insert1.setString(1, ""+fichaje.getCurrentTime());
+            insert1.setString(2, FechasUtils.fechaParaMysql(fichaje.getFecha()));
+            insert1.setString(3, fichaje.getHora());
+            insert1.setString(4, ""+fichaje.getIdProfesor());
+            insert1.setString(5, ""+fichaje.getTerminal());
+            insert1.setString(6, ""+fichaje.isEsEntrada());
+            insert1.setString(7, fichaje.getCurso());
+            insert1.setString(8, fichaje.getMotivo());
+            insert1.executeUpdate();
+
+            return true; //Correcto
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
     public static ArrayList<FichajeBean> getListaFichajesProfesor(ProfesorBean profesor, int mes) {
         ArrayList<FichajeBean> listaResult;
         listaResult = new ArrayList<>();

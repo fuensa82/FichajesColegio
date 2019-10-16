@@ -11,7 +11,17 @@ import com.iteku.beans.FichajeBean;
 import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
+import java.awt.Frame;
+import java.awt.Window;
 import java.util.ArrayList;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,16 +29,23 @@ import javax.swing.table.DefaultTableModel;
  * @author Víctor
  */
 public class ListaFichajesProfesor extends javax.swing.JPanel {
+    
     private ProfesorBean profesor;
+    private boolean seleccionFila=false;
+    private FichajeBean fichajeSel;
+    private ArrayList<FichajeBean> listaFichajes;
+    private JFrame padre;
     /**
      * Creates new form ListaFichajesProfesor
      */
-    public ListaFichajesProfesor(ProfesorBean profesor) {
+    public ListaFichajesProfesor(ProfesorBean profesor, JFrame padre) {
+        this.padre=padre;
         this.profesor=profesor;
         initComponents();
         comboValorDefault();
         String mes=FechasUtils.dameMesFechaActual();
         cargarListaFichajes(Integer.parseInt(mes));
+        ponListenerTabla(jTable1);
     }
 
     /**
@@ -96,10 +113,25 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
         }
 
         jButton1.setText("Añadir fichaje");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Modificar fichaje");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Salir");
+        jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Mes de consulta");
 
@@ -162,6 +194,57 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
             //Logger.getLogger(ListaHorasExtras.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jComboBox1PropertyChange
+private void ponListenerTabla(JTable jTable1) {
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evento) {
+                ListSelectionModel lsm = (ListSelectionModel) evento.getSource();
+                int indice = lsm.getMinSelectionIndex();
+                if (indice != -1) {
+                    seleccionFila = true;
+                    System.out.println("Indice: " + indice);
+                    System.out.println("Id fichaje: " + listaFichajes.get(indice).getIdFichaje());
+                    fichajeSel = listaFichajes.get(indice);
+                }
+            }
+        });
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JDialog frame = new JDialog(padre, "Añadir fichaje a "+profesor.getNombreCorto(), true);
+        
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
+        frame.getContentPane().add(new MttoFichajes(null,profesor));
+        frame.pack();
+        frame.setVisible(true);
+        //this.cambiarSesion(sesionSelecionada);
+        //cargarListaProfesores();
+        frame.setVisible(false);
+        cargarListaFichajes();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (!seleccionFila) {
+            JOptionPane.showMessageDialog(null, "Primero debe seleccionar una fila con datos");
+            return;
+        }
+        //Window parentWindow = SwingUtilities.windowForComponent(this.getParent()); 
+        
+        
+        JDialog frame = new JDialog(padre, "Modificar fichaje a "+profesor.getNombreCorto(), true);
+        
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        frame.getContentPane().add(new MttoFichajes(fichajeSel,profesor));
+        frame.pack();
+        frame.setVisible(true);
+        frame.setVisible(false);
+        cargarListaFichajes();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Window w = SwingUtilities.getWindowAncestor(this);
+                w.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cargarListaFichajes() {
         String mes=FechasUtils.dameMesFechaActual();
@@ -177,7 +260,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
      * @param mes si mes vale 0 carga todas las horas sin tener en cuenta el mes.
      */
     private void cargarListaFichajes(int mes) {
-        ArrayList<FichajeBean> listaFichajes;
+        
         listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
 
         DefaultTableModel datosTabla = (DefaultTableModel) jTable1.getModel();

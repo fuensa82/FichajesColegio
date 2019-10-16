@@ -349,10 +349,10 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JDialog frame = new JDialog(this, "Cargar fichakes", true);
+        JDialog frame = new JDialog(this, "Cargar fichajes", true);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
-        frame.getContentPane().add(new ListaFichajesProfesor(profesorSeleccionado));
+        frame.getContentPane().add(new ListaFichajesProfesor(profesorSeleccionado,this));
         frame.pack();
         frame.setVisible(true);
         //this.cambiarSesion(sesionSelecionada);

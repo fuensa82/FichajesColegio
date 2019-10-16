@@ -33,6 +33,20 @@ public class FechasUtils {
         }
         return fecha.substring(8, 10) + "-" + fecha.substring(5, 7) + "-" + fecha.substring(0, 4);
     }
+    /**
+     * Dada una fecha en formato MySQL (aaaa-mm-dd) genera la fecha estandar
+     * española (dd-mm-aaaa) pero con el delimitador que se le pase, que
+     * puede ser /, un espacio, nada, ...
+     *
+     * @param fecha
+     * @return
+     */
+    public static String fecha(String fecha, String separador) {
+        if ((fecha == null) || (fecha.equalsIgnoreCase("")) || (fecha.equals("0000-00-00"))) {
+            return "";
+        }
+        return fecha.substring(8, 10) + separador + fecha.substring(5, 7) + separador + fecha.substring(0, 4);
+    }
 
     /**
      * Busca en la base de datos el ultimo curso dado de alta. Formato 2019-2020
