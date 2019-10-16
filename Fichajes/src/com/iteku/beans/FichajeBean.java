@@ -18,6 +18,15 @@ public class FichajeBean {
     private int terminal;
     private boolean esEntrada;
     private String curso;
+    private String motivo;
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
 
     public int getIdFichaje() {
         return idFichaje;

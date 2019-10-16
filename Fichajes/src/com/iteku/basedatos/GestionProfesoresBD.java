@@ -186,6 +186,39 @@ public class GestionProfesoresBD {
         }
         return false;
     }
+    
+    public static ProfesorBean getProfesor(String idProfesor) {
+        ProfesorBean profesor = new ProfesorBean();
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement consulta = conexion.prepareStatement(
+                    "select idProfesor, nombre, apellidos, idTarjeta "
+                    + "from profesores "
+                    + "where idProfesor=?");
+            consulta.setString(1, idProfesor);
+            ResultSet resultado = consulta.executeQuery();
+            if(!resultado.next()){
+                System.out.println("Id Profesor no econtrado. "+idProfesor);
+                return null;
+            }
+            profesor.setIdProfesor(resultado.getInt(1));
+            profesor.setNombre(resultado.getString(2));
+            profesor.setApellidos(resultado.getString(3));
+            profesor.setIdTarjeta(resultado.getInt(4));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+        } finally {
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return profesor;
+    }
 /**
  * Genera la fichas de horario de todos los prefesores para el curso en curso.
  * @param idProfesor
