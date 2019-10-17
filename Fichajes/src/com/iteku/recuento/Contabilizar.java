@@ -16,7 +16,9 @@ import java.util.ArrayList;
  */
 public class Contabilizar {
     public void contabilizarConMesYProfesor(ProfesorBean profesor, int mes){
-        getHorarioCompacto(profesor);
+        ArrayList<FichaBean> listaFichas=getHorarioCompacto(profesor);
+        
+        
         
     }
     
