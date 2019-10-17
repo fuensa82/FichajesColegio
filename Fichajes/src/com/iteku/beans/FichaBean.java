@@ -29,6 +29,9 @@ public class FichaBean {
     public String getHoraIni() {
         return horaIni;
     }
+    public String toString(){
+        return "Dia: "+this.dia+" hora: de "+this.horaIni+" a "+this.horaFin;
+    }
 
     public void setHoraIni(String horaIni) {
         this.horaIni = horaIni;

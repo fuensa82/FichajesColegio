@@ -7,6 +7,7 @@ package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
+import com.iteku.recuento.Contabilizar;
 import com.iteku.utils.FechasUtils;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -361,7 +362,8 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        
+        Contabilizar contar=new Contabilizar();
+        contar.contabilizarConMesYProfesor(profesorSeleccionado, 1);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
