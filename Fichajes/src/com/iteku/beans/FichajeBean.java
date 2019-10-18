@@ -5,6 +5,8 @@
  */
 package com.iteku.beans;
 
+import com.iteku.utils.FechasUtils;
+
 /**
  *
  * @author Víctor
@@ -20,6 +22,9 @@ public class FichajeBean {
     private String curso;
     private String motivo;
 
+    public char getDiaSemana(){
+        return FechasUtils.dimeDíaSemana(fecha);
+    }
     public String getMotivo() {
         return motivo;
     }

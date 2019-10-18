@@ -33,6 +33,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private boolean seleccionFila = false;
     ProfesorBean profesorSeleccionado;
 
+    
     /**
      * Creates new form BackOfficeFichajes
      */
@@ -363,7 +364,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         Contabilizar contar=new Contabilizar();
-        contar.contabilizarConMesYProfesor(profesorSeleccionado, 1);
+        contar.contabilizarConMesYProfesor(profesorSeleccionado, 10);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

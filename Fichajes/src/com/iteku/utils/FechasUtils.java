@@ -19,7 +19,21 @@ import java.util.GregorianCalendar;
 import javax.naming.NamingException;
 
 public class FechasUtils {
-
+    /**
+     * Devuelve qué día de la semana es la fecha pasada como parámetro. La fecha tiene que ser en formado dd-mm-aaaa (el separador será indiferente)
+     * @param fecha
+     * @return un char con el valor L, M, X, J, V, S, D o vacío si la fecha no tiene sentido, está mal formada, ...
+     */
+    public static char dimeDíaSemana(String fecha){
+        char dias[]={'L','M','X','J','V','S','D'};
+        int year=Integer.parseInt(fecha.substring(6, 10));
+        int mes=Integer.parseInt(fecha.substring(3, 5))-1; //Los meses van de 0 a 11.
+        int dia=Integer.parseInt(fecha.substring(0, 2));
+        
+        GregorianCalendar c=new GregorianCalendar(year, mes, dia);
+        int indiceDia=c.get(GregorianCalendar.DAY_OF_WEEK);
+        return dias[indiceDia];
+    }
     /**
      * Dada una fecha en formato MySQL (aaaa-mm-dd) genera la fecha estandar
      * española (dd-mm-aaaa)

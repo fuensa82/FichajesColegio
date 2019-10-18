@@ -5,8 +5,11 @@
  */
 package com.iteku.recuento;
 
+import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.FichaBean;
+import com.iteku.beans.FichajeBean;
+import com.iteku.beans.FichajeRecuentoBean;
 import com.iteku.beans.ProfesorBean;
 import java.util.ArrayList;
 
@@ -16,8 +19,10 @@ import java.util.ArrayList;
  */
 public class Contabilizar {
     public void contabilizarConMesYProfesor(ProfesorBean profesor, int mes){
+        ArrayList<FichajeBean> listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
+        ArrayList<FichajeRecuentoBean> listaFichajesRecuento= UtilsContabilizar.convertirFichajes(listaFichajes);
         ArrayList<FichaBean> listaFichas=getHorarioCompacto(profesor);
-        
+        imprimeArray(listaFichajesRecuento);
         
         
     }
@@ -47,6 +52,13 @@ public class Contabilizar {
         System.out.println("*******************Imprimendo***********************");
         for (FichaBean listaFicha : listaFichas) {
             System.out.println(listaFicha);
+        }
+    }
+    
+    public void imprimeArray(ArrayList lista){
+        System.out.println("*******************Imprimendo***********************");
+        for (Object objeto : lista) {
+            System.out.println(objeto);
         }
     }
     /**
