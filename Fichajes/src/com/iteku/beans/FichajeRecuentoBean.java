@@ -6,6 +6,7 @@
 package com.iteku.beans;
 
 import com.iteku.backofficefichajes.Config;
+import com.iteku.utils.FechasUtils;
 
 /**
  * Esta clase se utilizará para hacer los calculos, y contendrá los tramos de horas que está el personal en el centro.
@@ -52,5 +53,8 @@ public class FichajeRecuentoBean {
     
     public String toString(){
         return "Fecha: "+getFecha()+" Ini: "+getHoraEntrada()+" Fin: "+getHoraSalida();
+    }
+    public char getDiaSemana(){
+        return FechasUtils.dimeDíaSemana(fecha);
     }
 }

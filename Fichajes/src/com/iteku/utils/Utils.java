@@ -27,6 +27,8 @@ public class Utils {
         return resultado;
     }
     
+    
+    
     public static String getTipoHora(String texto){
         if ("Complementaria (C)".equalsIgnoreCase(texto)) {
             return "C";
@@ -62,4 +64,6 @@ public class Utils {
            }
         }
     }
+    
+    
 }

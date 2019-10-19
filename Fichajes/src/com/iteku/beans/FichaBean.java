@@ -72,6 +72,7 @@ public class FichaBean {
     public String getCurso() {
         return curso;
     }
+    
 
     public void setCurso(String curso) {
         this.curso = curso;

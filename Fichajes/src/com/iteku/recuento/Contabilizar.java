@@ -12,64 +12,61 @@ import com.iteku.beans.FichajeBean;
 import com.iteku.beans.FichajeRecuentoBean;
 import com.iteku.beans.ProfesorBean;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author vPalomo
  */
 public class Contabilizar {
+    /**
+     * Prepara todos los datos de un profesor y un mes concreto para empezar el recuento de dicho profesor.
+     * @param profesor
+     * @param mes 
+     */
     public void contabilizarConMesYProfesor(ProfesorBean profesor, int mes){
         ArrayList<FichajeBean> listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
         ArrayList<FichajeRecuentoBean> listaFichajesRecuento= UtilsContabilizar.convertirFichajes(listaFichajes);
-        ArrayList<FichaBean> listaFichas=getHorarioCompacto(profesor);
-        imprimeArray(listaFichajesRecuento);
-        
-        
+        ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorarioCompacto(profesor);
+        HashMap<String,ArrayList<FichaBean>> horario=UtilsContabilizar.convertirHorario(listaFichas);
+        UtilsContabilizar.imprimeArray("Lista antes de contabilizar",listaFichajesRecuento);
+        int horasL=contabilizaHorasLectivas(listaFichajesRecuento, listaFichas);
+        System.out.println("Segundos de horas lectivas: "+horasL);
+        UtilsContabilizar.imprimeArray("Lista despues de recuento",listaFichajesRecuento);
     }
     
-    public ArrayList<FichaBean> getHorarioCompacto(ProfesorBean profesor){
-        ArrayList<FichaBean> listaFichas=getHorario(profesor);
-        imprimeHorario(listaFichas);
-        for(int i=listaFichas.size()-1;i>0;i--){ //Recorremos la lista desde el final al principio
-            FichaBean fichaActual=listaFichas.get(i);
-            FichaBean fichaAnterior=listaFichas.get(i-1);
-            if(fichaActual.getDia()==fichaAnterior.getDia()){
-                if(fichaActual.getHoraIni().trim().equals(fichaAnterior.getHoraFin().trim())){
-                    listaFichas.remove(i);
-                    fichaAnterior.setHoraFin(fichaActual.getHoraFin());
-                }else{
-                    System.out.println("No se borra por no coincidir la hora");
+    
+    
+    /**
+     * 
+     * @param listaFichajesRecuento
+     * @param listaFichas
+     * @return Los segundos que se han completado de horas lectivas, luego si se quiere se pasaran a horas, minutos
+     */
+    private int contabilizaHorasLectivas(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ArrayList<FichaBean> listaFichas) {
+        HashMap<String,ArrayList<FichaBean>> horario=UtilsContabilizar.convertirHorario(listaFichas);
+        int segundos=0;
+        FichajeRecuentoBean fichaje;
+        ArrayList<FichaBean> fichasHorario;
+        for(int i=0;i<listaFichajesRecuento.size();i++){
+            fichaje=listaFichajesRecuento.get(i);
+            fichasHorario=horario.get(""+fichaje.getDiaSemana());
+            System.out.println("Fichashorarios: "+fichasHorario.size());
+            for(int j=0;j<fichasHorario.size();j++){
+                System.out.println("Comparando");
+                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
+                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
+                //Caso. Se empieza la ficha de horario estando en el centro y se termina la ficha estando en el centro
+                if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>0 &&
+                        UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
+                    segundos+=UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichasHorario.get(j).getHoraFin());
+                } else {
+                    
                 }
-            }else{
-                System.out.println("No se borra por no coincidir el dia");
             }
         }
-        imprimeHorario(listaFichas);
-        return listaFichas;
-    }
-    
-    public void imprimeHorario(ArrayList<FichaBean> listaFichas){
-        System.out.println("*******************Imprimendo***********************");
-        for (FichaBean listaFicha : listaFichas) {
-            System.out.println(listaFicha);
-        }
-    }
-    
-    public void imprimeArray(ArrayList lista){
-        System.out.println("*******************Imprimendo***********************");
-        for (Object objeto : lista) {
-            System.out.println(objeto);
-        }
-    }
-    /**
-     * Consulta el horario de un profesor y devuelve un arrayList con todas sus fichas
-     * @param profesor
-     * @return 
-     */
-    public ArrayList<FichaBean> getHorario(ProfesorBean profesor){
-        //imprimeHorario(listaFichas);
-        //System.out.println("*************************************************************************");
-        return GestionProfesoresBD.getListaFichasCurso(""+profesor.getIdProfesor());
         
+        System.out.println("Hashmap: "+horario.toString());
+        return segundos;
     }
 }

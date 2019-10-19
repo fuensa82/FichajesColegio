@@ -98,8 +98,6 @@ public class GestionFichajeBD {
     }
     
     public static boolean putFichaje(FichajeBean fichaje) {
-
-        boolean result=false;
         Connection conexion = null;
         try {
             conexion = ConectorBD.getConnection();
@@ -135,7 +133,7 @@ public class GestionFichajeBD {
             conexion=ConectorBD.getConnection();
             FichajeBean fichaje;
             PreparedStatement consulta = conexion.prepareStatement(
-                    "SELECT idFichaje, currentTime, fecha, hora, idProfesor, terminal, dentro, curso FROM fichajes WHERE idProfesor=? and curso=? and MONTH(fecha)=? order by fecha, hora");
+                    "SELECT idFichaje, currentTime, fecha, hora, idProfesor, terminal, dentro, curso, motivo FROM fichajes WHERE idProfesor=? and curso=? and MONTH(fecha)=? order by fecha, hora");
             consulta.setString(1, ""+profesor.getIdProfesor());
             consulta.setString(2, FechasUtils.getCursoActual());
             consulta.setString(3, ""+mes);
@@ -144,12 +142,13 @@ public class GestionFichajeBD {
                 fichaje=new FichajeBean();
                 fichaje.setIdFichaje(resultado.getInt(1));
                 fichaje.setCurrentTime(resultado.getLong(2));
-                fichaje.setFecha(resultado.getString(3));
+                fichaje.setFecha(FechasUtils.fecha(resultado.getString(3), "/"));
                 fichaje.setHora(resultado.getString(4));
                 fichaje.setIdProfesor(resultado.getInt(5));
                 fichaje.setTerminal(resultado.getInt(6));
                 fichaje.setEsEntrada("true".equals(resultado.getString(7).trim())?true:false);
                 fichaje.setCurso(resultado.getString(8));
+                fichaje.setMotivo(resultado.getString(9));
                 listaResult.add(fichaje);
             }
         } catch (SQLException e) {
@@ -164,6 +163,52 @@ public class GestionFichajeBD {
             }
         }
         return listaResult;
+    }
+
+    public static boolean modificarFichaje(FichajeBean fichaje) {
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement insert1 = conexion.prepareStatement(
+                    "UPDATE `colsan`.`fichajes` set currentTime=?, fecha=?, hora=?, terminal=?,dentro=?, motivo=? where idFichaje=?");
+            //Long time=System.currentTimeMillis();
+            //profesor.setCurrentTimeMillis(time);
+            insert1.setString(1, ""+fichaje.getCurrentTime());
+            insert1.setString(2, FechasUtils.fechaParaMysql(fichaje.getFecha()));
+            insert1.setString(3, fichaje.getHora());
+            insert1.setString(4, ""+fichaje.getTerminal());
+            insert1.setString(5, ""+fichaje.isEsEntrada());
+            insert1.setString(6, fichaje.getMotivo());
+            insert1.setString(7, ""+fichaje.getIdFichaje());
+            insert1.executeUpdate();
+
+            return true; //Correcto
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public static boolean borrarFichaje(FichajeBean fichaje) {
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement insert1 = conexion.prepareStatement(
+                    "DELETE from `colsan`.`fichajes` where idFichaje=?");
+            insert1.setString(1, ""+fichaje.getIdFichaje());
+            insert1.executeUpdate();
+
+            return true; //Correcto
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
     
     

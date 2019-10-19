@@ -5,6 +5,7 @@
  */
 package com.iteku.utils;
 
+import com.iteku.backofficefichajes.Config;
 import com.iteku.basedatos.ConectorBD;
 import com.iteku.beans.ProfesorBean;
 import java.sql.Connection;
@@ -25,13 +26,14 @@ public class FechasUtils {
      * @return un char con el valor L, M, X, J, V, S, D o vacío si la fecha no tiene sentido, está mal formada, ...
      */
     public static char dimeDíaSemana(String fecha){
-        char dias[]={'L','M','X','J','V','S','D'};
+        System.out.println("Fecha: "+fecha);
+        char dias[]=Config.dias;
         int year=Integer.parseInt(fecha.substring(6, 10));
         int mes=Integer.parseInt(fecha.substring(3, 5))-1; //Los meses van de 0 a 11.
         int dia=Integer.parseInt(fecha.substring(0, 2));
         
         GregorianCalendar c=new GregorianCalendar(year, mes, dia);
-        int indiceDia=c.get(GregorianCalendar.DAY_OF_WEEK);
+        int indiceDia=c.get(GregorianCalendar.DAY_OF_WEEK)-1;
         return dias[indiceDia];
     }
     /**

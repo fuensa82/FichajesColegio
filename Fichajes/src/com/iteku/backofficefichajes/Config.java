@@ -11,4 +11,6 @@ package com.iteku.backofficefichajes;
  */
 public class Config {
     public static String horaMaxima="20:00:00";
+    public static String horaMinima="07:00:00";
+    public static char dias[]={'D','L','M','X','J','V','S'};
 }

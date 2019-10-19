@@ -79,11 +79,11 @@ public class MttoFichajes extends javax.swing.JPanel {
 
         jComboBoxTipoFichaje.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Salida" }));
 
-        jFormattedHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("HH:mm"))));
+        jFormattedHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("HH:mm:ss"))));
 
         jLabel5.setText("dd/mm/aaaa");
 
-        jLabel6.setText("hh:mm");
+        jLabel6.setText("hh:mm:ss");
 
         jTextAreaMotivo.setColumns(20);
         jTextAreaMotivo.setRows(5);
@@ -113,7 +113,7 @@ public class MttoFichajes extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addGroup(layout.createSequentialGroup()
@@ -133,7 +133,7 @@ public class MttoFichajes extends javax.swing.JPanel {
                                 .addComponent(jFormattedHora, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6))
-                            .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabelNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(104, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -191,18 +191,24 @@ public class MttoFichajes extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe escribir un motivo para el cambio");
             return;
         }else{
-            FichajeBean fichajeBean=new FichajeBean();
+            if(nuevo){
+                fichaje=new FichajeBean();
+            }
    
             
-            fichajeBean.setCurso(FechasUtils.getCursoActual());
-            fichajeBean.setFecha(jFormattedTextFecha.getText());
-            fichajeBean.setHora(jFormattedHora.getText());
-            fichajeBean.setEsEntrada(jComboBoxTipoFichaje.getSelectedIndex()==0?true:false);
-            fichajeBean.setIdProfesor(profesor.getIdProfesor());
-            fichajeBean.setMotivo(jTextAreaMotivo.getText());
-            fichajeBean.setTerminal(0);
-            
-            boolean result=GestionFichajeBD.putFichaje(fichajeBean);
+            fichaje.setCurso(FechasUtils.getCursoActual());
+            fichaje.setFecha(jFormattedTextFecha.getText());
+            fichaje.setHora(jFormattedHora.getText());
+            fichaje.setEsEntrada(jComboBoxTipoFichaje.getSelectedIndex()==0?true:false);
+            fichaje.setIdProfesor(profesor.getIdProfesor());
+            fichaje.setMotivo(jTextAreaMotivo.getText());
+            fichaje.setTerminal(0);
+            boolean result;
+            if(nuevo){
+                result=GestionFichajeBD.putFichaje(fichaje);
+            }else{
+                result=GestionFichajeBD.modificarFichaje(fichaje);
+            }
             if(result){
                 JOptionPane.showMessageDialog(null, "Guardado correctamente");
                 Window w = SwingUtilities.getWindowAncestor(this);
@@ -237,7 +243,7 @@ public class MttoFichajes extends javax.swing.JPanel {
         jLabelNombre.setText(profesor.getNombre());
         if (!nuevo) {
             jFormattedHora.setText(fichaje.getHora());
-            jFormattedTextFecha.setText(FechasUtils.fecha(fichaje.getFecha(), "/"));
+            jFormattedTextFecha.setText(fichaje.getFecha());
             if (fichaje.isEsEntrada()) {
                 jComboBoxTipoFichaje.setSelectedIndex(0);
             } else {

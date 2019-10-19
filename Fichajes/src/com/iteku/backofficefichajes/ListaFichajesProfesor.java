@@ -64,6 +64,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -79,20 +80,20 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Fecha", "Hora En", "Hora Sal", "Terminal"
+                "Id", "Fecha", "Hora En", "Hora Sal", "Terminal", "Motivo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -110,6 +111,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(40);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(40);
             jTable1.getColumnModel().getColumn(4).setPreferredWidth(40);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(190);
         }
 
         jButton1.setText("Añadir fichaje");
@@ -135,6 +137,13 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
 
         jLabel1.setText("Mes de consulta");
 
+        jButton4.setText("Eliminar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,6 +152,8 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
@@ -150,7 +161,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
                         .addComponent(jButton3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(109, 109, 109)
@@ -172,7 +183,8 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -211,7 +223,7 @@ private void ponListenerTabla(JTable jTable1) {
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JDialog frame = new JDialog(padre, "Añadir fichaje a "+profesor.getNombreCorto(), true);
-        
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new MttoFichajes(null,profesor));
@@ -246,6 +258,14 @@ private void ponListenerTabla(JTable jTable1) {
                 w.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int i=JOptionPane.showConfirmDialog(null,"Está seguro de querer borrar le fichaje", "Eliminación",JOptionPane.YES_NO_OPTION);
+        if(i!=1){
+            GestionFichajeBD.borrarFichaje(fichajeSel);
+            cargarListaFichajes();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private void cargarListaFichajes() {
         String mes=FechasUtils.dameMesFechaActual();
         cargarListaFichajes(Integer.parseInt(mes));
@@ -274,10 +294,11 @@ private void ponListenerTabla(JTable jTable1) {
             
             datosTabla.addRow(new String[]{
                 ""+listaFichajes.get(i).getIdFichaje(),
-                FechasUtils.fecha(listaFichajes.get(i).getFecha()),
+                listaFichajes.get(i).getFecha(),
                 listaFichajes.get(i).isEsEntrada()?listaFichajes.get(i).getHora():"",
                 !listaFichajes.get(i).isEsEntrada()?listaFichajes.get(i).getHora():"",
-                ""+listaFichajes.get(i).getTerminal()
+                ""+listaFichajes.get(i).getTerminal(),
+                listaFichajes.get(i).getMotivo()
             });
         }
     }
@@ -286,6 +307,7 @@ private void ponListenerTabla(JTable jTable1) {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
