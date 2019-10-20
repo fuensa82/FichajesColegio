@@ -64,6 +64,19 @@ public class Utils {
            }
         }
     }
+    /**
+     * Convierte los segundos en horas:minutos:segundos
+     * @param seg
+     * @return un String con el formato hh:mm:ss
+     */
+    public static String convierteSegundos(int seg) {
+        int minutos=seg/60;
+        int segundos=seg%60;
+        int horas=minutos/60;
+        minutos=minutos%60;
+        return ""+horas+":"+(minutos<10?"0"+minutos:minutos)+":"+(segundos<10?"0"+segundos:segundos);
+        
+    }
     
     
 }

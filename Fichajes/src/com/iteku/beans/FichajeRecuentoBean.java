@@ -18,6 +18,15 @@ public class FichajeRecuentoBean {
     private String fecha;
     private int idProfesor;
 
+    public FichajeRecuentoBean(FichajeRecuentoBean fichaje) {
+        this.horaEntrada=fichaje.horaEntrada;
+        this.horaSalida=fichaje.horaSalida;
+        this.fecha=fichaje.fecha;
+        this.idProfesor=fichaje.idProfesor;
+    }
+    public FichajeRecuentoBean() {
+    }
+
     public String getHoraEntrada() {
         return horaEntrada;
     }

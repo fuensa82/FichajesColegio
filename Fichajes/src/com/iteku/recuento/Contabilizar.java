@@ -11,6 +11,7 @@ import com.iteku.beans.FichaBean;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.FichajeRecuentoBean;
 import com.iteku.beans.ProfesorBean;
+import com.iteku.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,8 +31,8 @@ public class Contabilizar {
         ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorarioCompacto(profesor);
         HashMap<String,ArrayList<FichaBean>> horario=UtilsContabilizar.convertirHorario(listaFichas);
         UtilsContabilizar.imprimeArray("Lista antes de contabilizar",listaFichajesRecuento);
-        int horasL=contabilizaHorasLectivas(listaFichajesRecuento, listaFichas);
-        System.out.println("Segundos de horas lectivas: "+horasL);
+        int segundosLectivos=contabilizaHorasLectivas(listaFichajesRecuento, listaFichas);
+        System.out.println("Segundos de horas lectivas: "+Utils.convierteSegundos(segundosLectivos));
         UtilsContabilizar.imprimeArray("Lista despues de recuento",listaFichajesRecuento);
     }
     
@@ -57,9 +58,14 @@ public class Contabilizar {
                 System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
                 System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
                 //Caso. Se empieza la ficha de horario estando en el centro y se termina la ficha estando en el centro
-                if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>0 &&
-                        UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
+                if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>0 && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
                     segundos+=UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichasHorario.get(j).getHoraFin());
+                    //Creamos el fichaje ficticio nuevo, para no perder las horas
+                    FichajeRecuentoBean fichajeResto=new FichajeRecuentoBean(fichaje);
+                    fichajeResto.setHoraEntrada(fichasHorario.get(j).getHoraFin());
+                    //Modifico el fichaje de recuento existente, quitandole las horas lectivas que ya están contadas.
+                    fichaje.setHoraSalida(fichasHorario.get(j).getHoraIni());
+                    listaFichajesRecuento.add(i+1, fichajeResto);
                 } else {
                     
                 }
