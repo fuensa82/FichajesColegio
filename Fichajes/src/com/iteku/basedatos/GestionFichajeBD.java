@@ -210,7 +210,37 @@ public class GestionFichajeBD {
         }
         return false;
     }
-    
+    /**
+     * 
+     * @param p
+     * @param mes
+     * @return 
+     */
+    public static boolean compruebaFichajesProfesor(ProfesorBean p, int mes){
+        boolean result=true;
+        ArrayList<FichajeBean> lista=getListaFichajesProfesor(p, mes);
+        String fechaAnterior="";
+        boolean isDentro=true;
+        int contFichaje=0;
+        for(int i=0;i<lista.size() && result;i++){
+            if(!lista.get(i).getFecha().equals(fechaAnterior)){
+                if(contFichaje%2!=0){
+                    result=false;
+                }
+                isDentro=true;
+                contFichaje=0;
+            }
+            if(lista.get(i).isEsEntrada()!=isDentro){
+                result=false;
+            }else{
+                isDentro=!isDentro;
+            }
+            fechaAnterior=lista.get(i).getFecha();
+            contFichaje++;
+        }
+        
+        return result;
+    }
     
     
 }

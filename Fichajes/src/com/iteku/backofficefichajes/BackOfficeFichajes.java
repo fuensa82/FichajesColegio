@@ -5,6 +5,7 @@
  */
 package com.iteku.backofficefichajes;
 
+import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.recuento.Contabilizar;
@@ -97,20 +98,20 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
 
         tProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Profesor", "Nombre Corto", "Nombre", "Apellidos", "Tarjeta", "Estado", "Hora Estado"
+                "ID Profesor", "Nombre Corto", "Nombre", "Apellidos", "Tarjeta", "Estado", "Hora Estado", "Alerta"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -133,6 +134,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             tProfesores.getColumnModel().getColumn(4).setPreferredWidth(60);
             tProfesores.getColumnModel().getColumn(5).setPreferredWidth(30);
             tProfesores.getColumnModel().getColumn(6).setPreferredWidth(30);
+            tProfesores.getColumnModel().getColumn(7).setPreferredWidth(20);
         }
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos profesor seleccionado"));
@@ -358,7 +360,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         frame.pack();
         frame.setVisible(true);
         //this.cambiarSesion(sesionSelecionada);
-        //cargarListaProfesores();
+        cargarListaProfesores();
         frame.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -518,6 +520,7 @@ if (!seleccionFila) {
             if (listaProfesores.get(i).isDentro()) {
                 listaProfesores.get(i).cargaCurrentTime();
             }
+            
             datosTabla.addRow(new String[]{
                 "" + listaProfesores.get(i).getIdProfesor(),
                 listaProfesores.get(i).getNombreCorto(),
@@ -525,7 +528,8 @@ if (!seleccionFila) {
                 listaProfesores.get(i).getApellidos(),
                 "" + listaProfesores.get(i).getIdTarjeta(),
                 "" + (listaProfesores.get(i).isDentro() ? "Dentro" : "Ausente"),
-                "" + listaProfesores.get(i).getHoraCurrentTime()
+                "" + listaProfesores.get(i).getHoraCurrentTime(),
+                GestionFichajeBD.compruebaFichajesProfesor(listaProfesores.get(i), 10)?"":"Contienen errores"
             });
         }
     }

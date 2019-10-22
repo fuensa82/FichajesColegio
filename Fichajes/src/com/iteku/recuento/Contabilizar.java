@@ -82,6 +82,7 @@ public class Contabilizar {
                     //Modifico el fichaje de recuento existente, quitandole las horas lectivas que ya están contadas.
                     fichaje.setHoraSalida(fichasHorario.get(j).getHoraIni());
                     listaFichajesRecuento.add(i, fichajeResto);
+                    i++;
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>0
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())>0){
                     System.out.println("Caso 2");
