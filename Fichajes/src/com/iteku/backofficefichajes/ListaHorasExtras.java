@@ -5,16 +5,23 @@
  */
 package com.iteku.backofficefichajes;
 
+import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionHorasExtrasBD;
 import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
+import java.awt.Frame;
 import java.awt.Window;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,11 +34,17 @@ public class ListaHorasExtras extends javax.swing.JPanel {
      * Creates new form ListaHorasExtras
      */
     ProfesorBean profesor;
+    private boolean seleccionFila=false;
+    private HoraExtraBean horaSel;
+    private ArrayList<HoraExtraBean> listaHorasExtra;
+    
+    
     public ListaHorasExtras(ProfesorBean p) {
         profesor=p;
         initComponents();
         comboValorDefault();
         cargarListaHoras();
+        ponerListenerTabla(jTableHoras);
         
     }
 
@@ -45,8 +58,7 @@ public class ListaHorasExtras extends javax.swing.JPanel {
      * @param mes si mes vale 0 carga todas las horas sin tener en cuenta el mes.
      */
     private void cargarListaHoras(int mes) {
-        ArrayList<HoraExtraBean> listaHoras;
-        listaHoras = GestionHorasExtrasBD.getHorasExtraProfesor(profesor,mes);
+        listaHorasExtra = GestionHorasExtrasBD.getHorasExtraProfesor(profesor,mes);
 
         DefaultTableModel datosTabla = (DefaultTableModel) jTableHoras.getModel();
         for (int i = datosTabla.getRowCount(); i > 0; i--) {
@@ -55,16 +67,16 @@ public class ListaHorasExtras extends javax.swing.JPanel {
 
         }
         //datosTabla.addRow(new String[]{"","","","",""});
-        for (int i = 0; i < listaHoras.size(); i++) {
+        for (int i = 0; i < listaHorasExtra.size(); i++) {
             
             datosTabla.addRow(new String[]{
-                ""+listaHoras.get(i).getIdHoraExtra(),
-                listaHoras.get(i).getFecha(),
-                listaHoras.get(i).getHoraIni(),
-                listaHoras.get(i).getHoraFin(),
-                "" + listaHoras.get(i).getMotivo(),
-                "" + listaHoras.get(i).getFechaAlta(),
-                listaHoras.get(i).getTipoHora()
+                ""+listaHorasExtra.get(i).getIdHoraExtra(),
+                listaHorasExtra.get(i).getFecha(),
+                listaHorasExtra.get(i).getHoraIni(),
+                listaHorasExtra.get(i).getHoraFin(),
+                "" + listaHorasExtra.get(i).getMotivo(),
+                "" + listaHorasExtra.get(i).getFechaAlta(),
+                listaHorasExtra.get(i).getTipoHora()
             });
         }
     }
@@ -82,6 +94,8 @@ public class ListaHorasExtras extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         jTableHoras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -147,6 +161,20 @@ public class ListaHorasExtras extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setText("Añadir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Eliminar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,7 +190,10 @@ public class ListaHorasExtras extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)))
                 .addContainerGap())
         );
@@ -176,8 +207,15 @@ public class ListaHorasExtras extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addGap(4, 4, 4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(4, 4, 4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4))
+                        .addContainerGap())))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -208,10 +246,32 @@ public class ListaHorasExtras extends javax.swing.JPanel {
                 w.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        JDialog frame = new JDialog((Frame)null, "Añadir horas extra a "+profesor.getNombreCorto(), true);
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
+        frame.getContentPane().add(new PonerHoraExtra(profesor));
+        frame.pack();
+        frame.setVisible(true);
+        //this.cambiarSesion(sesionSelecionada);
+        cargarListaHoras();
+        frame.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int i=JOptionPane.showConfirmDialog(null,"Está seguro de querer borrar la hora", "Eliminación",JOptionPane.YES_NO_OPTION);
+        if(i!=1){
+            GestionHorasExtrasBD.deleteHorasExtraProfesor(horaSel);
+            cargarListaHoras();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableHoras;
@@ -220,5 +280,21 @@ public class ListaHorasExtras extends javax.swing.JPanel {
     private void comboValorDefault() {
         String mes=FechasUtils.dameMesFechaActual();
         jComboBox1.setSelectedIndex(Integer.parseInt(mes)-1);
+    }
+
+    private void ponerListenerTabla(JTable jTable1) {
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evento) {
+                ListSelectionModel lsm = (ListSelectionModel) evento.getSource();
+                int indice = lsm.getMinSelectionIndex();
+                if (indice != -1) {
+                    seleccionFila = true;
+                    System.out.println("Indice: " + indice);
+                    System.out.println("Id hora extra: " + listaHorasExtra.get(indice).getIdHoraExtra());
+                    horaSel = listaHorasExtra.get(indice);
+                }
+            }
+        });
     }
 }

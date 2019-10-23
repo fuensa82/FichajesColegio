@@ -54,8 +54,45 @@ public class GestionHorasExtrasBD {
         
         return result;
     }
+    
     /**
-     * 
+     * Borra la hora extra que se pasa como parámetro.
+     * @param hora Al menos necesitamos el id de la hora a borrar
+     * @return 
+     */
+    public static boolean deleteHorasExtraProfesor(HoraExtraBean hora){
+        ArrayList<HoraExtraBean> result;
+        result = new ArrayList();
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            PreparedStatement consulta;
+            consulta = conexion.prepareStatement(
+                "DELETE FROM horasextra WHERE idHoraExtra=?");
+            consulta.setString(1, ""+hora.getIdHoraExtra());
+                
+            int resultInt=consulta.executeUpdate();
+            if(resultInt>0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return false;
+    
+    }
+    /**
+     * Borrar 
      * @param p
      * @param mes del 1 al 12
      * @return 

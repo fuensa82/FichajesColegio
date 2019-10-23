@@ -26,13 +26,24 @@ public class Contabilizar {
      * @param mes 
      */
     public void contabilizarConMesYProfesor(ProfesorBean profesor, int mes){
+        //Preparamos todos los datos. Lista de fichas de horario, lista de fichajes
         ArrayList<FichajeBean> listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
         ArrayList<FichajeRecuentoBean> listaFichajesRecuento= UtilsContabilizar.convertirFichajes(listaFichajes);
         ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorarioCompacto(profesor);
         HashMap<String,ArrayList<FichaBean>> horario=UtilsContabilizar.convertirHorario(listaFichas);
+        
+        
+        
+        /**
+         * Contabilizamos las horas lectivas
+         */
         UtilsContabilizar.imprimeArray("Lista antes de contabilizar",listaFichajesRecuento);
         int segundosLectivos=contabilizaHorasLectivas(listaFichajesRecuento, listaFichas);
         System.out.println("Segundos de horas lectivas: "+Utils.convierteSegundos(segundosLectivos));
+        
+        /**
+         * Contabilizamos la horas no lectivas
+         */
         UtilsContabilizar.imprimeArray("Lista despues de recuento",listaFichajesRecuento);
         int segundosNLectivos=contabilizaHorasNoLectivas(listaFichajesRecuento);
         System.out.println("Segundos de horas no lectivas: "+Utils.convierteSegundos(segundosNLectivos));
@@ -41,7 +52,8 @@ public class Contabilizar {
     
     
     /**
-     * 
+     * Se le pasa la lista de fichajes que está aun por tratar y la lista de fichas de horario que le corresponden al profesor.
+     * La listaFichajesRecuento se verá modificada, quitando el tiempo que coincida con el horario.
      * @param listaFichajesRecuento
      * @param listaFichas
      * @return Los segundos que se han completado de horas lectivas, luego si se quiere se pasaran a horas, minutos
@@ -82,7 +94,7 @@ public class Contabilizar {
                     //Modifico el fichaje de recuento existente, quitandole las horas lectivas que ya están contadas.
                     fichaje.setHoraSalida(fichasHorario.get(j).getHoraIni());
                     listaFichajesRecuento.add(i, fichajeResto);
-                    i++;
+                    i++; //Como hemos añadido un item más a la lista y la estamos recorriendo al reves, hay que mantener el indice para que este nuevo item tambien sea tratado.
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>0
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())>0){
                     System.out.println("Caso 2");

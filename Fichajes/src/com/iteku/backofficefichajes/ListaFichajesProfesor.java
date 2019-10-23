@@ -206,7 +206,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
             //Logger.getLogger(ListaHorasExtras.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jComboBox1PropertyChange
-private void ponListenerTabla(JTable jTable1) {
+    private void ponListenerTabla(JTable jTable1) {
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evento) {
@@ -259,9 +259,11 @@ private void ponListenerTabla(JTable jTable1) {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int i=JOptionPane.showConfirmDialog(null,"Está seguro de querer borrar le fichaje", "Eliminación",JOptionPane.YES_NO_OPTION);
+        int i=JOptionPane.showConfirmDialog(null,"Está seguro de querer borrar el fichaje", "Eliminación",JOptionPane.YES_NO_OPTION);
         if(i!=1){
-            GestionFichajeBD.borrarFichaje(fichajeSel);
+            if(!GestionFichajeBD.borrarFichaje(fichajeSel)){
+                JOptionPane.showMessageDialog(null, "Error eliminando las horas.");
+            }
             cargarListaFichajes();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
