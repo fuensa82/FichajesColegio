@@ -73,4 +73,13 @@ public class GestionEventosBD {
         }
         return listaResult;
     }
+    
+    /**
+     * 
+        SELECT profesores.nombre, profesores.nombreCorto, eventos.descripcion FROM profesores, eventos, eventoprofesor 
+        WHERE eventos.idEvento=eventoprofesor.idEvento 
+		AND eventoprofesor.idProfesor=profesores.idProfesor
+                
+     */
+    
 }
