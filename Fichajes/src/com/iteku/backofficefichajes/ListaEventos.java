@@ -5,17 +5,52 @@
  */
 package com.iteku.backofficefichajes;
 
+import com.iteku.basedatos.GestionEventosBD;
+import com.iteku.basedatos.GestionHorasExtrasBD;
+import com.iteku.beans.EventoBean;
+import com.iteku.beans.HoraExtraBean;
+import com.iteku.beans.ProfesorBean;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author vPalomo
  */
 public class ListaEventos extends javax.swing.JPanel {
 
+    
+    EventoBean evento;
+    private boolean seleccionFila=false;
+    private EventoBean horaSel;
+    private ArrayList<EventoBean> listaEventos;
     /**
      * Creates new form ListaEventos
      */
     public ListaEventos() {
         initComponents();
+        cargarListaEventos(0);
+    }
+    /**
+     * el mes debe ser un valor entre 1 y 12, tambien vale el 0 para cargar todos los meses.
+     * @param mes 
+     */
+    private void cargarListaEventos(int mes) {
+        listaEventos = GestionEventosBD.getListaEventos(mes);
+        DefaultTableModel datosTabla = (DefaultTableModel) jTableEventos.getModel();
+        for (int i = datosTabla.getRowCount(); i > 0; i--) {
+            datosTabla.removeRow(i - 1);
+        }
+        for (EventoBean evento : listaEventos){
+            datosTabla.addRow(new Object[]{
+                ""+evento.getIdEvento(),
+                evento.getDescripcion(),
+                evento.getFecha(),
+                evento.getHoraIni(),
+                evento.getHoraFin(),
+                evento.isDiaCompleto()
+            });
+        }
     }
 
     /**
@@ -28,27 +63,50 @@ public class ListaEventos extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableEventos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableProfesores = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEventos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id Evento", "Descripcion", "Fecha", "Hora Ini", "Hora Fin", "Dia Completo"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableEventos);
+        if (jTableEventos.getColumnModel().getColumnCount() > 0) {
+            jTableEventos.getColumnModel().getColumn(0).setPreferredWidth(30);
+            jTableEventos.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTableEventos.getColumnModel().getColumn(2).setPreferredWidth(60);
+            jTableEventos.getColumnModel().getColumn(3).setPreferredWidth(50);
+            jTableEventos.getColumnModel().getColumn(4).setPreferredWidth(50);
+            jTableEventos.getColumnModel().getColumn(5).setPreferredWidth(50);
+        }
+
+        jTableProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,7 +117,7 @@ public class ListaEventos extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTableProfesores);
 
         jButton1.setText("jButton1");
 
@@ -107,7 +165,7 @@ public class ListaEventos extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableEventos;
+    private javax.swing.JTable jTableProfesores;
     // End of variables declaration//GEN-END:variables
 }

@@ -37,13 +37,16 @@ CREATE TABLE IF NOT EXISTS `eventos` (
   `fecha` date NOT NULL,
   `horaIni` time DEFAULT NULL,
   `horaFin` time DEFAULT NULL,
-  `isDiaCompleto` binary(4) DEFAULT NULL,
+  `diaCompleto` binary(4) DEFAULT NULL,
   `descripcion` varchar(200) NOT NULL,
+  `curso` varchar(9) NOT NULL,
   PRIMARY KEY (`idEvento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Eventos especiales del colegio';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Eventos especiales del colegio';
 
 -- Volcando datos para la tabla colsan.eventos: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
+INSERT IGNORE INTO `eventos` (`idEvento`, `fecha`, `horaIni`, `horaFin`, `diaCompleto`, `descripcion`, `curso`) VALUES
+	(1, '2019-10-23', '13:43:24', '13:43:25', _binary 0x74727565, 'Pruebaaaaaaa', '2019-2020');
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla colsan.eventroprofesor
