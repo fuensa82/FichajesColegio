@@ -31,7 +31,7 @@ public class EventoBean {
 
     public ArrayList<ProfesorBean> getListaProfesores() {
         if(listaProfesores==null){
-            //
+            //GestionEventosBD.getListaProfesores
         }
         return listaProfesores;
     }
