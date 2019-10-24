@@ -6,13 +6,9 @@
 package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionFichajeBD;
-import com.iteku.basedatos.GestionHorasExtrasBD;
-import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.FichajeBean;
-import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
-import com.iteku.utils.Utils;
 import java.awt.Window;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;

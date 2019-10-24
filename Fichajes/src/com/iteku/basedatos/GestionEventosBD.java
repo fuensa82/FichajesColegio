@@ -5,14 +5,18 @@
  */
 package com.iteku.basedatos;
 
+import com.iteku.backofficefichajes.Config;
 import com.iteku.beans.EventoBean;
 import com.iteku.beans.FichajeBean;
+import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
@@ -41,10 +45,10 @@ public class GestionEventosBD {
             EventoBean evento;
             PreparedStatement consulta;
             if(mes==0){
-                consulta = conexion.prepareStatement("SELECT idEvento, fecha, horaIni, horaFin, diaCompleto, descripcion FROM eventos WHERE curso=?");
+                consulta = conexion.prepareStatement("SELECT idEvento, fecha, horaIni, horaFin, diaCompleto, descripcion FROM eventos WHERE curso=? ORDER by idEvento DESC ");
                 consulta.setString(1, FechasUtils.getCursoActual());
             }else{
-                consulta = conexion.prepareStatement("SELECT idEvento, fecha, horaIni, horaFin, diaCompleto, descripcion FROM eventos WHERE curso=? and MONTH(fecha)=?");
+                consulta = conexion.prepareStatement("SELECT idEvento, fecha, horaIni, horaFin, diaCompleto, descripcion FROM eventos WHERE curso=? and MONTH(fecha)=? ORDER by idEvento DESC ");
                 consulta.setString(1, FechasUtils.getCursoActual());
                 consulta.setString(2, ""+mes);
             }
@@ -74,12 +78,171 @@ public class GestionEventosBD {
         return listaResult;
     }
     
+    public static ArrayList<ProfesorBean> getListaProfesores(EventoBean evento){
+        ArrayList<ProfesorBean> listaProfesoresEvento=getListaProfesoresEnEvento(evento, true);
+        listaProfesoresEvento.addAll(getListaProfesoresEnEvento(evento, false));
+        return listaProfesoresEvento;
+    }
     /**
      * 
-        SELECT profesores.nombre, profesores.nombreCorto, eventos.descripcion FROM profesores, eventos, eventoprofesor 
-        WHERE eventos.idEvento=eventoprofesor.idEvento 
-		AND eventoprofesor.idProfesor=profesores.idProfesor
+        SELECT profesores.idProfesor, profesores.nombre, profesores.nombreCorto FROM profesores, eventoprofesor 
+        WHERE eventoprofesor.idEvento=? AND eventoprofesor.idProfesor=profesores.idProfesor
                 
      */
+    public static ArrayList<ProfesorBean> getListaProfesoresEnEvento(EventoBean evento, boolean enEvento){
+        ArrayList<ProfesorBean> result;
+        result = new ArrayList();
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            ProfesorBean profesor;
+            PreparedStatement consulta;
+            if(enEvento){
+                consulta = conexion.prepareStatement(
+                    "SELECT profesores.idProfesor, profesores.nombre, profesores.apellidos, profesores.nombreCorto FROM profesores, eventoprofesor " +
+                    "WHERE eventoprofesor.idEvento=? AND eventoprofesor.idProfesor=profesores.idProfesor");
+                
+            }else{
+                consulta=conexion.prepareStatement("SELECT profesores.idProfesor, profesores.nombre, profesores.apellidos, profesores.nombreCorto FROM profesores "+
+                    "WHERE idProfesor not IN" +
+                        " (SELECT profesores.idProfesor FROM profesores, eventoprofesor " +
+                        " WHERE eventoprofesor.idEvento=? AND eventoprofesor.idProfesor=profesores.idProfesor)");
+            }
+            consulta.setString(1, ""+evento.getIdEvento());
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()){
+                profesor=new ProfesorBean();
+                profesor.setIdProfesor(resultado.getInt(1));
+                profesor.setNombre(resultado.getString(2));
+                profesor.setApellidos(resultado.getString(3));
+                profesor.setNombreCorto(resultado.getString(4));
+                profesor.setEnEvento(enEvento);
+                result.add(profesor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return result;
+    }
+
+    public static boolean guardaProfesoresEvento(ArrayList<ProfesorBean> listaProfesores, EventoBean evento) {
+        deleteProfesoresDelEvento(evento);
+        boolean result=false;
+        
+        Connection conexion = null;
+        try {
+            if(listaProfesores.size()>0){
+                conexion = ConectorBD.getConnection();
+                String sql="INSERT INTO `eventoprofesor` (`idEvento`, `idProfesor`) VALUES";
+                boolean ejecutar=false;
+                for (ProfesorBean profesor : listaProfesores) {
+                    if(profesor.isEnEvento()){
+                        sql+="("+evento.getIdEvento()+","+profesor.getIdProfesor()+"),";
+                        ejecutar=true;
+                    }
+                }
+                PreparedStatement insert1 = conexion.prepareStatement(sql.substring(0,sql.length()-1));
+                System.out.println("sql: "+insert1);
+                if(ejecutar){
+                    insert1.executeUpdate();
+                }
+            }
+            return true; //Correcto
+
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        } finally{
+            try {
+                conexion.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestionHorasExtrasBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return result;
+        
+        
+    }
     
+    public static void deleteProfesoresDelEvento(EventoBean evento){
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            PreparedStatement consulta;
+            consulta = conexion.prepareStatement(
+                "DELETE FROM eventoprofesor WHERE idEvento=?");
+            consulta.setString(1, ""+evento.getIdEvento());
+            int resultInt=consulta.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }    
+    }
+
+    public static boolean putEvento(EventoBean evento) {
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement insert1 = conexion.prepareStatement(
+                    "INSERT INTO `colsan`.`eventos` (`fecha`, `horaIni`, `horaFin`, `diaCompleto`, `descripcion`, `curso`) VALUES (?, ?, ?, ?, ?, ?)");
+            //Long time=System.currentTimeMillis();
+            //profesor.setCurrentTimeMillis(time);
+            insert1.setString(1, FechasUtils.fechaParaMysql(evento.getFecha()));
+            insert1.setString(2, evento.isDiaCompleto()?null:evento.getHoraIni());
+            insert1.setString(3, evento.isDiaCompleto()?null:evento.getHoraFin());
+            insert1.setString(4, ""+evento.isDiaCompleto());
+            insert1.setString(5, evento.getDescripcion());
+            insert1.setString(6, evento.getCurso());
+            insert1.executeUpdate();
+
+            return true; //Correcto
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean modificarEvento(EventoBean evento) {
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement insert1 = conexion.prepareStatement(
+                    "UPDATE `colsan`.`eventos` SET `fecha`=?, `horaIni`=?, `horaFin`=?, `diaCompleto`=?, `descripcion`=?, `curso`=? WHERE  `idEvento`=?;");
+
+            insert1.setString(1, evento.getFecha());
+            insert1.setString(2, evento.getHoraIni());
+            insert1.setString(3, evento.getHoraFin());
+            insert1.setString(4, ""+evento.isDiaCompleto());
+            insert1.setString(5, evento.getDescripcion());
+            insert1.setString(6, evento.getCurso());
+            insert1.setString(7, ""+evento.getIdEvento());
+            insert1.executeUpdate();
+
+            return true; //Correcto
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }

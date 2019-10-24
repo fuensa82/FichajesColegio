@@ -6,7 +6,6 @@
 package com.iteku.recuento;
 
 import com.iteku.basedatos.GestionFichajeBD;
-import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.FichaBean;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.FichajeRecuentoBean;

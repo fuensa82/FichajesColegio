@@ -6,7 +6,6 @@
 package com.iteku.basedatos;
 
 import com.iteku.beans.ProfesorBean;
-import com.iteku.utils.FechasUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

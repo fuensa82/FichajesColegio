@@ -13,7 +13,6 @@ import com.iteku.utils.FechasUtils;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -352,6 +351,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new ListaFichajesProfesor(profesorSeleccionado,this));
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         //this.cambiarSesion(sesionSelecionada);
         cargarListaProfesores();
@@ -415,6 +415,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new HorarioProfesor(jTextIdProfesor.getText()));
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         //this.cambiarSesion(sesionSelecionada);
         //cargarListaProfesores();
@@ -432,6 +433,7 @@ if (!seleccionFila) {
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new ListaHorasExtras(profesorSeleccionado));
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         //this.cambiarSesion(sesionSelecionada);
         //cargarListaProfesores();

@@ -20,6 +20,19 @@ public class ProfesorBean {
     private String apellidos;
     private int idTarjeta;
     private long currentTimeMillis;
+    private boolean enEvento;
+    
+    public String toString(){
+        return idProfesor+" - "+nombreCorto+" - "+nombre+" - "+apellidos+" - "+enEvento; 
+    }
+
+    public boolean isEnEvento() {
+        return enEvento;
+    }
+
+    public void setEnEvento(boolean enEvento) {
+        this.enEvento = enEvento;
+    }
 
     public ProfesorBean(){
         

@@ -5,6 +5,7 @@
  */
 package com.iteku.beans;
 
+import com.iteku.basedatos.GestionEventosBD;
 import java.util.ArrayList;
 
 /**
@@ -30,9 +31,9 @@ public class EventoBean {
     }
 
     public ArrayList<ProfesorBean> getListaProfesores() {
-        if(listaProfesores==null){
-            //GestionEventosBD.getListaProfesores
-        }
+        //if(listaProfesores==null){
+            listaProfesores=GestionEventosBD.getListaProfesores(this);
+        //}
         return listaProfesores;
     }
 

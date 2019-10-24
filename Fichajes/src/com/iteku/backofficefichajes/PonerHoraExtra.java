@@ -10,8 +10,6 @@ import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.Utils;
 import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 

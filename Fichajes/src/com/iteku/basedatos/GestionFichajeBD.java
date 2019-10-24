@@ -5,7 +5,6 @@
  */
 package com.iteku.basedatos;
 
-import com.iteku.beans.FichaBean;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;

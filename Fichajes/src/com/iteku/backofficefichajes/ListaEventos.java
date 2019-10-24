@@ -6,13 +6,15 @@
 package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionEventosBD;
-import com.iteku.basedatos.GestionHorasExtrasBD;
 import com.iteku.beans.EventoBean;
-import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
+import java.awt.Frame;
+import java.awt.Point;
+import java.awt.Window;
 import java.util.ArrayList;
-import javax.swing.JTable;
+import javax.swing.JDialog;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -49,6 +51,7 @@ public class ListaEventos extends javax.swing.JPanel {
                     System.out.println("Evento: " + indice);
                     System.out.println("Id evento: " + listaEventos.get(indice).getIdEvento());
                     eventoSel = listaEventos.get(indice);
+                    cargarListaProfesores(eventoSel);
                 }
             }
         });
@@ -83,7 +86,6 @@ public class ListaEventos extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEventos = new javax.swing.JTable();
@@ -92,7 +94,12 @@ public class ListaEventos extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButtonCargarProfesores = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         jTableEventos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,10 +127,11 @@ public class ListaEventos extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jButtonCargarProfesores, org.jdesktop.beansbinding.ELProperty.create("${action.enabled}"), jTableEventos, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
-        bindingGroup.addBinding(binding);
-
+        jTableEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableEventosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableEventos);
         if (jTableEventos.getColumnModel().getColumnCount() > 0) {
             jTableEventos.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -136,20 +144,17 @@ public class ListaEventos extends javax.swing.JPanel {
 
         jTableProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "", "Nombre C.", "Nombre", "Apellidos"
+                "", "Nombre C.", "Nombre", "Apellidos", "Id Prof"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                true, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -166,18 +171,51 @@ public class ListaEventos extends javax.swing.JPanel {
             jTableProfesores.getColumnModel().getColumn(1).setPreferredWidth(500);
             jTableProfesores.getColumnModel().getColumn(2).setPreferredWidth(500);
             jTableProfesores.getColumnModel().getColumn(3).setPreferredWidth(1000);
+            jTableProfesores.getColumnModel().getColumn(4).setPreferredWidth(50);
         }
 
-        jButton1.setText("jButton1");
-
-        jButton2.setText("jButton2");
-
-        jButton3.setText("jButton3");
-
-        jButtonCargarProfesores.setText("jButton4");
-        jButtonCargarProfesores.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Nuevo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCargarProfesoresActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Modificar");
+
+        jButton3.setText("Borrar");
+
+        jLabel1.setText("Profesores afectados por el evento seleccionado en la tabla de eventos");
+
+        jLabel2.setText("Tabla de eventos");
+
+        jButton4.setText("Guardar cambios");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Salir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton6.setText("Seleccionar todo");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton7.setText("Borrar todo");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
             }
         });
 
@@ -187,59 +225,134 @@ public class ListaEventos extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton4)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton5))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 533, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
-                    .addComponent(jScrollPane2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButtonCargarProfesores, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(340, 340, 340)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButton6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton7)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addGap(22, 22, 22)
+                .addComponent(jLabel2)
+                .addGap(3, 3, 3)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonCargarProfesores, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addContainerGap())
         );
-
-        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonCargarProfesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarProfesoresActionPerformed
-        cargarListaProfesores(eventoSel);
-        
-    }//GEN-LAST:event_jButtonCargarProfesoresActionPerformed
+    private void jTableEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEventosMouseClicked
+        if(evt.getClickCount()==2){
+            cargarListaProfesores(eventoSel);
+        }
+        System.out.println("Raton: "+evt.getClickCount());
+    }//GEN-LAST:event_jTableEventosMouseClicked
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        guardarProfesoresEnEvento();
+        cargarListaProfesores(eventoSel);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        DefaultTableModel datosTabla=(DefaultTableModel) jTableProfesores.getModel();
+        for(int i=0;i<datosTabla.getRowCount();i++){
+            datosTabla.setValueAt(true, i, 0);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        DefaultTableModel datosTabla=(DefaultTableModel) jTableProfesores.getModel();
+        for(int i=0;i<datosTabla.getRowCount();i++){
+            datosTabla.setValueAt(false, i, 0);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Window w = SwingUtilities.getWindowAncestor(this);
+        w.setVisible(false);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JDialog frame = new JDialog((Frame)null, "Añadir evento", true);
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
+        frame.getContentPane().add(new MttoEvento(null));
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        //this.cambiarSesion(sesionSelecionada);
+        //cargarListaProfesores();
+        frame.setVisible(false);
+        cargarListaEventos(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void guardarProfesoresEnEvento(){
+        DefaultTableModel datosTabla=(DefaultTableModel) jTableProfesores.getModel();
+        ArrayList<ProfesorBean> listaProfesores2=new ArrayList<>();
+        for (int i=0;i<datosTabla.getRowCount();i++){
+            ProfesorBean profesor=new ProfesorBean();
+            profesor.setIdProfesor((int)datosTabla.getValueAt(i,4));
+            profesor.setEnEvento((boolean)datosTabla.getValueAt(i,0));
+            listaProfesores2.add(profesor);
+        }
+        GestionEventosBD.guardaProfesoresEvento(listaProfesores2,eventoSel);
+        System.out.println(listaProfesores);
+        System.out.println(""+datosTabla.getValueAt(0,0));
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButtonCargarProfesores;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableEventos;
     private javax.swing.JTable jTableProfesores;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     private void cargarListaProfesores(EventoBean eventoSel) {
@@ -250,10 +363,11 @@ public class ListaEventos extends javax.swing.JPanel {
         }
         for (ProfesorBean profesor : listaProfesores){
             datosTabla.addRow(new Object[]{
-                true,
+                profesor.isEnEvento(),
                 profesor.getNombreCorto(),
                 profesor.getNombre(),
-                profesor.getApellidos()
+                profesor.getApellidos(),
+                profesor.getIdProfesor()
             });
         }
     }
