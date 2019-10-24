@@ -13,6 +13,7 @@ import java.awt.Point;
 import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -182,6 +183,11 @@ public class ListaEventos extends javax.swing.JPanel {
         });
 
         jButton2.setText("Modificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Borrar");
 
@@ -313,16 +319,28 @@ public class ListaEventos extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JDialog frame = new JDialog((Frame)null, "Añadir evento", true);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new MttoEvento(null));
         frame.pack();
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
-        //this.cambiarSesion(sesionSelecionada);
-        //cargarListaProfesores();
         frame.setVisible(false);
         cargarListaEventos(0);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (!seleccionFila) {
+            JOptionPane.showMessageDialog(null, "Primero debe seleccionar una fila con datos");
+            return;
+        }
+        JDialog frame = new JDialog((Frame)null, "Modificar evento", true);
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        frame.getContentPane().add(new MttoEvento(eventoSel));
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        frame.setVisible(false);
+        cargarListaEventos(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void guardarProfesoresEnEvento(){
         DefaultTableModel datosTabla=(DefaultTableModel) jTableProfesores.getModel();

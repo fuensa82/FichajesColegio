@@ -251,6 +251,7 @@ public class ListaHorasExtras extends javax.swing.JPanel {
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new PonerHoraExtra(profesor));
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         //this.cambiarSesion(sesionSelecionada);
         cargarListaHoras();

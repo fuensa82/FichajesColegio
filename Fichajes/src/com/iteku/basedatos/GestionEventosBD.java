@@ -226,10 +226,9 @@ public class GestionEventosBD {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
                     "UPDATE `colsan`.`eventos` SET `fecha`=?, `horaIni`=?, `horaFin`=?, `diaCompleto`=?, `descripcion`=?, `curso`=? WHERE  `idEvento`=?;");
-
-            insert1.setString(1, evento.getFecha());
-            insert1.setString(2, evento.getHoraIni());
-            insert1.setString(3, evento.getHoraFin());
+            insert1.setString(1, FechasUtils.fechaParaMysql(evento.getFecha()));
+            insert1.setString(2, evento.isDiaCompleto()?null:evento.getHoraIni());
+            insert1.setString(3, evento.isDiaCompleto()?null:evento.getHoraFin());
             insert1.setString(4, ""+evento.isDiaCompleto());
             insert1.setString(5, evento.getDescripcion());
             insert1.setString(6, evento.getCurso());

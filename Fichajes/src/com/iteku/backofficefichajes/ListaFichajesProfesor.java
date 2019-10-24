@@ -225,6 +225,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new MttoFichajes(null,profesor));
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         //this.cambiarSesion(sesionSelecionada);
         //cargarListaProfesores();
@@ -245,6 +246,7 @@ public class ListaFichajesProfesor extends javax.swing.JPanel {
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         frame.getContentPane().add(new MttoFichajes(fichajeSel,profesor));
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         frame.setVisible(false);
         cargarListaFichajes();

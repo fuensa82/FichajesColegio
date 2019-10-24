@@ -399,6 +399,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new VentanaCargarHorarios());
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         //this.cambiarSesion(sesionSelecionada);
         cargarListaProfesores();
@@ -445,6 +446,7 @@ if (!seleccionFila) {
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         frame.getContentPane().add(new CrearCursoNuevo());
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         frame.setVisible(false); 
         iniciarMisComponentes();
@@ -456,6 +458,7 @@ if (!seleccionFila) {
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         frame.getContentPane().add(new ListaEventos());
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
         iniciarMisComponentes();
         frame.setVisible(false);

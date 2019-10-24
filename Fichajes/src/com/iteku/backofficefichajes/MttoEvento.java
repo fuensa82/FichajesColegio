@@ -30,6 +30,14 @@ public class MttoEvento extends javax.swing.JPanel {
             nuevo=false;
         }
         initComponents();
+        if(!nuevo){
+            jTextTitulo.setText(evento.getDescripcion());
+            jFormattedFecha.setText(evento.getFecha());
+            jFormattedHoraIni.setText(evento.getHoraIni());
+            jFormattedHoraFin.setText(evento.getHoraFin());
+            jCheckDiaCompleto.setSelected(evento.isDiaCompleto());
+
+        }
     }
 
     /**
