@@ -9,7 +9,6 @@ import com.iteku.basedatos.GestionEventosBD;
 import com.iteku.beans.EventoBean;
 import com.iteku.beans.ProfesorBean;
 import java.awt.Frame;
-import java.awt.Point;
 import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JDialog;
@@ -190,6 +189,11 @@ public class ListaEventos extends javax.swing.JPanel {
         });
 
         jButton3.setText("Borrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Profesores afectados por el evento seleccionado en la tabla de eventos");
 
@@ -341,6 +345,17 @@ public class ListaEventos extends javax.swing.JPanel {
         frame.setVisible(false);
         cargarListaEventos(0);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        int i=JOptionPane.showConfirmDialog(null,"Está seguro de querer borrar el evento", "Eliminación",JOptionPane.YES_NO_OPTION);
+        if(i!=1){
+            if(!GestionEventosBD.borrarEvento(eventoSel)){
+                JOptionPane.showMessageDialog(null, "Error eliminando el evento.");
+            }
+            cargarListaEventos(i);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void guardarProfesoresEnEvento(){
         DefaultTableModel datosTabla=(DefaultTableModel) jTableProfesores.getModel();

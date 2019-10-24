@@ -244,4 +244,26 @@ public class GestionEventosBD {
         }
         return false;
     }
+    public static boolean borrarEvento(EventoBean evento) {
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement insert1 = conexion.prepareStatement(
+                    "DELETE from `colsan`.`eventos` where idEvento=?");
+            insert1.setString(1, ""+evento.getIdEvento());
+            insert1.executeUpdate();
+            insert1 = conexion.prepareStatement(
+                    "DELETE from `colsan`.`eventoprofesor` where idEvento=?");
+            insert1.setString(1, ""+evento.getIdEvento());
+            insert1.executeUpdate();
+
+            return true; //Correcto
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }
