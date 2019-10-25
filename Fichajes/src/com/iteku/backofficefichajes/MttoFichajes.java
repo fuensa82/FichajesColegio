@@ -245,6 +245,8 @@ public class MttoFichajes extends javax.swing.JPanel {
             } else {
                 jComboBoxTipoFichaje.setSelectedIndex(1);
             }
+        }else{
+            jFormattedTextFecha.setText(FechasUtils.fechaActualString("/"));
         }
     }
 }

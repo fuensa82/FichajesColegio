@@ -24,10 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class VentanaCargarHorarios extends javax.swing.JPanel {
 
-    private static String rutaScriptNode="C:\\Users\\vPalomo\\Proyectos\\Otros\\CargaDeHorarios\\index.js";
-    //private static String rutaScriptNode="C:\\Users\\Víctor\\Proyectos\\Colegio\\CargaDeHorarios\\index.js";
-    private static String rutaLog="c:\\ControlHorario\\exit.log";
-    private static String ficheroBarra="c:\\ControlHorario\\barra.dat";
+    
     /**
      * Creates new form VentanaCargarHorarios
      */
@@ -54,6 +51,8 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabelCurso = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jComboTipoHoras = new javax.swing.JComboBox<>();
 
         jButton1.setText("Examinar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -87,30 +86,14 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
 
         jLabelCurso.setText("jLabel4");
 
+        jLabel4.setText("Tipo de horas del horario");
+
+        jComboTipoHoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Complementaria (C)", "Lectiva (L)", "No lectiva (NL)" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jFileText)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(162, 162, 162))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(72, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelCurso))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -124,6 +107,30 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jFileText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(162, 162, 162))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(72, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboTipoHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelCurso))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,12 +143,16 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(2, 2, 2)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jComboTipoHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jFileText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -154,6 +165,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(!jFileText.getText().equals("")){
+            String tipoHora=Utils.getTipoHora(jComboTipoHoras.getItemAt(jComboTipoHoras.getSelectedIndex()));
             jTextField1.setText("");
             jButton2.setEnabled(false);
             try{
@@ -164,10 +176,10 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 while ((line = in.readLine()) != null) {  
                     System.out.println(line);  
                 }*/
-                Utils.generarFichero(ficheroBarra);
+                Utils.generarFichero(Config.ficheroBarra);
                 jFileText.getText();
                 System.out.println("File: "+jFileText.getText());
-                Process p = Runtime.getRuntime().exec("cmd /C node "+rutaScriptNode+" "+jFileText.getText()+" "+FechasUtils.getCursoActual()+" > "+rutaLog );  
+                Process p = Runtime.getRuntime().exec("cmd /C node "+Config.rutaScriptNode+" "+jFileText.getText()+" "+FechasUtils.getCursoActual()+" "+tipoHora+" > "+Config.rutaLog );  
                 System.out.println("Lanzando comando node");
                 
                 //Thread.sleep(4000);
@@ -175,7 +187,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 new Thread(new Runnable() {
                     public void run() {
                         try{                            
-                            File archivo = new File (ficheroBarra);
+                            File archivo = new File (Config.ficheroBarra);
                             FileReader fr = new FileReader (archivo);
                             while (!"FIN".equalsIgnoreCase(jTextField1.getText())) {
                                 SwingUtilities.invokeLater(new Runnable() {
@@ -244,10 +256,12 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboTipoHoras;
     private javax.swing.JTextField jFileText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelCurso;
     private final javax.swing.JProgressBar jProgressBar1 = new javax.swing.JProgressBar();
     private javax.swing.JTextField jTextField1;

@@ -178,6 +178,15 @@ public class FechasUtils {
      * @return
      */
     public static String fechaActualString() {
+        return fechaActualString("-");
+    }
+    
+    /**
+     * Devuelve la fecha de hoy en formado dd-mm-aaaa
+     *
+     * @return
+     */
+    public static String fechaActualString(String separador) {
         Calendar c = Calendar.getInstance();
         String anio = Integer.toString(c.get(1));
 
@@ -196,7 +205,7 @@ public class FechasUtils {
         } else {
             dia = "" + d;
         }
-        return dia + "-" + mes + "-" + anio;
+        return dia + separador + mes + separador + anio;
     }
 
     public static String getNumMes(String mes) throws Exception {
