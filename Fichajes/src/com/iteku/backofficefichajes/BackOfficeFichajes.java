@@ -8,8 +8,11 @@ package com.iteku.backofficefichajes;
 import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
+import com.iteku.informes.ImpresionInforme;
 import com.iteku.recuento.Contabilizar;
 import com.iteku.utils.FechasUtils;
+import com.itextpdf.text.DocumentException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -361,6 +364,13 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         Contabilizar contar=new Contabilizar();
         contar.contabilizarConMesYProfesor(profesorSeleccionado, 10);
+        try {
+            new ImpresionInforme((ArrayList<ProfesorBean>)null, 2).generarDocuemnto();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(BackOfficeFichajes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(BackOfficeFichajes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

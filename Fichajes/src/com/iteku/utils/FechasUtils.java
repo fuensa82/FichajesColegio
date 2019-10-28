@@ -12,10 +12,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import javax.naming.NamingException;
 
 public class FechasUtils {
@@ -296,5 +298,11 @@ public class FechasUtils {
                 + FechasUtils.rellenaIzquierda("" + c.get(GregorianCalendar.SECOND), "0", 2);
         //+ c.get(GregorianCalendar.MINUTE) + ":"
         //+ c.get(GregorianCalendar.SECOND);
+    }
+
+    public static String dameFechaNTP() {
+        SimpleDateFormat formateador = new SimpleDateFormat("HH:mm:ss 'del' EEEE dd 'de' MMMM 'de' yyyy", new Locale("es","ES"));
+        String fechaInforme=formateador.format(FechaExternaNTP.getNTPDate());
+        return fechaInforme;
     }
 }

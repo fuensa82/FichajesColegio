@@ -7,8 +7,11 @@ package com.iteku.informes;
 
 //import com.itextpdf.kernel.pdf.PdfName.Document;
 import com.iteku.beans.ProfesorBean;
+import com.iteku.utils.FechaExternaNTP;
 import com.iteku.utils.FechasUtils;
+import com.iteku.utils.Utils;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -18,7 +21,9 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  *
@@ -42,13 +47,22 @@ public class ImpresionInforme {
     }
     
     public void cabecera(Document documento) throws DocumentException{
-        documento.add(new Paragraph("Informe de horas del mes de "+FechasUtils.getMesNum(mes),
+        Paragraph p=new Paragraph("COLEGIO SAN JOSE",
                                         FontFactory.getFont("arial",   // fuente
                                         22,                            // tamaño
+                                        Font.UNDERLINE,
+                                        BaseColor.BLACK));
+        p.setAlignment(Chunk.ALIGN_CENTER);
+        documento.add(p);
+        documento.add(new Paragraph(" "));
+        documento.add(new Paragraph("Informe de horas del mes de "+FechasUtils.getMesNum(mes),
+                                        FontFactory.getFont("arial",   // fuente
+                                        18,                            // tamaño
                                         Font.ITALIC,                   // estilo
                                         BaseColor.BLACK)));             // color
         documento.add(new Paragraph("Fecha de generación de los datos: "));
-        documento.add(new Paragraph("Fecha de generación del informe: "));
+        
+        documento.add(new Paragraph("Fecha de generación del informe: "+FechasUtils.dameFechaNTP()));
     }
     
     public void cuerpo(Document documento) throws DocumentException{
