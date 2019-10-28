@@ -414,7 +414,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         JDialog frame = new JDialog(this, "Horario profesor "+profesorSeleccionado.getNombreCorto(), true);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
-        frame.getContentPane().add(new HorarioProfesor(jTextIdProfesor.getText()));
+        frame.getContentPane().add(new HorarioProfesor(profesorSeleccionado));
         frame.pack();
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);

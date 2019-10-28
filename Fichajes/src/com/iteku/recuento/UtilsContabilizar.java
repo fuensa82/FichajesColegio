@@ -96,15 +96,15 @@ public class UtilsContabilizar {
      * @param profesor
      * @return 
      */
-    public static ArrayList<FichaBean> getHorario(ProfesorBean profesor){
+    public static ArrayList<FichaBean> getHorario(ProfesorBean profesor, String tipoHora){
         //imprimeHorario(listaFichas);
         //System.out.println("*************************************************************************");
-        return GestionProfesoresBD.getListaFichasCurso(""+profesor.getIdProfesor());
+        return GestionProfesoresBD.getListaFichasCurso(profesor, tipoHora);
         
     }
     
-    public static ArrayList<FichaBean> getHorarioCompacto(ProfesorBean profesor){
-        ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorario(profesor);
+    public static ArrayList<FichaBean> getHorarioCompacto(ProfesorBean profesor, String tipoHora){
+        ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorario(profesor, tipoHora);
         UtilsContabilizar.imprimeHorario(listaFichas);
         for(int i=listaFichas.size()-1;i>0;i--){ //Recorremos la lista desde el final al principio
             FichaBean fichaActual=listaFichas.get(i);

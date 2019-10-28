@@ -7,6 +7,8 @@ package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.FichaBean;
+import com.iteku.beans.ProfesorBean;
+import com.iteku.utils.Utils;
 import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.SwingUtilities;
@@ -18,12 +20,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HorarioProfesor extends javax.swing.JPanel {
 
+    private ProfesorBean profesor;
     /**
      * Creates new form HorarioProfesor
      */
-    public HorarioProfesor(String idProfesor) {
+    public HorarioProfesor(ProfesorBean profesor) {
+        this.profesor=profesor;
         initComponents();
-        cargarDatos(idProfesor);
+        cargarDatos(profesor, "L");
+        jComboBox1.setSelectedIndex(1);
     }
 
     /**
@@ -38,6 +43,8 @@ public class HorarioProfesor extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tFichas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         tFichas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,6 +81,15 @@ public class HorarioProfesor extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setText("Tipo de horario:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Complementaria (C)", "Lectiva (L)", "No lectiva (NL)" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,12 +102,22 @@ public class HorarioProfesor extends javax.swing.JPanel {
                         .addComponent(jButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE))
                 .addGap(19, 19, 19))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addGap(8, 8, 8))
@@ -103,15 +129,22 @@ public class HorarioProfesor extends javax.swing.JPanel {
                 w.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        String tipoHora=Utils.getTipoHora(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
+        cargarDatos(profesor, tipoHora);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tFichas;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarDatos(String idProfesor) {
-        ArrayList<FichaBean> listaFichas = GestionProfesoresBD.getListaFichasCurso(idProfesor);
+    private void cargarDatos(ProfesorBean profesor, String tipoHora) {
+        ArrayList<FichaBean> listaFichas = GestionProfesoresBD.getListaFichasCurso(profesor, tipoHora);
         DefaultTableModel datosTabla = (DefaultTableModel) tFichas.getModel();
         for (int i = datosTabla.getRowCount(); i > 0; i--) {
             //filasTabla=0;
