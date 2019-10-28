@@ -98,7 +98,7 @@ public class UtilsContabilizar {
      */
     public static ArrayList<FichaBean> getHorario(ProfesorBean profesor, String tipoHora){
         //imprimeHorario(listaFichas);
-        //System.out.println("*************************************************************************");
+        //System.out.println("************************************************************************* ");
         return GestionProfesoresBD.getListaFichasCurso(profesor, tipoHora);
         
     }

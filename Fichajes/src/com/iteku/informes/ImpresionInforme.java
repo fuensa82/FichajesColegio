@@ -7,6 +7,7 @@ package com.iteku.informes;
 
 //import com.itextpdf.kernel.pdf.PdfName.Document;
 import com.iteku.beans.ProfesorBean;
+import com.iteku.utils.FechasUtils;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -40,12 +41,18 @@ public class ImpresionInforme {
         this.mes=mes;
     }
     
-    public void cabecera(Document documento){
-        
+    public void cabecera(Document documento) throws DocumentException{
+        documento.add(new Paragraph("Informe de horas del mes de "+FechasUtils.getMesNum(mes),
+                                        FontFactory.getFont("arial",   // fuente
+                                        22,                            // tamaño
+                                        Font.ITALIC,                   // estilo
+                                        BaseColor.BLACK)));             // color
+        documento.add(new Paragraph("Fecha de generación de los datos: "));
+        documento.add(new Paragraph("Fecha de generación del informe: "));
     }
     
     public void cuerpo(Document documento) throws DocumentException{
-        documento.add(new Paragraph("Esto es el primer párrafo, normalito"));
+        
         documento.add(new Paragraph("Este es el segundo y tiene una fuente rara",
                                         FontFactory.getFont("arial",   // fuente
                                         22,                            // tamaño
@@ -72,7 +79,7 @@ public class ImpresionInforme {
         PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
         documento.open();
         cabecera(documento);
-        
+        cuerpo(documento);
         documento.close();
 
     }

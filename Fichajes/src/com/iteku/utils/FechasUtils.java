@@ -238,7 +238,45 @@ public class FechasUtils {
         }
 
     }
+/**
+ * Dado el mes nos devuelve el literal del mes. Si le mandamos un 1 nos devuelve Enero. El caso del 0 devolverá
+ * el literal "todos los meses"
+ * @param mes
+ * @return
+ * @throws Exception 
+ */
+    public static String getMesNum(int mes){
+        if(mes==0){
+            return "todos los meses";
+        }else if (mes==1) {
+            return "Enero";
+        } else if (mes==2) {
+            return "Febrero";
+        } else if (mes==3) {
+            return "Marzo";
+        } else if (mes==4) {
+            return "Abril";
+        } else if (mes==5) {
+            return "Mayo";
+        } else if (mes==6) {
+            return "Junio";
+        } else if (mes==7) {
+            return "Julio";
+        } else if (mes==8) {
+            return "Agosto";
+        } else if (mes==9) {
+            return "Septiembre";
+        } else if (mes==10) {
+            return "Octubre";
+        } else if (mes==11) {
+            return "Noviembre";
+        } else if (mes==12) {
+            return "Diciembre";
+        } else {
+            return "todos los meses";
+        }
 
+    }
     public static String rellenaIzquierda(String texto, String relleno, int longitud) {
         String aux = "";
         for (int i = 0; i < longitud; i++) {
