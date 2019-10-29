@@ -6,6 +6,7 @@
 package com.iteku.recuento;
 
 import com.iteku.basedatos.GestionFichajeBD;
+import com.iteku.basedatos.GestionInformesBD;
 import com.iteku.beans.FichaBean;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.FichajeRecuentoBean;
@@ -61,7 +62,13 @@ public class Contabilizar {
         listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
         listaFichajesRecuento= UtilsContabilizar.convertirFichajes(listaFichajes);
         int segundosValidacion=contabilizaHorasNoLectivas(listaFichajesRecuento);
+        int segundosValidacion2=segundosComplementarios+segundosLectivos+segundosNLectivos;
         System.out.println("Comprobacion: "+Utils.convierteSegundos(segundosValidacion));
+        String obser=segundosValidacion==segundosValidacion2?"Correcto":"No coinciden las horas en el colegio, con las horas calculadas de cada tipo";
+        
+        //Guardamos en la base de datos
+        GestionInformesBD.guardaInforme(profesor, obser, segundosLectivos, segundosNLectivos, segundosComplementarios,mes);
+        
         
     }
     

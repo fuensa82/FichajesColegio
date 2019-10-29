@@ -5,9 +5,7 @@
  */
 package com.iteku.basedatos;
 
-import com.iteku.backofficefichajes.Config;
 import com.iteku.beans.EventoBean;
-import com.iteku.beans.FichajeBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
 import java.sql.Connection;

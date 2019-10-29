@@ -193,7 +193,7 @@ public class GestionProfesoresBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement consulta = conexion.prepareStatement(
-                    "select idProfesor, nombre, apellidos, idTarjeta "
+                    "select idProfesor, nombre, apellidos, idTarjeta, nombreCorto "
                     + "from profesores "
                     + "where idProfesor=?");
             consulta.setString(1, idProfesor);
@@ -206,6 +206,7 @@ public class GestionProfesoresBD {
             profesor.setNombre(resultado.getString(2));
             profesor.setApellidos(resultado.getString(3));
             profesor.setIdTarjeta(resultado.getInt(4));
+            profesor.setNombreCorto(resultado.getString(5));
 
         } catch (SQLException e) {
             e.printStackTrace();

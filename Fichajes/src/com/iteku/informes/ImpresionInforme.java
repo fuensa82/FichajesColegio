@@ -86,7 +86,7 @@ public class ImpresionInforme {
         Document documento = new Document();
 
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
-        FileOutputStream ficheroPdf = new FileOutputStream("fichero"+profesor.getIdProfesor()+".pdf");
+        FileOutputStream ficheroPdf = new FileOutputStream("fichero"+profesor.getNombreCorto()+".pdf");
 
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
         // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento

@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
  * @author Víctor
  */
 public class ProfesorBean {
+
     private int idProfesor;
     private String nombreCorto;
     private String nombre;
@@ -22,16 +23,16 @@ public class ProfesorBean {
     private long currentTimeMillis;
     private boolean enEvento;
     private String fechaUltimoInforme;
-    
-    public String getFechaUltimoInforme(){
-        if(fechaUltimoInforme==null || "".equals(fechaUltimoInforme)){
-            fechaUltimoInforme=GestionProfesoresBD.getFechaUltInforme(this);
+
+    public String getFechaUltimoInforme() {
+        if (fechaUltimoInforme == null || "".equals(fechaUltimoInforme)) {
+            fechaUltimoInforme = GestionProfesoresBD.getFechaUltInforme(this);
         }
         return fechaUltimoInforme;
     }
-    
-    public String toString(){
-        return idProfesor+" - "+nombreCorto+" - "+nombre+" - "+apellidos+" - "+enEvento; 
+
+    public String toString() {
+        return idProfesor + " - " + nombreCorto + " - " + nombre + " - " + apellidos + " - " + enEvento;
     }
 
     public boolean isEnEvento() {
@@ -42,24 +43,38 @@ public class ProfesorBean {
         this.enEvento = enEvento;
     }
 
-    public ProfesorBean(){
-        
+    public ProfesorBean() {
+
     }
-    public ProfesorBean(String idProfesor,String nombre, String apellidos, String idTarjeta,String nombreCorto){
-        this.idProfesor=Integer.parseInt(idProfesor);
-        this.nombre=nombre;
-        this.apellidos=apellidos;
-        this.idTarjeta=Integer.parseInt(idTarjeta);
-        this.nombreCorto=nombreCorto;
+
+    public ProfesorBean(String idProfesor, String nombre, String apellidos, String idTarjeta, String nombreCorto) {
+        this.idProfesor = Integer.parseInt(idProfesor);
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.idTarjeta = Integer.parseInt(idTarjeta);
+        this.nombreCorto = nombreCorto;
     }
 
     public String getNombreCorto() {
+        if (nombreCorto == null) {
+            rellenarDatos();
+        }
         return nombreCorto;
+    }
+
+    private void rellenarDatos() {
+        ProfesorBean p = GestionProfesoresBD.getProfesor("" + this.idProfesor);
+        this.nombre = p.getNombre();
+        this.apellidos = p.getApellidos();
+        this.idTarjeta = p.getIdTarjeta();
+        System.out.println("cargando datos ...");
+        this.nombreCorto = p.getNombreCorto();
     }
 
     public void setNombreCorto(String nombreCorto) {
         this.nombreCorto = nombreCorto;
     }
+
     public long getCurrentTimeMillis() {
         return currentTimeMillis;
     }
@@ -67,32 +82,37 @@ public class ProfesorBean {
     public void setCurrentTimeMillis(long currentTimeMillis) {
         this.currentTimeMillis = currentTimeMillis;
     }
-    public void cargaCurrentTime(){
-        currentTimeMillis=GestionProfesoresBD.getUltimaCurrentTime(idProfesor, FechasUtils.fechaHoyParaMysql());
+
+    public void cargaCurrentTime() {
+        currentTimeMillis = GestionProfesoresBD.getUltimaCurrentTime(idProfesor, FechasUtils.fechaHoyParaMysql());
     }
-    public String getFechaHoraCurrentTime(){
-        if(isDentro()){
-            GregorianCalendar c=new GregorianCalendar();
+
+    public String getFechaHoraCurrentTime() {
+        if (isDentro()) {
+            GregorianCalendar c = new GregorianCalendar();
             c.setTimeInMillis(currentTimeMillis);
             return FechasUtils.getFechaString(c);
-        }else{
+        } else {
             return "";
         }
     }
-    
-    public String getHoraCurrentTime(){
-        if(isDentro()){
-            String fecha=getFechaHoraCurrentTime();
+
+    public String getHoraCurrentTime() {
+        if (isDentro()) {
+            String fecha = getFechaHoraCurrentTime();
             return fecha.split(" ")[1];
-        }else{
+        } else {
             return "";
         }
-        
+
     }
-/**
- * Indica si el profesor que marca está saliendo o entrado. True para entrando y false para saliendo.
- * @return 
- */
+
+    /**
+     * Indica si el profesor que marca está saliendo o entrado. True para
+     * entrando y false para saliendo.
+     *
+     * @return
+     */
     public boolean isDentro() {
         return GestionProfesoresBD.isDentro(idProfesor);
     }
@@ -129,6 +149,4 @@ public class ProfesorBean {
         this.idTarjeta = idTarjeta;
     }
 
-   
-           
 }

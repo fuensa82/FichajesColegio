@@ -119,10 +119,10 @@ public class UtilsContabilizar {
                     listaFichas.remove(i);
                     fichaAnterior.setHoraFin(fichaActual.getHoraFin());
                 }else{
-                    System.out.println("No se borra por no coincidir la hora");
+                    //System.out.println("No se borra por no coincidir la hora");
                 }
             }else{
-                System.out.println("No se borra por no coincidir el dia");
+                //System.out.println("No se borra por no coincidir el dia");
             }
         }
         UtilsContabilizar.imprimeHorario(listaFichas);
