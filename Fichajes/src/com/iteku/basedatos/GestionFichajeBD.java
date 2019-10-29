@@ -123,7 +123,12 @@ public class GestionFichajeBD {
         }
         return false;
     }
-    
+    /**
+     * Genera la lista de los fichajes de un mes del profesor.
+     * @param profesor Con que contenga el idProfesor es suficiente
+     * @param mes
+     * @return 
+     */
     public static ArrayList<FichajeBean> getListaFichajesProfesor(ProfesorBean profesor, int mes) {
         ArrayList<FichajeBean> listaResult;
         listaResult = new ArrayList<>();

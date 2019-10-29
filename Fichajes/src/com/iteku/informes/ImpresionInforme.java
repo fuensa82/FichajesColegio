@@ -46,7 +46,7 @@ public class ImpresionInforme {
         this.mes=mes;
     }
     
-    public void cabecera(Document documento) throws DocumentException{
+    private void cabecera(Document documento) throws DocumentException{
         Paragraph p=new Paragraph("COLEGIO SAN JOSE",
                                         FontFactory.getFont("arial",   // fuente
                                         22,                            // tamaño
@@ -65,7 +65,7 @@ public class ImpresionInforme {
         documento.add(new Paragraph("Fecha de generación del informe: "+FechasUtils.dameFechaNTP()));
     }
     
-    public void cuerpo(Document documento) throws DocumentException{
+    private void cuerpo(Document documento) throws DocumentException{
         
         documento.add(new Paragraph("Este es el segundo y tiene una fuente rara",
                                         FontFactory.getFont("arial",   // fuente
@@ -86,7 +86,7 @@ public class ImpresionInforme {
         Document documento = new Document();
 
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
-        FileOutputStream ficheroPdf = new FileOutputStream("fichero.pdf");
+        FileOutputStream ficheroPdf = new FileOutputStream("fichero"+profesor.getIdProfesor()+".pdf");
 
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
         // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento

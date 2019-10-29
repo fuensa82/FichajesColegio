@@ -10,6 +10,7 @@ import com.iteku.beans.FichaBean;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.FichajeRecuentoBean;
 import com.iteku.beans.ProfesorBean;
+import com.iteku.informes.ImpresionInforme;
 import com.iteku.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,8 +63,8 @@ public class Contabilizar {
         int segundosValidacion=contabilizaHorasNoLectivas(listaFichajesRecuento);
         System.out.println("Comprobacion: "+Utils.convierteSegundos(segundosValidacion));
         
-        
     }
+    
     
     
     
@@ -161,4 +162,6 @@ public class Contabilizar {
         }
         return segundos;
     }
+
+    
 }

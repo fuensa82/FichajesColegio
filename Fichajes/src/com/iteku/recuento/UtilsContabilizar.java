@@ -93,7 +93,7 @@ public class UtilsContabilizar {
     
     /**
      * Consulta el horario de un profesor y devuelve un arrayList con todas sus fichas
-     * @param profesor
+     * @param profesor Con que contenga solo el ID vale.
      * @return 
      */
     public static ArrayList<FichaBean> getHorario(ProfesorBean profesor, String tipoHora){
@@ -102,7 +102,12 @@ public class UtilsContabilizar {
         return GestionProfesoresBD.getListaFichasCurso(profesor, tipoHora);
         
     }
-    
+    /**
+     * 
+     * @param profesor
+     * @param tipoHora
+     * @return 
+     */
     public static ArrayList<FichaBean> getHorarioCompacto(ProfesorBean profesor, String tipoHora){
         ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorario(profesor, tipoHora);
         UtilsContabilizar.imprimeHorario(listaFichas);

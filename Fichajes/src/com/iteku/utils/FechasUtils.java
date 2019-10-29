@@ -51,6 +51,28 @@ public class FechasUtils {
         return fecha.substring(8, 10) + "-" + fecha.substring(5, 7) + "-" + fecha.substring(0, 4);
     }
     /**
+     * Dada una fecha de mysql (aaaa-mm-dd hh:mm:ss) genera la fecha estandar con el separador que se le pasa como parámetro
+     * @param fecha
+     * @param separador
+     * @return 
+     */
+    public static String fechaYHora(String fecha, String separador) {
+        if ((fecha == null) || (fecha.equalsIgnoreCase("")) || (fecha.equals("0000-00-00"))) {
+            return "";
+        }
+        return fecha.substring(8, 10) + separador + fecha.substring(5, 7) + separador + fecha.substring(0, 4) + " "+fecha.substring(11) ;
+    }
+    
+    /**
+     * Dada una fecha de mysql (aaaa-mm-dd hh:mm:ss) genera la fecha estandar con el separador /
+     * Se puede usar la funcion fechaYHora(String fecha, String separador) si necesitamos otro separador
+     * @param fecha
+     * @return 
+     */
+    public static String fechaYHora(String fecha) {
+        return fechaYHora(fecha,"/");
+    }
+    /**
      * Dada una fecha en formato MySQL (aaaa-mm-dd) genera la fecha estandar
      * española (dd-mm-aaaa) pero con el delimitador que se le pase, que
      * puede ser /, un espacio, nada, ...
@@ -209,7 +231,13 @@ public class FechasUtils {
         }
         return dia + separador + mes + separador + anio;
     }
-
+/**
+ * Dado el mes nos dice su numero (1-> Enero, ...) y si el mes es Todos nos devuelve 0.
+ * No es case sensitive.
+ * @param mes
+ * @return
+ * @throws Exception 
+ */
     public static String getNumMes(String mes) throws Exception {
         if ("Enero".equalsIgnoreCase(mes)) {
             return "01";
@@ -235,6 +263,8 @@ public class FechasUtils {
             return "11";
         } else if ("Diciembre".equalsIgnoreCase(mes)) {
             return "12";
+        } else if("Todos".equalsIgnoreCase(mes)){
+            return "0";
         } else {
             throw new Exception("Error al convertir el mes " + mes + " a número");
         }

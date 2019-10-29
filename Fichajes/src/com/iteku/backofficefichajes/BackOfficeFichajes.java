@@ -9,6 +9,7 @@ import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.informes.ImpresionInforme;
+import com.iteku.informes.ListaProfesoresInforme;
 import com.iteku.recuento.Contabilizar;
 import com.iteku.utils.FechasUtils;
 import com.itextpdf.text.DocumentException;
@@ -362,7 +363,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Contabilizar contar=new Contabilizar();
+        /**Contabilizar contar=new Contabilizar();
         contar.contabilizarConMesYProfesor(profesorSeleccionado, 10);
         try {
             new ImpresionInforme((ArrayList<ProfesorBean>)null, 2).generarDocuemnto();
@@ -370,7 +371,14 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             Logger.getLogger(BackOfficeFichajes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
             Logger.getLogger(BackOfficeFichajes.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
+        JDialog frame = new JDialog(this, "Gestion de eventos", true);
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        frame.getContentPane().add(new ListaProfesoresInforme());
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        frame.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

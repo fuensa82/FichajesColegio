@@ -221,7 +221,7 @@ public class GestionProfesoresBD {
     }
 /**
  * Genera la fichas de horario de todos los prefesores para el curso en curso.
- * @param idProfesor
+ * @param profesor Con que contenga el idProfesor es suficiente.
  * @return 
  */
     public static ArrayList<FichaBean> getListaFichasCurso(ProfesorBean profesor, String tipoHora) {
@@ -260,5 +260,32 @@ public class GestionProfesoresBD {
             }
         }
         return result;
+    }
+
+    public static String getFechaUltInforme(ProfesorBean profesor) {
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement consulta = conexion.prepareStatement(
+                    "SELECT idInforme, fechaGeneracion, mes, idProfesor, observaciones, curso, horasL, horasNL, horasC FROM informes WHERE idProfesor=? AND curso=? order by fechaGeneracion DESC LIMIT 1");
+            consulta.setString(1, ""+profesor.getIdProfesor());
+            consulta.setString(2, FechasUtils.getCursoActual());
+            ResultSet resultado = consulta.executeQuery();
+            if(!resultado.next()){
+                return null;
+            }
+            return resultado.getString(2);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+        } finally {
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return "";
     }
 }

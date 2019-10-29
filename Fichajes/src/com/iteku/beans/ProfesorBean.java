@@ -21,6 +21,14 @@ public class ProfesorBean {
     private int idTarjeta;
     private long currentTimeMillis;
     private boolean enEvento;
+    private String fechaUltimoInforme;
+    
+    public String getFechaUltimoInforme(){
+        if(fechaUltimoInforme==null || "".equals(fechaUltimoInforme)){
+            fechaUltimoInforme=GestionProfesoresBD.getFechaUltInforme(this);
+        }
+        return fechaUltimoInforme;
+    }
     
     public String toString(){
         return idProfesor+" - "+nombreCorto+" - "+nombre+" - "+apellidos+" - "+enEvento; 
