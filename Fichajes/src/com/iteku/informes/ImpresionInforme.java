@@ -6,10 +6,9 @@
 package com.iteku.informes;
 
 //import com.itextpdf.kernel.pdf.PdfName.Document;
+import com.iteku.backofficefichajes.Config;
 import com.iteku.beans.ProfesorBean;
-import com.iteku.utils.FechaExternaNTP;
 import com.iteku.utils.FechasUtils;
-import com.iteku.utils.Utils;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -21,9 +20,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  *
@@ -81,12 +78,12 @@ public class ImpresionInforme {
         documento.add(tabla);
     }
     
-    public void generarDocuemnto()throws FileNotFoundException, DocumentException{
+    public void generarDocuementoMes()throws FileNotFoundException, DocumentException{
         // Se crea el documento
         Document documento = new Document();
 
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
-        FileOutputStream ficheroPdf = new FileOutputStream("fichero"+profesor.getNombreCorto()+".pdf");
+        FileOutputStream ficheroPdf = new FileOutputStream(Config.rutaPrograma+"\\informes\\informe"+profesor.getNombreCorto()+"_"+mes+".pdf");
 
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
         // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento
