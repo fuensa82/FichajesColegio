@@ -133,7 +133,7 @@ public class Contabilizar {
                     detalleInforme.setHoraIni(fichasHorario.get(j).getHoraIni());
                     detalleInforme.setHoraFin(fichasHorario.get(j).getHoraFin());
                     detalleInforme.setTipoHora(tipoHora);
-                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme);
+                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 1 - contabilizaHorasLectivasOCmplementarias");
                     
                     //Creamos el fichaje ficticio nuevo, para no perder las horas
                     FichajeRecuentoBean fichajeResto=new FichajeRecuentoBean(fichaje);
@@ -154,7 +154,7 @@ public class Contabilizar {
                     detalleInforme.setHoraIni(fichasHorario.get(j).getHoraIni());
                     detalleInforme.setHoraFin(fichaje.getHoraSalida());
                     detalleInforme.setTipoHora(tipoHora);
-                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme);
+                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 2 - contabilizaHorasLectivasOCmplementarias");
                     
                     fichaje.setHoraSalida(fichasHorario.get(j).getHoraIni());
                     //listaFichajesRecuento.add(i+1, fichajeResto);
@@ -170,7 +170,7 @@ public class Contabilizar {
                     detalleInforme.setHoraIni(fichaje.getHoraEntrada());
                     detalleInforme.setHoraFin(fichasHorario.get(j).getHoraFin());
                     detalleInforme.setTipoHora(tipoHora);
-                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme);
+                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 3 - contabilizaHorasLectivasOCmplementarias");
                     
                     fichaje.setHoraEntrada(fichasHorario.get(j).getHoraFin());
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0
@@ -185,7 +185,7 @@ public class Contabilizar {
                     detalleInforme.setHoraIni(fichaje.getHoraEntrada());
                     detalleInforme.setHoraFin(fichaje.getHoraSalida());
                     detalleInforme.setTipoHora(tipoHora);
-                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme);
+                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme," Ultimmo caso - contabilizaHorasLectivasOCmplementarias");
                     
                     //Se ha completado todo el tiempo, se borra el fichaje para no tratarlo más.
                     listaFichajesRecuento.remove(i);
@@ -221,7 +221,7 @@ public class Contabilizar {
             detalleInforme.setHoraIni(fichajeRecuento.getHoraEntrada());
             detalleInforme.setHoraFin(fichajeRecuento.getHoraSalida());
             detalleInforme.setTipoHora("NL");
-            GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme);
+            GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasNoLectivas");
                     
         }
         return segundos;

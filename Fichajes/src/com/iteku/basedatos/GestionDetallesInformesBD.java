@@ -71,7 +71,7 @@ public class GestionDetallesInformesBD {
      * @param evento
      * @return 
      */
-    public static boolean guardaDetalleInforme(DetalleInformeBean detalle) {
+    public static boolean guardaDetalleInforme(DetalleInformeBean detalle, String llamada) {
         boolean result=false;
         
         Connection conexion = null;
@@ -80,7 +80,7 @@ public class GestionDetallesInformesBD {
             boolean ejecutar=false;
 
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`detallesinformes` (`idProfesor`, `totalHoras`, `horaIni`, `horaFin`,`fecha`,`tipoHora`, `totalHorasString`) VALUES (?, ?,?, ?, ?, ?, ?);"
+                    "INSERT INTO `colsan`.`detallesinformes` (`idProfesor`, `totalHoras`, `horaIni`, `horaFin`,`fecha`,`tipoHora`, `totalHorasString`,`llamada`) VALUES (?, ?,?, ?, ?, ?, ?, ?);"
             );
             insert1.setString(1, ""+detalle.getIdProfesor());
             insert1.setString(2, ""+detalle.getTotalHoras());
@@ -89,6 +89,7 @@ public class GestionDetallesInformesBD {
             insert1.setString(5, FechasUtils.fechaParaMysql(detalle.getFecha()));
             insert1.setString(6, detalle.getTipoHora());
             insert1.setString(7, Utils.convierteSegundos(detalle.getTotalHoras()));
+            insert1.setString(8, llamada);
             insert1.executeUpdate();
             return true; //Correcto
 
