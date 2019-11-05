@@ -102,6 +102,20 @@ public class UtilsContabilizar {
         return GestionProfesoresBD.getListaFichasCurso(profesor, tipoHora);
         
     }
+    
+    /**
+     * 
+     * @param diaCompleto
+     * @param profesor
+     * @param mes
+     * @return 
+     */
+    public static ArrayList<FichaBean> getFichasRecuentoEventos(boolean diaCompleto,ProfesorBean profesor, int mes){
+        ArrayList<FichaBean> listaFichas=new ArrayList<FichaBean>();
+        
+        return listaFichas;
+    }
+    
     /**
      * 
      * @param profesor
@@ -110,7 +124,7 @@ public class UtilsContabilizar {
      */
     public static ArrayList<FichaBean> getHorarioCompacto(ProfesorBean profesor, String tipoHora){
         ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorario(profesor, tipoHora);
-        UtilsContabilizar.imprimeHorario(listaFichas);
+        //UtilsContabilizar.imprimeHorario(listaFichas);
         for(int i=listaFichas.size()-1;i>0;i--){ //Recorremos la lista desde el final al principio
             FichaBean fichaActual=listaFichas.get(i);
             FichaBean fichaAnterior=listaFichas.get(i-1);
@@ -125,7 +139,7 @@ public class UtilsContabilizar {
                 //System.out.println("No se borra por no coincidir el dia");
             }
         }
-        UtilsContabilizar.imprimeHorario(listaFichas);
+        //UtilsContabilizar.imprimeHorario(listaFichas);
         return listaFichas;
     }
     
@@ -158,4 +172,5 @@ public class UtilsContabilizar {
             return segundosm-segundosM;
         }
     }
+
 }

@@ -32,6 +32,54 @@ public class GestionEventosBD {
     }
     /**
      * 
+     * @param isCompleto
+     * @param profesor
+     * @param mes
+     * @return 
+     */
+    public static ArrayList<EventoBean> getListaEventosProfesor(boolean isCompleto, ProfesorBean profesor, int mes){
+        ArrayList<EventoBean> listaResult = new ArrayList<>();
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            EventoBean evento;
+            PreparedStatement consulta;
+            
+            consulta = conexion.prepareStatement("SELECT eventos.idEvento, fecha, horaIni, horaFin, diaCompleto, descripcion FROM eventoprofesor, eventos" +
+                                                " WHERE eventoprofesor.idProfesor=? AND eventoprofesor.idEvento=eventos.idEvento" +
+                                                " AND curso=?");
+            consulta.setString(2, FechasUtils.getCursoActual());
+            consulta.setString(1, ""+profesor.getIdProfesor());
+            
+            
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()){
+                if("true".equals(resultado.getString(5).trim())==isCompleto){
+                    evento=new EventoBean();
+                    evento.setIdEvento(resultado.getInt(1));
+                    evento.setFecha(FechasUtils.fecha(resultado.getString(2), "/"));
+                    evento.setHoraIni(resultado.getString(3));
+                    evento.setHoraFin(resultado.getString(4));
+                    evento.setDiaCompleto("true".equals(resultado.getString(5).trim())?true:false);
+                    evento.setDescripcion(resultado.getString(6));
+                    listaResult.add(evento);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return listaResult;
+    }
+    /**
+     * 
      * @param mes de 1 a 12 para los meses y 0 para todos los meses
      * @return 
      */
@@ -82,10 +130,8 @@ public class GestionEventosBD {
         return listaProfesoresEvento;
     }
     /**
-     * 
-        SELECT profesores.idProfesor, profesores.nombre, profesores.nombreCorto FROM profesores, eventoprofesor 
-        WHERE eventoprofesor.idEvento=? AND eventoprofesor.idProfesor=profesores.idProfesor
-                
+     *  SELECT profesores.idProfesor, profesores.nombre, profesores.nombreCorto FROM profesores, eventoprofesor 
+     *  WHERE eventoprofesor.idEvento=? AND eventoprofesor.idProfesor=profesores.idProfesor
      */
     public static ArrayList<ProfesorBean> getListaProfesoresEnEvento(EventoBean evento, boolean enEvento){
         ArrayList<ProfesorBean> result;
