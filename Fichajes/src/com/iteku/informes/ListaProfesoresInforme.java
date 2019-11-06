@@ -307,9 +307,12 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
     private javax.swing.JTable jTableProfesores;
     // End of variables declaration//GEN-END:variables
 
+    
     private void hiloContabiliza(ArrayList<ProfesorBean> listaProfesores2, int mes) {
         Contabilizar conta = new Contabilizar();
+        System.out.println("Total contabilizaciones: "+totalContabilizaciones);
         for (ProfesorBean profesor : listaProfesores2) {
+            System.out.println("Barra progreso: "+barraProgreso);
             barraProgreso += 1 / (totalContabilizaciones / 100);
             jProgressBar1.setValue((int) barraProgreso);
             //jProgressBar1.repaint();
@@ -323,9 +326,15 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
                 Logger.getLogger(ListaProfesoresInforme.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
     }
 
+    /**
+     * Lanza un hilo que se encarga de contabilizar 
+     * @param listaProfesores2
+     * @param mes
+     * @throws FileNotFoundException
+     * @throws DocumentException 
+     */
     private void contabiliza(ArrayList<ProfesorBean> listaProfesores2, int mes) throws FileNotFoundException, DocumentException {
         Runnable miRunnable = new Runnable() {
             @Override
@@ -339,7 +348,6 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
                     for (int i = 0; i < Config.arrayMes.length; i++) {
                         hiloContabiliza(listaProfesores2, Config.arrayMes[i]);
                     }
-                    
                 }
                 System.out.println("Fin del hilo");
                 JOptionPane.showMessageDialog(null, "Generacion completada");
@@ -348,7 +356,6 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
                 totalContabilizaciones=0;
                 barraProgreso=0;
             }
-
         };
         Thread hilo = new Thread (miRunnable);
         hilo.start();

@@ -15,7 +15,6 @@ import com.iteku.beans.FichaBean;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.FichajeRecuentoBean;
 import com.iteku.beans.ProfesorBean;
-import com.iteku.informes.ImpresionInforme;
 import com.iteku.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,21 +61,21 @@ public class Contabilizar {
         /**
          * Contabilizamos la horas no lectivas (el resto de lo que quede en los fichajes.
          */
-        int segundosNLectivos=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor);
+        int segundosNLectivos=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor, true);
         
-        System.out.println("Segundos de horas lectivas:        "+Utils.convierteSegundos(segundosLectivos));
-        System.out.println("Segundos de horas complementarias: "+Utils.convierteSegundos(segundosComplementarios));
-        System.out.println("Segundos de horas no lectivas:     "+Utils.convierteSegundos(segundosNLectivos));
-        System.out.println("Total:                             "+Utils.convierteSegundos((segundosComplementarios+segundosLectivos+segundosNLectivos)));
+//        System.out.println("Segundos de horas lectivas:        "+Utils.convierteSegundos(segundosLectivos));
+//        System.out.println("Segundos de horas complementarias: "+Utils.convierteSegundos(segundosComplementarios));
+//        System.out.println("Segundos de horas no lectivas:     "+Utils.convierteSegundos(segundosNLectivos));
+//        System.out.println("Total:                             "+Utils.convierteSegundos((segundosComplementarios+segundosLectivos+segundosNLectivos)));
         
         /**
          * Comprobacion
          */
         listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
         listaFichajesRecuento= UtilsContabilizar.convertirFichajes(listaFichajes);
-        int segundosValidacion=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor);
+        int segundosValidacion=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor, false);
         int segundosValidacion2=segundosComplementarios+segundosLectivos+segundosNLectivos;
-        System.out.println("Comprobacion: "+Utils.convierteSegundos(segundosValidacion));
+        //System.out.println("Comprobacion: "+Utils.convierteSegundos(segundosValidacion));
         String obser=segundosValidacion==segundosValidacion2?"Correcto":"No coinciden las horas en el colegio, con las horas calculadas de cada tipo";
         
         //Guardamos en la base de datos
@@ -105,27 +104,27 @@ public class Contabilizar {
             detalleInforme.setIdProfesor(profesor.getIdProfesor());
             fichaje=listaFichajesRecuento.get(i);
             fichasHorario=horario.get(""+fichaje.getDiaSemana());
-            System.out.println("Fichashorarios: "+fichasHorario.size());
+//            System.out.println("Fichashorarios: "+fichasHorario.size());
             boolean seguir=true;
             for(int j=0;j<fichasHorario.size() && seguir;j++){
-                System.out.println("Comparando i="+i+" j="+j);
-                System.out.println("            Fichas      Fichajes");
-                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
-                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
+//                System.out.println("Comparando i="+i+" j="+j);
+//                System.out.println("            Fichas      Fichajes");
+//                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
+//                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
                 //Caso. Se empieza la ficha de horario estando en el centro y se termina la ficha estando en el centro
                 if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraSalida())>=0){
-                    System.out.println("Caso todo antes");
-                    System.out.println("Fichaje:============");
-                    System.out.println("Ficha:                ======");
+//                    System.out.println("Caso todo antes");
+//                    System.out.println("Fichaje:============");
+//                    System.out.println("Ficha:                ======");
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraEntrada())<=0) {
-                    System.out.println("Caso todo despues");
-                    System.out.println("Fichaje:         ============");
-                    System.out.println("Ficha:  ======");
+//                    System.out.println("Caso todo despues");
+//                    System.out.println("Fichaje:         ============");
+//                    System.out.println("Ficha:  ======");
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0 
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
-                    System.out.println("Caso 1");
-                    System.out.println("Fichaje:============");
-                    System.out.println("Ficha:     ======");
+//                    System.out.println("Caso 1");
+//                    System.out.println("Fichaje:============");
+//                    System.out.println("Ficha:     ======");
                     segundos+=UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichasHorario.get(j).getHoraFin());
                     
                     detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichasHorario.get(j).getHoraFin()));
@@ -144,9 +143,9 @@ public class Contabilizar {
                     i++; //Como hemos añadido un item más a la lista y la estamos recorriendo al reves, hay que mantener el indice para que este nuevo item tambien sea tratado.
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())>0){
-                    System.out.println("Caso 2");
-                    System.out.println("Fichaje:============");
-                    System.out.println("Ficha:         ===========");
+//                    System.out.println("Caso 2");
+//                    System.out.println("Fichaje:============");
+//                    System.out.println("Ficha:         ===========");
                     segundos+=UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichaje.getHoraSalida());
                     
                     detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichaje.getHoraSalida()));
@@ -160,9 +159,9 @@ public class Contabilizar {
                     //listaFichajesRecuento.add(i+1, fichajeResto);
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())<=0
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
-                    System.out.println("Caso 3");
-                    System.out.println("Fichaje:   ============");
-                    System.out.println("Ficha:  ======");
+//                    System.out.println("Caso 3");
+//                    System.out.println("Fichaje:   ============");
+//                    System.out.println("Ficha:  ======");
                     segundos+=UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichasHorario.get(j).getHoraFin());
                     
                     detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichasHorario.get(j).getHoraFin()));
@@ -175,9 +174,9 @@ public class Contabilizar {
                     fichaje.setHoraEntrada(fichasHorario.get(j).getHoraFin());
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
-                    System.out.println("Fichaje:   =======");
-                    System.out.println("Ficha:  =============");
-                    System.out.println("Caso 4");
+//                    System.out.println("Fichaje:   =======");
+//                    System.out.println("Ficha:  =============");
+//                    System.out.println("Caso 4");
                     segundos+=UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichaje.getHoraSalida());
                     
                     detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichaje.getHoraSalida()));
@@ -191,16 +190,16 @@ public class Contabilizar {
                     listaFichajesRecuento.remove(i);
                     seguir=false;
                 }else{
-                    System.out.println("ERROR: por aquí no debería pasar, ya se deberían haber tratado todos los casos");
+//                    System.out.println("ERROR: por aquí no debería pasar, ya se deberían haber tratado todos los casos");
                     
                 }
-                System.out.println("Resultado ->Fichas      Fichajes");
-                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
-                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
-                System.out.println("***********************************************************");
+                //System.out.println("Resultado ->Fichas      Fichajes");
+//                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
+//                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
+//                System.out.println("***********************************************************");
             }
         }
-        System.out.println("Hashmap: "+horario.toString());
+        //System.out.println("Hashmap: "+horario.toString());
         return segundos;
     }
 
@@ -209,7 +208,7 @@ public class Contabilizar {
      * @param listaFichajesRecuento
      * @return 
      */
-    private int contabilizaHorasNoLectivas(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ProfesorBean profesor) {
+    private int contabilizaHorasNoLectivas(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ProfesorBean profesor, boolean guardar) {
         int segundos=0;
         for (FichajeRecuentoBean fichajeRecuento : listaFichajesRecuento) {
             segundos+=UtilsContabilizar.dimeDuracion(fichajeRecuento.getHoraEntrada(),fichajeRecuento.getHoraSalida());
@@ -221,7 +220,7 @@ public class Contabilizar {
             detalleInforme.setHoraIni(fichajeRecuento.getHoraEntrada());
             detalleInforme.setHoraFin(fichajeRecuento.getHoraSalida());
             detalleInforme.setTipoHora("NL");
-            GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasNoLectivas");
+            if(guardar)GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasNoLectivas");
                     
         }
         return segundos;
@@ -242,7 +241,7 @@ public class Contabilizar {
                 if(fichaje.getFecha().equals(evento.getFecha())){
                     segundos+=UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(), fichaje.getHoraSalida());
                     listaFichajesRecuento.remove(i);
-                    System.out.println("Fichaje en evento: "+fichaje.getFecha()+" "+fichaje.getHoraEntrada()+" "+fichaje.getHoraSalida());
+//                    System.out.println("Fichaje en evento: "+fichaje.getFecha()+" "+fichaje.getHoraEntrada()+" "+fichaje.getHoraSalida());
                 }
             }
         }

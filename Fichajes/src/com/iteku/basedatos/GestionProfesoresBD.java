@@ -83,12 +83,12 @@ public class GestionProfesoresBD {
             consulta.setString(2, ""+idProfesor);
             ResultSet resultado = consulta.executeQuery();
             if(!resultado.next()){
-                System.out.println("El profesor no está dentro. "+idProfesor);
+                //System.out.println("El profesor no está dentro. "+idProfesor);
                 return false;
             }
             String auxDentro=resultado.getString(2);
-            System.out.println("resultado base de datos: "+auxDentro.trim().length());
-            System.out.println("Trinario: "+auxDentro.trim().equalsIgnoreCase("false"));
+//            System.out.println("resultado base de datos: "+auxDentro.trim().length());
+//            System.out.println("Trinario: "+auxDentro.trim().equalsIgnoreCase("false"));
             //boolean 
             if(auxDentro.equalsIgnoreCase("true")){
                 

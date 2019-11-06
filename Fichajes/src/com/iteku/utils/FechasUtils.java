@@ -27,7 +27,7 @@ public class FechasUtils {
      * @return un char con el valor L, M, X, J, V, S, D o vacío si la fecha no tiene sentido, está mal formada, ...
      */
     public static char dimeDíaSemana(String fecha){
-        System.out.println("Fecha: "+fecha);
+        //System.out.println("Fecha: "+fecha);
         char dias[]=Config.dias;
         int year=Integer.parseInt(fecha.substring(6, 10));
         int mes=Integer.parseInt(fecha.substring(3, 5))-1; //Los meses van de 0 a 11.

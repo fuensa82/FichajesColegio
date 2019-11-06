@@ -7,8 +7,11 @@ package com.iteku.informes;
 
 //import com.itextpdf.kernel.pdf.PdfName.Document;
 import com.iteku.backofficefichajes.Config;
+import com.iteku.basedatos.GestionDetallesInformesBD;
+import com.iteku.beans.DetalleInformeBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
+import com.iteku.utils.Utils;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -36,6 +39,7 @@ public class ImpresionInforme {
     private static Font FuenteCabecera2=FontFactory.getFont("arial", 18, Font.ITALIC, BaseColor.BLACK);
     private static Font FuenteTextoNormal=FontFactory.getFont("arial", 14, Font.NORMAL, BaseColor.BLACK);
     private static Font FuenteTextoNegrita=FontFactory.getFont("arial", 14, Font.BOLD, BaseColor.BLACK);
+    private ArrayList<DetalleInformeBean> listaDetalles;
     
     public ImpresionInforme(ArrayList<ProfesorBean> ListaProfesores, int mes) {
         this.ListaProfesores=ListaProfesores;
@@ -61,28 +65,29 @@ public class ImpresionInforme {
         p2.add(c2);
         documento.add(p2);
         documento.add( Chunk.NEWLINE );
-        documento.add(new Paragraph("Fecha de generación de los datos: "));
+        documento.add(new Paragraph("Fecha de generación de los datos: "+listaDetalles.get(0).getFecha()));
         documento.add( Chunk.NEWLINE );
         documento.add(new Paragraph("Fecha de generación del informe: "+FechasUtils.dameFechaNTP()));
     }
     
     private void cuerpo(Document documento) throws DocumentException{
         
-        documento.add(new Paragraph("Este es el segundo y tiene una fuente rara",
-                                        FontFactory.getFont("arial",   // fuente
-                                        22,                            // tamaño
-                                        Font.ITALIC,                   // estilo
-                                        BaseColor.CYAN)));             // color
+        documento.add(new Paragraph("Informe de horas",FuenteTextoNormal));
 
-        PdfPTable tabla = new PdfPTable(3);
-        for (int i = 0; i < 15; i++)
-        {
-                tabla.addCell("celda " + i);
+        PdfPTable tabla = new PdfPTable(5);
+        for (DetalleInformeBean listaDetalle : listaDetalles) {
+            tabla.addCell(listaDetalle.getFecha());
+            tabla.addCell(listaDetalle.getHoraIni());
+            tabla.addCell(listaDetalle.getHoraFin());
+            tabla.addCell(listaDetalle.getTipoHora());
+            tabla.addCell(Utils.convierteSegundos(listaDetalle.getTotalHoras()));
         }
         documento.add(tabla);
     }
     
     public void generarDocuementoMes()throws FileNotFoundException, DocumentException{
+        
+        cargaDatosIniciales();
         // Se crea el documento
         Document documento = new Document();
 
@@ -97,5 +102,9 @@ public class ImpresionInforme {
         cuerpo(documento);
         documento.close();
 
+    }
+
+    private void cargaDatosIniciales() {
+        listaDetalles=GestionDetallesInformesBD.getListaDetallesInformes(profesor, mes);
     }
 }
