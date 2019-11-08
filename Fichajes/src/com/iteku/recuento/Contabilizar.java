@@ -15,7 +15,6 @@ import com.iteku.beans.FichaBean;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.FichajeRecuentoBean;
 import com.iteku.beans.ProfesorBean;
-import com.iteku.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,6 +29,8 @@ public class Contabilizar {
      * @param mes 
      */
     public void contabilizarConMesYProfesor(ProfesorBean profesor, int mes){
+        GestionDetallesInformesBD.deleteDetallesInforme(profesor, mes);        
+
         //Preparamos todos los datos. Lista de fichas de horario.
         ArrayList<FichajeBean> listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
         ArrayList<FichajeRecuentoBean> listaFichajesRecuento= UtilsContabilizar.convertirFichajes(listaFichajes);
@@ -50,18 +51,18 @@ public class Contabilizar {
          * Contabilizamos las horas lectivas
          */
         ArrayList<FichaBean> listaFichasLectivas=UtilsContabilizar.getHorarioCompacto(profesor, "L");
-        int segundosLectivos=contabilizaHorasLectivasOCmplementarias(listaFichajesRecuento, listaFichasLectivas, profesor,"L");
+        int segundosLectivos=contabilizaHorasLectivasOCmplementarias(listaFichajesRecuento, listaFichasLectivas, profesor,"L", mes);
         
         /**
          * Contabilizar horas complementarias
          */
         ArrayList<FichaBean> listaFichasComplementarias=UtilsContabilizar.getHorarioCompacto(profesor, "C");
-        int segundosComplementarios=contabilizaHorasLectivasOCmplementarias(listaFichajesRecuento, listaFichasComplementarias, profesor,"C");
+        int segundosComplementarios=contabilizaHorasLectivasOCmplementarias(listaFichajesRecuento, listaFichasComplementarias, profesor,"C", mes);
         
         /**
          * Contabilizamos la horas no lectivas (el resto de lo que quede en los fichajes.
          */
-        int segundosNLectivos=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor, true);
+        int segundosNLectivos=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor, true, mes);
         
 //        System.out.println("Segundos de horas lectivas:        "+Utils.convierteSegundos(segundosLectivos));
 //        System.out.println("Segundos de horas complementarias: "+Utils.convierteSegundos(segundosComplementarios));
@@ -73,7 +74,7 @@ public class Contabilizar {
          */
         listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
         listaFichajesRecuento= UtilsContabilizar.convertirFichajes(listaFichajes);
-        int segundosValidacion=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor, false);
+        int segundosValidacion=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor, false, mes);
         int segundosValidacion2=segundosComplementarios+segundosLectivos+segundosNLectivos;
         //System.out.println("Comprobacion: "+Utils.convierteSegundos(segundosValidacion));
         String obser=segundosValidacion==segundosValidacion2?"Correcto":"No coinciden las horas en el colegio, con las horas calculadas de cada tipo";
@@ -94,7 +95,8 @@ public class Contabilizar {
      * @param listaFichas
      * @return Los segundos que se han completado de horas lectivas, luego si se quiere se pasaran a horas, minutos
      */
-    private int contabilizaHorasLectivasOCmplementarias(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ArrayList<FichaBean> listaFichas, ProfesorBean profesor, String tipoHora) {
+    private int contabilizaHorasLectivasOCmplementarias(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ArrayList<FichaBean> listaFichas, ProfesorBean profesor, String tipoHora, int mes) {
+        
         HashMap<String,ArrayList<FichaBean>> horario=UtilsContabilizar.convertirHorario(listaFichas);
         int segundos=0;
         FichajeRecuentoBean fichaje;
@@ -132,7 +134,7 @@ public class Contabilizar {
                     detalleInforme.setHoraIni(fichasHorario.get(j).getHoraIni());
                     detalleInforme.setHoraFin(fichasHorario.get(j).getHoraFin());
                     detalleInforme.setTipoHora(tipoHora);
-                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 1 - contabilizaHorasLectivasOCmplementarias");
+                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 1 - contabilizaHorasLectivasOCmplementarias", mes);
                     
                     //Creamos el fichaje ficticio nuevo, para no perder las horas
                     FichajeRecuentoBean fichajeResto=new FichajeRecuentoBean(fichaje);
@@ -153,7 +155,7 @@ public class Contabilizar {
                     detalleInforme.setHoraIni(fichasHorario.get(j).getHoraIni());
                     detalleInforme.setHoraFin(fichaje.getHoraSalida());
                     detalleInforme.setTipoHora(tipoHora);
-                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 2 - contabilizaHorasLectivasOCmplementarias");
+                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 2 - contabilizaHorasLectivasOCmplementarias", mes);
                     
                     fichaje.setHoraSalida(fichasHorario.get(j).getHoraIni());
                     //listaFichajesRecuento.add(i+1, fichajeResto);
@@ -169,7 +171,7 @@ public class Contabilizar {
                     detalleInforme.setHoraIni(fichaje.getHoraEntrada());
                     detalleInforme.setHoraFin(fichasHorario.get(j).getHoraFin());
                     detalleInforme.setTipoHora(tipoHora);
-                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 3 - contabilizaHorasLectivasOCmplementarias");
+                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 3 - contabilizaHorasLectivasOCmplementarias", mes);
                     
                     fichaje.setHoraEntrada(fichasHorario.get(j).getHoraFin());
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0
@@ -184,7 +186,7 @@ public class Contabilizar {
                     detalleInforme.setHoraIni(fichaje.getHoraEntrada());
                     detalleInforme.setHoraFin(fichaje.getHoraSalida());
                     detalleInforme.setTipoHora(tipoHora);
-                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme," Ultimmo caso - contabilizaHorasLectivasOCmplementarias");
+                    GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme," Ultimmo caso - contabilizaHorasLectivasOCmplementarias", mes);
                     
                     //Se ha completado todo el tiempo, se borra el fichaje para no tratarlo más.
                     listaFichajesRecuento.remove(i);
@@ -208,7 +210,7 @@ public class Contabilizar {
      * @param listaFichajesRecuento
      * @return 
      */
-    private int contabilizaHorasNoLectivas(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ProfesorBean profesor, boolean guardar) {
+    private int contabilizaHorasNoLectivas(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ProfesorBean profesor, boolean guardar, int mes) {
         int segundos=0;
         for (FichajeRecuentoBean fichajeRecuento : listaFichajesRecuento) {
             segundos+=UtilsContabilizar.dimeDuracion(fichajeRecuento.getHoraEntrada(),fichajeRecuento.getHoraSalida());
@@ -220,7 +222,7 @@ public class Contabilizar {
             detalleInforme.setHoraIni(fichajeRecuento.getHoraEntrada());
             detalleInforme.setHoraFin(fichajeRecuento.getHoraSalida());
             detalleInforme.setTipoHora("NL");
-            if(guardar)GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasNoLectivas");
+            if(guardar)GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasNoLectivas", mes);
                     
         }
         return segundos;

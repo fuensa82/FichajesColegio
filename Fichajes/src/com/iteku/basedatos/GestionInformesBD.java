@@ -5,11 +5,15 @@
  */
 package com.iteku.basedatos;
 
+import com.iteku.beans.DetalleInformeBean;
+import com.iteku.beans.InformeBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -53,4 +57,47 @@ public class GestionInformesBD {
         
         return result;
     }
+    
+    public static InformeBean getTotalInformes(ProfesorBean profesor, int mes){
+        Connection conexion = null;
+        
+        try {
+            conexion=ConectorBD.getConnection();
+            InformeBean informe=new InformeBean();
+            PreparedStatement consulta;
+            
+            consulta = conexion.prepareStatement("SELECT idInforme, fechaGeneracion, mes, idProfesor, observaciones, curso, horasL, horasNL, horasC FROM informes where idProfesor=? AND mes=? ORDER BY fechaGeneracion desc LIMIT 1");
+            consulta.setString(1, ""+profesor.getIdProfesor());
+            consulta.setString(2, ""+mes);
+            
+            
+            ResultSet resultado = consulta.executeQuery();
+            if (resultado.next()) {
+                informe.setIdInforme(resultado.getInt(1));
+                informe.setFechaGeneracion(FechasUtils.fechaYHora(resultado.getString(2)));
+                informe.setMes(resultado.getInt(3));
+                informe.setIdProfesor(resultado.getInt(4));
+                informe.setObservaciones(resultado.getString(5));
+                informe.setCurso(resultado.getString(6));
+                informe.setHorasL(resultado.getInt(7));
+                informe.setHorasNL(resultado.getInt(8));
+                informe.setHorasC(resultado.getInt(9));
+            return informe;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        
+        return null;
+    }
+    
+    
 }

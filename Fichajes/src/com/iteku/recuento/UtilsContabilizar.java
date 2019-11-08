@@ -160,12 +160,12 @@ public class UtilsContabilizar {
     public static int dimeDuracion(String hIni, String hFin){
         int horasM=Integer.parseInt(hIni.substring(0, 2));
         int minutosM=Integer.parseInt(hIni.substring(3, 5));
-        int segundosM=Integer.parseInt(hIni.substring(7))+minutosM*60+horasM*60*60;
+        int segundosM=Integer.parseInt(hIni.substring(6))+minutosM*60+horasM*60*60;
         
         int horasm=Integer.parseInt(hFin.substring(0, 2));
         int minutosm=Integer.parseInt(hFin.substring(3, 5));
-        int segundosm=Integer.parseInt(hFin.substring(7))+minutosm*60+horasm*60*60;
-        
+        int segundosm=Integer.parseInt(hFin.substring(6))+minutosm*60+horasm*60*60;
+        //System.out.println(""+Integer.parseInt(hFin.substring(0, 2))+" "+Integer.parseInt(hFin.substring(3, 5))+" "+Integer.parseInt(hFin.substring(6)));
         if(segundosM>segundosm){
             return segundosM-segundosm;
         }else{

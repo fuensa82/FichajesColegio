@@ -10,9 +10,24 @@ package com.iteku.beans;
  * @author vPalomo
  */
 public class DetalleInformeBean {
-    private int idDetalleInforme, idProfesor, totalHoras;
-    private String horaIni, horaFin, fecha, tipoHora;
+    private int idDetalleInforme, idProfesor, totalHoras, mes;
+    private String horaIni, horaFin, fecha, tipoHora, fechaCalculo;
 
+    public String getFechaCalculo() {
+        return fechaCalculo;
+    }
+
+    public void setFechaCalculo(String fechaCalculo) {
+        this.fechaCalculo = fechaCalculo;
+    }
+    
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
     public int getIdDetalleInforme() {
         return idDetalleInforme;
     }
