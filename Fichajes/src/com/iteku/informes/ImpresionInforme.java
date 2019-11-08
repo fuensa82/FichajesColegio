@@ -37,6 +37,7 @@ public class ImpresionInforme {
     
     private ProfesorBean profesor;
     private int mes;
+    private String curso;
     private static Font FuenteCabecera1=FontFactory.getFont("arial", 22, Font.UNDERLINE, BaseColor.BLACK);
     private static Font FuenteCabecera2=FontFactory.getFont("arial", 18, Font.ITALIC, BaseColor.BLACK);
     private static Font FuenteTextoNormal=FontFactory.getFont("arial", 14, Font.NORMAL, BaseColor.BLACK);
@@ -50,12 +51,21 @@ public class ImpresionInforme {
         this.profesor=profesor;
         this.mes=mes;
     }
+
+    public ImpresionInforme(ProfesorBean profesor) {
+        this.profesor=profesor;
+        this.curso=FechasUtils.getCursoActual();
+    }
     
     private void cabecera(Document documento) throws DocumentException{
         Paragraph p=new Paragraph("COLEGIO SAN JOSE",FuenteCabecera1);
         p.setAlignment(Chunk.ALIGN_CENTER);
         documento.add(p);
-        documento.add(new Paragraph("Informe de horas del mes de "+FechasUtils.getMesNum(mes),FuenteCabecera2)); 
+        if(mes==0){
+            documento.add(new Paragraph("Informe de horas del curso "+curso,FuenteCabecera2));
+        }else{
+            documento.add(new Paragraph("Informe de horas del mes de "+FechasUtils.getMesNum(mes),FuenteCabecera2)); 
+        }
         Chunk c1 = new Chunk("Nombre y apellidos:  ", FuenteTextoNormal);
         Chunk c2 = new Chunk(profesor.getNombre()+" "+profesor.getApellidos(),FuenteTextoNegrita);
         Paragraph p2=new Paragraph();
@@ -133,6 +143,20 @@ public class ImpresionInforme {
         p2.add(c1);
         p2.add(c2);
         documento.add(p2);
+        
+    }
+
+    void generarDocuementoCurso() throws FileNotFoundException, DocumentException{
+        Document documento = new Document();
+
+        // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
+        FileOutputStream ficheroPdf = new FileOutputStream(Config.rutaPrograma+"\\informes\\informe"+profesor.getNombreCorto()+"_"+mes+".pdf");
+
+        // Se asocia el documento al OutputStream y se indica que el espaciado entre
+        // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento
+        PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
+        documento.open();
+        cabecera(documento);
         
     }
 }

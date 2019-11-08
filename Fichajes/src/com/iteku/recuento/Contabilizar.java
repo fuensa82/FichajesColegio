@@ -24,6 +24,13 @@ import java.util.HashMap;
  */
 public class Contabilizar {
     /**
+     * 
+     * @param profesor 
+     */
+    public void contabilizarAnualProfesor(ProfesorBean profesor){
+        
+    }
+    /**
      * Prepara todos los datos de un profesor y un mes concreto para empezar el recuento de dicho profesor.
      * @param profesor
      * @param mes 
