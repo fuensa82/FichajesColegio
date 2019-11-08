@@ -149,7 +149,7 @@ public class ImpresionInforme {
     void generarDocuementoCurso() throws FileNotFoundException, DocumentException{
         Document documento = new Document();
 
-        // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
+        // Se crea el OutputStream para el fichero donde queremos dejar el pdf .
         FileOutputStream ficheroPdf = new FileOutputStream(Config.rutaPrograma+"\\informes\\informe"+profesor.getNombreCorto()+"_"+mes+".pdf");
 
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
