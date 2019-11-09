@@ -65,11 +65,11 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jComboMes = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jButtonGenerar = new javax.swing.JButton();
+        jButtonInformeMes = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jProgressBar1 = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonInformeCurso = new javax.swing.JButton();
 
         jTableProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -134,10 +134,10 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
 
         jLabel3.setText("3. Pulse en Generar");
 
-        jButtonGenerar.setText("Generar informes");
-        jButtonGenerar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonInformeMes.setText("Generar informes mensual");
+        jButtonInformeMes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGenerarActionPerformed(evt);
+                jButtonInformeMesActionPerformed(evt);
             }
         });
 
@@ -155,10 +155,10 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Informe del curso");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonInformeCurso.setText("Generar recuento del curso");
+        jButtonInformeCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonInformeCursoActionPerformed(evt);
             }
         });
 
@@ -170,9 +170,9 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(236, 236, 236)
+                        .addGap(211, 211, 211)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,20 +186,18 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jComboMes, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(jLabel3))
+                                .addComponent(jButtonInformeMes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonInformeCurso))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jButtonGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(115, 115, 115)
+                                .addComponent(jLabel3)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -214,31 +212,29 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
                     .addComponent(jButton7))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(310, 310, 310)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(310, 310, 310)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonGenerar)
-                            .addComponent(jComboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButtonInformeMes)
+                            .addComponent(jComboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonInformeCurso))
+                        .addGap(11, 11, 11)
                         .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addGap(15, 15, 15)
                         .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(57, 57, 57)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(116, Short.MAX_VALUE)))
+                    .addContainerGap(87, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -260,8 +256,9 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboMesActionPerformed
 
-    private void jButtonGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerarActionPerformed
-        jButtonGenerar.setEnabled(false);
+    private void jButtonInformeMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInformeMesActionPerformed
+        jButtonInformeMes.setEnabled(false);
+        jButtonInformeCurso.setEnabled(false);
         try {
             int mes = Integer.parseInt(FechasUtils.getNumMes(jComboMes.getItemAt(jComboMes.getSelectedIndex())));
 
@@ -279,7 +276,7 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger.getLogger(ListaProfesoresInforme.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButtonGenerarActionPerformed
+    }//GEN-LAST:event_jButtonInformeMesActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Window w = SwingUtilities.getWindowAncestor(this);
@@ -295,10 +292,8 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonInformeCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInformeCursoActionPerformed
         try {
-            
-
             DefaultTableModel datosTabla = (DefaultTableModel) jTableProfesores.getModel();
             ArrayList<ProfesorBean> listaProfesores2 = new ArrayList<>();
             for (int i = 0; i < datosTabla.getRowCount(); i++) {
@@ -313,7 +308,7 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger.getLogger(ListaProfesoresInforme.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonInformeCursoActionPerformed
 
     private void cargarListaProfesores() {
         listaProfesores = GestionProfesoresBD.getListaProfesores();
@@ -336,10 +331,10 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButtonGenerar;
+    private javax.swing.JButton jButtonInformeCurso;
+    private javax.swing.JButton jButtonInformeMes;
     private javax.swing.JComboBox<String> jComboMes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -393,7 +388,8 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
                 }
                 System.out.println("Fin del hilo");
                 JOptionPane.showMessageDialog(null, "Generacion completada");
-                jButtonGenerar.setEnabled(true);
+                jButtonInformeMes.setEnabled(true);
+                jButtonInformeCurso.setEnabled(true);
                 jProgressBar1.setValue(0);
                 totalContabilizaciones=0;
                 barraProgreso=0;
@@ -408,13 +404,13 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
             @Override
             public void run() {
                 System.out.println("Comienza el hilo de contabilizacion anual");
-                    totalContabilizaciones = Config.arrayMes.length * listaProfesores2.size();
+                    totalContabilizaciones = listaProfesores2.size();
                     for (int i = 0; i < Config.arrayMes.length; i++) {
                         hiloContabilizaAnual(listaProfesores2);
                     }
-                System.out.println("Fin del hilo");
+                System.out.println("Fin del hilo anual");
                 JOptionPane.showMessageDialog(null, "Generacion completada");
-                jButtonGenerar.setEnabled(true);
+                jButtonInformeMes.setEnabled(true);
                 jProgressBar1.setValue(0);
                 totalContabilizaciones=0;
                 barraProgreso=0;
@@ -431,8 +427,6 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
             System.out.println("Barra progreso: "+barraProgreso);
             barraProgreso += 1 / (totalContabilizaciones / 100);
             jProgressBar1.setValue((int) barraProgreso);
-            //jProgressBar1.repaint();
-            conta.contabilizarAnualProfesor(profesor);
             ImpresionInforme pdf = new ImpresionInforme(profesor);
             try {
                 pdf.generarDocuementoCurso();

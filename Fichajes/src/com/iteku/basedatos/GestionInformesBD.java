@@ -5,7 +5,6 @@
  */
 package com.iteku.basedatos;
 
-import com.iteku.beans.DetalleInformeBean;
 import com.iteku.beans.InformeBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
@@ -13,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -23,11 +21,37 @@ import javax.naming.NamingException;
  * @author vPalomo
  */
 public class GestionInformesBD {
+    public static int deleteInforme(ProfesorBean profesor, int mes){
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            PreparedStatement consulta;
+            consulta = conexion.prepareStatement(
+                "DELETE FROM informes WHERE idProfesor=? and mes=?");
+            consulta.setString(1, ""+profesor.getIdProfesor());
+            consulta.setString(2, ""+mes);
+            int resultInt=consulta.executeUpdate();
+            return resultInt;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }    
+        return 0;
+    }
+    
     public static boolean guardaInforme(ProfesorBean p, String obser, int segundosL, int segundosNL, int segundosC, int mes){
         boolean result=false;
         
         Connection conexion = null;
         try {
+            GestionInformesBD.deleteInforme(p, mes);
             conexion = ConectorBD.getConnection();
             String sql="INSERT INTO `colsan`.`informes` (`mes`, `idProfesor`, `observaciones`, `curso`, `horasL`, `horasNL`, `horasC`) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?);";
