@@ -158,11 +158,37 @@ public class ImpresionInforme {
         documento.open();
         cabecera(documento);
         resumenTotalCurso(documento);
+        documento.close();
         
     }
 
-    private void resumenTotalCurso(Document documento) {
-        
-        
+    private void resumenTotalCurso(Document documento) throws DocumentException {
+        ArrayList<InformeBean> lista=GestionInformesBD.getTotalInformesCurso(profesor);
+        int segL=0;
+        int segNL=0;
+        int segC=0;
+        for (InformeBean informe: lista){
+            documento.add(new Paragraph(FechasUtils.getMesNum(informe.getMes()),FuenteTextoNegritaPe));
+            PdfPTable tabla = new PdfPTable(2);
+            tabla.addCell(new Phrase("Horas Lectivas (L):", FuenteTextoNegritaPe));
+            tabla.addCell(new Phrase(""+Utils.convierteSegundos(informe.getHorasL()), FuenteTextoNormalPe));
+            tabla.addCell(new Phrase("Horas No Lectivas (NL):", FuenteTextoNegritaPe));
+            tabla.addCell(new Phrase(""+Utils.convierteSegundos(informe.getHorasNL()), FuenteTextoNormalPe));
+            tabla.addCell(new Phrase("Horas Complementarias:", FuenteTextoNegritaPe));
+            tabla.addCell(new Phrase(""+Utils.convierteSegundos(informe.getHorasC()), FuenteTextoNormalPe));
+            documento.add(tabla);
+            segL+=informe.getHorasL();
+            segNL+=informe.getHorasNL();
+            segC+=informe.getHorasC();
+        }
+        documento.add(new Paragraph("Total curso "+FechasUtils.getCursoActual(),FuenteTextoNegritaPe));
+        PdfPTable tabla = new PdfPTable(2);
+        tabla.addCell(new Phrase("Horas Lectivas (L):", FuenteTextoNegritaPe));
+        tabla.addCell(new Phrase(""+Utils.convierteSegundos(segL), FuenteTextoNormalPe));
+        tabla.addCell(new Phrase("Horas No Lectivas (NL):", FuenteTextoNegritaPe));
+        tabla.addCell(new Phrase(""+Utils.convierteSegundos(segNL), FuenteTextoNormalPe));
+        tabla.addCell(new Phrase("Horas Complementarias:", FuenteTextoNegritaPe));
+        tabla.addCell(new Phrase(""+Utils.convierteSegundos(segC), FuenteTextoNormalPe));
+        documento.add(tabla);
     }
 }

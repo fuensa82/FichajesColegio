@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -108,6 +109,51 @@ public class GestionInformesBD {
                 informe.setHorasC(resultado.getInt(9));
             return informe;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }
+        
+        return null;
+    }
+    
+    public static ArrayList<InformeBean> getTotalInformesCurso(ProfesorBean profesor){
+        Connection conexion = null;
+        
+        try {
+            conexion=ConectorBD.getConnection();
+            InformeBean informe=new InformeBean();
+            ArrayList<InformeBean> result=new ArrayList<>();
+            PreparedStatement consulta;
+            
+            consulta = conexion.prepareStatement("SELECT idInforme, fechaGeneracion, mes, idProfesor, observaciones, curso, horasL, horasNL, horasC FROM informes where idProfesor=? AND curso=? ORDER BY mes");
+            consulta.setString(1, ""+profesor.getIdProfesor());
+            consulta.setString(2, ""+FechasUtils.getCursoActual());
+            
+            
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                informe=new InformeBean();
+                informe.setIdInforme(resultado.getInt(1));
+                informe.setFechaGeneracion(FechasUtils.fechaYHora(resultado.getString(2)));
+                informe.setMes(resultado.getInt(3));
+                informe.setIdProfesor(resultado.getInt(4));
+                informe.setObservaciones(resultado.getString(5));
+                informe.setCurso(resultado.getString(6));
+                informe.setHorasL(resultado.getInt(7));
+                informe.setHorasNL(resultado.getInt(8));
+                informe.setHorasC(resultado.getInt(9));
+                result.add(informe);
+            }
+            return result;
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
