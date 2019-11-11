@@ -20,13 +20,20 @@ public class FechaExternaNTP {
     //String servidor = "0.north-america.pool.ntp.org";
     private static long time=System.currentTimeMillis();
     private static Date fecha;
-    
+    /**
+     * Genera la consulta al ROA como mucho cada 10 segundos, sino, recupera la ultima que se consultó. y se la restan los milisegundos
+     * transcurridos desde el ultimo calculo
+     * @return 
+     */
     public static Date getNTPDate() {
         long timeNow=System.currentTimeMillis();
-        if((timeNow-time)>2000 || fecha==null){
+        if((timeNow-time)>10000 || fecha==null){
             time=System.currentTimeMillis();
             System.out.println("Buscamos hora ROA");
             fecha=getNTPDateROA();
+        }else{
+            System.out.println("Reutilizamos hora ROA");
+            return new Date(System.currentTimeMillis());
         }
         return fecha;
     }

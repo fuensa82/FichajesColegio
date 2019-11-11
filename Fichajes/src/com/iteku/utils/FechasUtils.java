@@ -206,9 +206,9 @@ public class FechasUtils {
     }
     
     /**
-     * Devuelve la fecha de hoy en formado dd-mm-aaaa
-     *
-     * @return
+     *  Devuelve la fecha de hoy en formado dd-mm-aaaa pero con el separador que le pasemos como parámetro.
+     * @param separador
+     * @return 
      */
     public static String fechaActualString(String separador) {
         Calendar c = Calendar.getInstance();
@@ -309,6 +309,13 @@ public class FechasUtils {
         }
 
     }
+    /**
+     * Rellena por la izq el texto que le pasemos rellenando con el relleno que le pasemos
+     * @param texto cadena a rellenar por la izquierda
+     * @param relleno Texto que utilizaremos para rellenar
+     * @param longitud logitud que deberá tener la cadena resultante.
+     * @return 
+     */
     public static String rellenaIzquierda(String texto, String relleno, int longitud) {
         String aux = "";
         for (int i = 0; i < longitud; i++) {
@@ -330,6 +337,10 @@ public class FechasUtils {
         //+ c.get(GregorianCalendar.SECOND);
     }
 
+    /**
+     * devuelve la fecha de hoy, pero obtenida de un servidor de hora externo. Será un texto en formato hh:mm:ss del lunes 11 de Noviembre de 2019
+     * @return 
+     */
     public static String dameFechaNTP() {
         SimpleDateFormat formateador = new SimpleDateFormat("HH:mm:ss 'del' EEEE dd 'de' MMMM 'de' yyyy", new Locale("es","ES"));
         String fechaInforme=formateador.format(FechaExternaNTP.getNTPDate());

@@ -117,10 +117,11 @@ public class UtilsContabilizar {
     }
     
     /**
-     * 
+     * Genera las fichas de horarios pero agrupando todo lo que se puede agrupar, dos fichas consecutivas se
+     * unen en una sola (Ini: 9:00, Fin: 10:00)(Ini: 10:00, Fin: 11:00) pasa a ser una sola ficha (Ini: 9:00, Fin: 11:00)
      * @param profesor
-     * @param tipoHora
-     * @return 
+     * @param tipoHora Lectiva, no lectiva y complementaria(L, NL, C)
+     * @return Un arrayList de fichas pero unificadas si son consecutivas.
      */
     public static ArrayList<FichaBean> getHorarioCompacto(ProfesorBean profesor, String tipoHora){
         ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorario(profesor, tipoHora);
@@ -142,14 +143,24 @@ public class UtilsContabilizar {
         //UtilsContabilizar.imprimeHorario(listaFichas);
         return listaFichas;
     }
-    
+    /**
+     * Utilizadad para imprimir un arrayList completo de FichaBean. Para que todo salga "bonito" el objeto debería 
+     * implementar el metodo toString
+     * @param listaFichas 
+     * @deprecated 
+     */
     public static void imprimeHorario(ArrayList<FichaBean> listaFichas){
         System.out.println("*******************Imprimendo***********************");
         for (FichaBean listaFicha : listaFichas) {
             System.out.println(listaFicha);
         }
     }
-    
+    /**
+     * Utilidad que imprime un arrayList de objetos. El objeto debe implementar el metodo toString
+     * @param cabecera
+     * @param lista 
+     * @deprecated 
+     */
     public static void imprimeArray(String cabecera, ArrayList lista){
         System.out.println("***********"+cabecera+"*******************");
         for (Object objeto : lista) {
@@ -157,6 +168,13 @@ public class UtilsContabilizar {
         }
     }
     
+    /**
+     * Dada una hora de inicio y una hora de fin, en formato hh:mm:ss, devuelve el número 
+     * de segundos transcurridos entre una y otra. Siempre devuelve un número positivo
+     * @param hIni
+     * @param hFin
+     * @return Los segundos transcurridos entre una y otra hora. Siempre en valor positivo o 0.
+     */
     public static int dimeDuracion(String hIni, String hFin){
         int horasM=Integer.parseInt(hIni.substring(0, 2));
         int minutosM=Integer.parseInt(hIni.substring(3, 5));

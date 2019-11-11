@@ -293,6 +293,7 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButtonInformeCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInformeCursoActionPerformed
+        JOptionPane.showMessageDialog(null, "Se van a generar los informes con los datos que ya se tienen calculados.\nPara volver a calcular algún datos debe primero generar el informe mensual\nque quiera recalcular.");
         try {
             DefaultTableModel datosTabla = (DefaultTableModel) jTableProfesores.getModel();
             ArrayList<ProfesorBean> listaProfesores2 = new ArrayList<>();
@@ -405,9 +406,9 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
             public void run() {
                 System.out.println("Comienza el hilo de contabilizacion anual");
                     totalContabilizaciones = listaProfesores2.size();
-                    for (int i = 0; i < Config.arrayMes.length; i++) {
+                    //for (int i = 0; i < Config.arrayMes.length; i++) {
                         hiloContabilizaAnual(listaProfesores2);
-                    }
+                    //}
                 System.out.println("Fin del hilo anual");
                 JOptionPane.showMessageDialog(null, "Generacion completada");
                 jButtonInformeMes.setEnabled(true);

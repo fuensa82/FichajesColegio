@@ -26,7 +26,8 @@ import java.util.HashMap;
 public class Contabilizar {
     
     /**
-     * Prepara todos los datos de un profesor y un mes concreto para empezar el recuento de dicho profesor.
+     * Prepara todos los datos de un profesor y un mes concreto para empezar el recuento de dicho profesor. Realiza el recuento y lo
+     * guarda en la base de datos, si hubiera otro informe anterior del mismo profesor y mes lo elimina.
      * @param profesor
      * @param mes 
      */
@@ -211,7 +212,7 @@ public class Contabilizar {
     private int contabilizaHorasNoLectivas(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ProfesorBean profesor, boolean guardar, int mes) {
         int segundos=0;
         for (FichajeRecuentoBean fichajeRecuento : listaFichajesRecuento) {
-            System.out.println(fichajeRecuento.getFecha()+" "+fichajeRecuento.getHoraEntrada()+"->"+fichajeRecuento.getHoraSalida()+" => "+UtilsContabilizar.dimeDuracion(fichajeRecuento.getHoraEntrada(),fichajeRecuento.getHoraSalida()));
+//            System.out.println(fichajeRecuento.getFecha()+" "+fichajeRecuento.getHoraEntrada()+"->"+fichajeRecuento.getHoraSalida()+" => "+UtilsContabilizar.dimeDuracion(fichajeRecuento.getHoraEntrada(),fichajeRecuento.getHoraSalida()));
             segundos+=UtilsContabilizar.dimeDuracion(fichajeRecuento.getHoraEntrada(),fichajeRecuento.getHoraSalida());
             
             DetalleInformeBean detalleInforme=new DetalleInformeBean();
@@ -226,13 +227,16 @@ public class Contabilizar {
         }
         return segundos;
     }
-/**
- * 
- * @param isCompleto
- * @param profesor
- * @param mes
- * @return 
- */
+
+    /**
+     * Metodo que cuentas el tiempo (en segundos) que se ha estado en un evento de día completo, teniendo en cuenta las horas
+     * de entrada y salida del profesor.
+     * @param listaFichajesRecuento Lista de fichajes con la que se va a comparar los eventos de día completo que
+     * tiene asignado dicho profesor. Se eliminaran las horas que se contabilicen.
+     * @param profesor Con tener relleno el codigo de profesor nos valdrá
+     * @param mes Mes que se está calculando, Enero el 1, febrero 2,...
+     * @return  Segundo que se ha estado en el colegio el día del evento.
+     */
     private int contabilizarEventosCompletos(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ProfesorBean profesor, int mes) {
         int segundos=0;
         ArrayList<EventoBean> listaEventos=GestionEventosBD.getListaEventosProfesor(true, profesor, mes);

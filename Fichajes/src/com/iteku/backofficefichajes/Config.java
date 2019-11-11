@@ -19,4 +19,5 @@ public class Config {
     public static String rutaLog="c:\\ControlHorario\\exit.log";
     public static String ficheroBarra="c:\\ControlHorario\\barra.dat";
     public static String rutaPrograma=System.getProperty("user.dir");
+    public static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};
 }

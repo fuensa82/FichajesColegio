@@ -27,6 +27,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  *
@@ -40,10 +41,10 @@ public class ImpresionInforme {
     private String curso;
     private static Font FuenteCabecera1=FontFactory.getFont("arial", 22, Font.UNDERLINE, BaseColor.BLACK);
     private static Font FuenteCabecera2=FontFactory.getFont("arial", 18, Font.ITALIC, BaseColor.BLACK);
-    private static Font FuenteTextoNormal=FontFactory.getFont("arial", 14, Font.NORMAL, BaseColor.BLACK);
-    private static Font FuenteTextoNegrita=FontFactory.getFont("arial", 14, Font.BOLD, BaseColor.BLACK);
-    private static Font FuenteTextoNegritaPe=FontFactory.getFont("arial", 9, Font.BOLD, BaseColor.BLACK);
-    private static Font FuenteTextoNormalPe=FontFactory.getFont("arial", 9, Font.NORMAL, BaseColor.BLACK);
+    private static Font FuenteTextoNormal=FontFactory.getFont("arial", 12, Font.NORMAL, BaseColor.BLACK);
+    private static Font FuenteTextoNegrita=FontFactory.getFont("arial", 12, Font.BOLD, BaseColor.BLACK);
+    private static Font FuenteTextoNegritaPe=FontFactory.getFont("arial", 8, Font.BOLD, BaseColor.BLACK);
+    private static Font FuenteTextoNormalPe=FontFactory.getFont("arial", 8, Font.NORMAL, BaseColor.BLACK);
     private ArrayList<DetalleInformeBean> listaDetalles;
     
     
@@ -167,6 +168,17 @@ public class ImpresionInforme {
         int segL=0;
         int segNL=0;
         int segC=0;
+        lista.sort(new Comparator<InformeBean>(){
+            @Override
+            public int compare(InformeBean info1, InformeBean info2) {
+                int orden1=Config.arrayMesOrdenCurso[info1.getMes()-1];
+                int orden2=Config.arrayMesOrdenCurso[info2.getMes()-1];
+                if(orden1<orden2)return -1;
+                else if (orden1==orden2) return 0;
+                else return 1;
+            }
+            
+        });
         for (InformeBean informe: lista){
             documento.add(new Paragraph(FechasUtils.getMesNum(informe.getMes()),FuenteTextoNegritaPe));
             PdfPTable tabla = new PdfPTable(2);

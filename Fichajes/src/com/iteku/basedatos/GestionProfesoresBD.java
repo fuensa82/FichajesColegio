@@ -45,7 +45,6 @@ public class GestionProfesoresBD {
             
         }finally{
             try {
-                //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
             }
@@ -64,12 +63,10 @@ public class GestionProfesoresBD {
      * @return 
      */
     public static boolean isDentro(int idProfesor){
-        //System.out.println("Buscando profesor "+idProfesor);
         return isDentro(idProfesor, FechasUtils.fechaHoyParaMysql());
     }
         
     public static boolean isDentro(int idProfesor, String fecha){
-        //System.out.println("Buscando en fecha "+fecha);
         boolean result=false;
         Connection conexion = null;
         try {
@@ -83,15 +80,7 @@ public class GestionProfesoresBD {
             consulta.setString(2, ""+idProfesor);
             ResultSet resultado = consulta.executeQuery();
             if(!resultado.next()){
-                //System.out.println("El profesor no está dentro. "+idProfesor);
                 return false;
-            }
-            String auxDentro=resultado.getString(2);
-//            System.out.println("resultado base de datos: "+auxDentro.trim().length());
-//            System.out.println("Trinario: "+auxDentro.trim().equalsIgnoreCase("false"));
-            //boolean 
-            if(auxDentro.equalsIgnoreCase("true")){
-                
             }
             
             return resultado.getString(2).trim().equalsIgnoreCase("true")?true:false;
@@ -103,7 +92,6 @@ public class GestionProfesoresBD {
             ex.printStackTrace();
         } finally {
             try {
-                //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -113,7 +101,6 @@ public class GestionProfesoresBD {
     }
     
     public static long getUltimaCurrentTime(int idProfesor, String fecha){
-        //System.out.println("Buscando en fecha "+fecha);
         long currentTime=0;
         Connection conexion = null;
         try {
@@ -213,7 +200,6 @@ public class GestionProfesoresBD {
         } catch (NamingException ex) {
         } finally {
             try {
-                //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
             }
@@ -255,7 +241,6 @@ public class GestionProfesoresBD {
             
         }finally{
             try {
-                //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
             }
@@ -282,7 +267,6 @@ public class GestionProfesoresBD {
         } catch (NamingException ex) {
         } finally {
             try {
-                //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
             }

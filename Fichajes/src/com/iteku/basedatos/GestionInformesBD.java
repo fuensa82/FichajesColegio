@@ -115,7 +115,6 @@ public class GestionInformesBD {
             
         }finally{
             try {
-                //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
             }
@@ -160,7 +159,6 @@ public class GestionInformesBD {
             
         }finally{
             try {
-                //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
             }
