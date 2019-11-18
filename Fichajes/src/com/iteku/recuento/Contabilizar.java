@@ -48,7 +48,8 @@ public class Contabilizar {
          * Contabilizar horas en eventos de tiempo parcial
          */
         
-        
+        ArrayList<EventoBean> listaEventos=GestionEventosBD.getListaEventosProfesor(false, profesor, mes);
+        int segundosEventosParciales=contabilizarEventosParciales(listaFichajesRecuento,listaEventos);
         
         /**
          * Contabilizamos las horas lectivas
@@ -261,6 +262,16 @@ public class Contabilizar {
         }
         return segundos;
     }
+
+    private int contabilizarEventosParciales(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ArrayList<EventoBean> listaEventos) {
+        int segundos=0;
+        FichaBean ficha=new FichaBean();
+        for(EventoBean evento: listaEventos ){
+            
+        }
+        return segundos;
+    }
+    
 
     
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author vPalomo
  */
-public class EventoBean {
+public class EventoBean{
     private int idEvento;
     private String fecha;
     private String horaIni;

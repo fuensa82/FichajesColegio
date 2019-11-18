@@ -12,7 +12,7 @@ import com.iteku.utils.FechasUtils;
  * Esta clase se utilizará para hacer los calculos, y contendrá los tramos de horas que está el personal en el centro.
  * @author vPalomo
  */
-public class FichajeRecuentoBean {
+public class FichajeRecuentoBean{
     private String horaEntrada;
     private String horaSalida;
     private String fecha;
