@@ -103,7 +103,7 @@ public class ImpresionInforme {
         Document documento = new Document();
 
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
-        FileOutputStream ficheroPdf = new FileOutputStream(Config.rutaPrograma+"\\informes\\informe"+profesor.getNombreCorto()+"_"+mes+".pdf");
+        FileOutputStream ficheroPdf = new FileOutputStream(Config.getRutaPrograma()+"\\informes\\informe"+profesor.getNombreCorto()+"_"+mes+".pdf");
 
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
         // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento
@@ -151,7 +151,7 @@ public class ImpresionInforme {
         Document documento = new Document();
 
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf .
-        FileOutputStream ficheroPdf = new FileOutputStream(Config.rutaPrograma+"\\informes\\recuento"+FechasUtils.getCursoActual()+"_"+profesor.getNombreCorto()+".pdf");
+        FileOutputStream ficheroPdf = new FileOutputStream(Config.getRutaPrograma()+"\\informes\\recuento"+FechasUtils.getCursoActual()+"_"+profesor.getNombreCorto()+".pdf");
 
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
         // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento
@@ -171,8 +171,8 @@ public class ImpresionInforme {
         lista.sort(new Comparator<InformeBean>(){
             @Override
             public int compare(InformeBean info1, InformeBean info2) {
-                int orden1=Config.arrayMesOrdenCurso[info1.getMes()-1];
-                int orden2=Config.arrayMesOrdenCurso[info2.getMes()-1];
+                int orden1=Config.getArrayMesOrdenCurso()[info1.getMes()-1];
+                int orden2=Config.getArrayMesOrdenCurso()[info2.getMes()-1];
                 if(orden1<orden2)return -1;
                 else if (orden1==orden2) return 0;
                 else return 1;

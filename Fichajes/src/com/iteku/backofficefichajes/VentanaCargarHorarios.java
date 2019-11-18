@@ -169,17 +169,10 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
             jTextField1.setText("");
             jButton2.setEnabled(false);
             try{
-                /*++Process p = Runtime.getRuntime().exec("cmd /C dir");  
-                BufferedReader in = new BufferedReader(  
-                                    new InputStreamReader(p.getInputStream()));  
-                String line = null;  
-                while ((line = in.readLine()) != null) {  
-                    System.out.println(line);  
-                }*/
-                Utils.generarFichero(Config.ficheroBarra);
+                Utils.generarFichero(Config.getFicheroBarra());
                 jFileText.getText();
                 System.out.println("File: "+jFileText.getText());
-                Process p = Runtime.getRuntime().exec("cmd /C node "+Config.rutaScriptNode+" "+jFileText.getText()+" "+FechasUtils.getCursoActual()+" "+tipoHora+" > "+Config.rutaLog );  
+                Process p = Runtime.getRuntime().exec("cmd /C node "+Config.getRutaScriptNode()+" "+jFileText.getText()+" "+FechasUtils.getCursoActual()+" "+tipoHora+" > "+Config.getRutaLog() );  
                 System.out.println("Lanzando comando node");
                 
                 //Thread.sleep(4000);
@@ -187,7 +180,7 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 new Thread(new Runnable() {
                     public void run() {
                         try{                            
-                            File archivo = new File (Config.ficheroBarra);
+                            File archivo = new File (Config.getFicheroBarra());
                             FileReader fr = new FileReader (archivo);
                             while (!"FIN".equalsIgnoreCase(jTextField1.getText())) {
                                 SwingUtilities.invokeLater(new Runnable() {

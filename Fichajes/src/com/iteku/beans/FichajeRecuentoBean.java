@@ -36,7 +36,7 @@ public class FichajeRecuentoBean {
     }
 
     public String getHoraSalida() {
-        if(horaSalida==null)return Config.horaMaxima;
+        if(horaSalida==null)return Config.getHoraMaxima();
         return horaSalida;
     }
 

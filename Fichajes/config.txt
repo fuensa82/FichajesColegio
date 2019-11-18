@@ -1,0 +1,9 @@
+horaMaxima=20:00:00
+horaMinima=07:00:00
+rutaScriptNode=C:\Users\vPalomo\Proyectos\Otros\CargaDeHorarios\index.js
+#rutaScriptNode=C:\Users\Víctor\Proyectos\Colegio\CargaDeHorarios\index.js
+rutaLog=c:\ControlHorario\exit.log
+ficheroBarra=c:\ControlHorario\barra.dat
+baseDatos=colsan
+usuario=c
+contrasenia=H

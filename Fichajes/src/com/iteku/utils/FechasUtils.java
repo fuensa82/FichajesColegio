@@ -28,7 +28,7 @@ public class FechasUtils {
      */
     public static char dimeDíaSemana(String fecha){
         //System.out.println("Fecha: "+fecha);
-        char dias[]=Config.dias;
+        char dias[]=Config.getDias();
         int year=Integer.parseInt(fecha.substring(6, 10));
         int mes=Integer.parseInt(fecha.substring(3, 5))-1; //Los meses van de 0 a 11.
         int dia=Integer.parseInt(fecha.substring(0, 2));

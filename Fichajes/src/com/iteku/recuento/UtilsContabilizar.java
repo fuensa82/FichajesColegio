@@ -38,16 +38,16 @@ public class UtilsContabilizar {
                 //es la parte de si todo es correcto
                 if(fichajeReal.isEsEntrada()){
                     fichaRecuento=new FichajeRecuentoBean();
-                    if(UtilsContabilizar.compararHoras(fichajeReal.getHora(),Config.horaMinima)>0){
+                    if(UtilsContabilizar.compararHoras(fichajeReal.getHora(),Config.getHoraMinima())>0){
                         fichaRecuento.setHoraEntrada(fichajeReal.getHora());
                     }else{
-                        fichaRecuento.setHoraEntrada(Config.horaMinima);
+                        fichaRecuento.setHoraEntrada(Config.getHoraMinima());
                     }
                     fichaRecuento.setFecha(fichajeReal.getFecha());
                     result.add(fichaRecuento);
                 }else{
-                    if(UtilsContabilizar.compararHoras(fichajeReal.getHora(),Config.horaMaxima)>0){
-                        fichaRecuento.setHoraSalida(Config.horaMaxima);
+                    if(UtilsContabilizar.compararHoras(fichajeReal.getHora(),Config.getHoraMaxima())>0){
+                        fichaRecuento.setHoraSalida(Config.getHoraMaxima());
                     }else{
                         fichaRecuento.setHoraSalida(fichajeReal.getHora());
                     }
@@ -81,8 +81,8 @@ public class UtilsContabilizar {
      */
     public static HashMap<String, ArrayList<FichaBean>> convertirHorario(ArrayList<FichaBean> listaFichas) {
         HashMap<String,ArrayList<FichaBean>> horario=new HashMap<>();
-        for(int i=0;i<Config.dias.length;i++){
-            horario.put(""+Config.dias[i], new ArrayList<>());
+        for(int i=0;i<Config.getDias().length;i++){
+            horario.put(""+Config.getDias()[i], new ArrayList<>());
         }
         
         for (FichaBean ficha : listaFichas) {

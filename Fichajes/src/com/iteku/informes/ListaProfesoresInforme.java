@@ -382,9 +382,9 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
                     totalContabilizaciones = listaProfesores2.size();
                     hiloContabiliza(listaProfesores2, mes);
                 } else {
-                    totalContabilizaciones = Config.arrayMes.length * listaProfesores2.size();
-                    for (int i = 0; i < Config.arrayMes.length; i++) {
-                        hiloContabiliza(listaProfesores2, Config.arrayMes[i]);
+                    totalContabilizaciones = Config.getArrayMes().length * listaProfesores2.size();
+                    for (int i = 0; i < Config.getArrayMes().length; i++) {
+                        hiloContabiliza(listaProfesores2, Config.getArrayMes()[i]);
                     }
                 }
                 System.out.println("Fin del hilo");
