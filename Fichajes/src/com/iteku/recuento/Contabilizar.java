@@ -227,7 +227,7 @@ public class Contabilizar {
             detalleInforme.setHoraIni(fichajeRecuento.getHoraEntrada());
             detalleInforme.setHoraFin(fichajeRecuento.getHoraSalida());
             detalleInforme.setTipoHora("NL");
-            if(guardar)GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasNoLectivas", mes);
+            if(guardar && detalleInforme.getTotalHoras()>0)GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasNoLectivas", mes);
                     
         }
         return segundos;
