@@ -47,10 +47,10 @@ public class GestionEventosBD {
             
             consulta = conexion.prepareStatement("SELECT eventos.idEvento, fecha, horaIni, horaFin, diaCompleto, descripcion FROM eventoprofesor, eventos" +
                                                 " WHERE eventoprofesor.idProfesor=? AND eventoprofesor.idEvento=eventos.idEvento" +
-                                                " AND curso=?");
+                                                " AND curso=? AND MONTH(fecha)=?");
             consulta.setString(2, FechasUtils.getCursoActual());
             consulta.setString(1, ""+profesor.getIdProfesor());
-            
+            consulta.setString(3, ""+mes);
             
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()){

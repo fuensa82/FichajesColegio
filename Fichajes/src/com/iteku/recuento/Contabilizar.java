@@ -49,7 +49,7 @@ public class Contabilizar {
          */
         
         ArrayList<EventoBean> listaEventos=GestionEventosBD.getListaEventosProfesor(false, profesor, mes);
-        int segundosEventosParciales=contabilizarEventosParciales(listaFichajesRecuento,listaEventos);
+        int segundosEventosParciales=contabilizarEventosParciales(listaFichajesRecuento,listaEventos, profesor, mes, "C");
         
         /**
          * Contabilizamos las horas lectivas
@@ -72,7 +72,8 @@ public class Contabilizar {
         System.out.println("Segundos de horas complementarias: "+Utils.convierteSegundos(segundosComplementarios));
         System.out.println("Segundos de horas no lectivas:     "+Utils.convierteSegundos(segundosNLectivos));
         System.out.println("Segundos eventos completos:        "+Utils.convierteSegundos(segundosEventosCompletos));
-        System.out.println("Total:                             "+Utils.convierteSegundos((segundosComplementarios+segundosLectivos+segundosNLectivos+segundosEventosCompletos)));
+        System.out.println("Segundos eventos parciales:        "+Utils.convierteSegundos(segundosEventosParciales));
+        System.out.println("Total:                             "+Utils.convierteSegundos((segundosComplementarios+segundosLectivos+segundosNLectivos+segundosEventosCompletos+segundosEventosParciales)));
         
         /**
          * Comprobacion
@@ -80,10 +81,13 @@ public class Contabilizar {
         listaFichajes = GestionFichajeBD.getListaFichajesProfesor(profesor,mes);
         listaFichajesRecuento= UtilsContabilizar.convertirFichajes(listaFichajes);
         int segundosValidacion=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor, false, mes);
-        int segundosValidacion2=segundosComplementarios+segundosLectivos+segundosNLectivos+segundosEventosCompletos;
+        int segundosValidacion2=segundosComplementarios+segundosLectivos+segundosNLectivos+segundosEventosCompletos+segundosEventosParciales;
         System.out.println("Comprobacion: "+Utils.convierteSegundos(segundosValidacion));
         String obser=segundosValidacion==segundosValidacion2?"Correcto":"No coinciden las horas en el colegio, con las horas calculadas de cada tipo.";
+        
         segundosComplementarios+=segundosEventosCompletos;
+        segundosComplementarios+=segundosEventosParciales;
+
         //Guardamos en la base de datos
         GestionInformesBD.guardaInforme(profesor, obser, segundosLectivos, segundosNLectivos, segundosComplementarios,mes);
         
@@ -263,15 +267,100 @@ public class Contabilizar {
         return segundos;
     }
 
-    private int contabilizarEventosParciales(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ArrayList<EventoBean> listaEventos) {
+    private int contabilizarEventosParciales(ArrayList<FichajeRecuentoBean> listaFichajesRecuento, ArrayList<EventoBean> listaEventos, ProfesorBean profesor, int mes, String tipoHora) {
         int segundos=0;
-        FichaBean ficha=new FichaBean();
-        for(EventoBean evento: listaEventos ){
-            
+        FichajeRecuentoBean fichaje;
+        for(int i=listaFichajesRecuento.size()-1;i>=0;i--){
+            DetalleInformeBean detalleInforme=new DetalleInformeBean();
+            detalleInforme.setIdProfesor(profesor.getIdProfesor());
+            boolean seguir=true;
+            fichaje=listaFichajesRecuento.get(i);
+            for(EventoBean evento: listaEventos ){
+                if(evento.getFecha().equalsIgnoreCase(fichaje.getFecha())){
+                    if(UtilsContabilizar.compararHoras(evento.getHoraIni(),fichaje.getHoraSalida())>=0){
+    //                    System.out.println("Caso todo antes");
+    //                    System.out.println("Fichaje:============");
+    //                    System.out.println("Ficha:                ======");
+                    }else if(UtilsContabilizar.compararHoras(evento.getHoraFin(),fichaje.getHoraEntrada())<=0) {
+    //                    System.out.println("Caso todo despues");
+    //                    System.out.println("Fichaje:         ============");
+    //                    System.out.println("Ficha:  ======");
+                    }else if(UtilsContabilizar.compararHoras(evento.getHoraIni(),fichaje.getHoraEntrada())>=0 
+                            && UtilsContabilizar.compararHoras(evento.getHoraFin(),fichaje.getHoraSalida())<0){
+    //                    System.out.println("Caso 1");
+    //                    System.out.println("Fichaje:============");
+    //                    System.out.println("Ficha:     ======");
+                        segundos+=UtilsContabilizar.dimeDuracion(evento.getHoraIni(), evento.getHoraFin());
+
+                        detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(evento.getHoraIni(), evento.getHoraFin()));
+                        detalleInforme.setFecha(fichaje.getFecha());
+                        detalleInforme.setHoraIni(evento.getHoraIni());
+                        detalleInforme.setHoraFin(evento.getHoraFin());
+                        detalleInforme.setTipoHora(tipoHora);
+                        GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 1 - contabilizarEventosParciales", mes);
+
+                        //Creamos el fichaje ficticio nuevo, para no perder las horas
+                        FichajeRecuentoBean fichajeResto=new FichajeRecuentoBean(fichaje);
+                        fichajeResto.setHoraEntrada(evento.getHoraFin());
+                        //Modifico el fichaje de recuento existente, quitandole las horas lectivas que ya están contadas.
+                        fichaje.setHoraSalida(evento.getHoraIni());
+                        listaFichajesRecuento.add(i, fichajeResto);
+                        i++; //Como hemos añadido un item más a la lista y la estamos recorriendo al reves, hay que mantener el indice para que este nuevo item tambien sea tratado.
+                    }else if(UtilsContabilizar.compararHoras(evento.getHoraIni(),fichaje.getHoraEntrada())>=0
+                            && UtilsContabilizar.compararHoras(evento.getHoraFin(),fichaje.getHoraSalida())>0){
+    //                    System.out.println("Caso 2");
+    //                    System.out.println("Fichaje:============");
+    //                    System.out.println("Ficha:         ===========");
+                        segundos+=UtilsContabilizar.dimeDuracion(evento.getHoraIni(), fichaje.getHoraSalida());
+
+                        detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(evento.getHoraIni(), fichaje.getHoraSalida()));
+                        detalleInforme.setFecha(fichaje.getFecha());
+                        detalleInforme.setHoraIni(evento.getHoraIni());
+                        detalleInforme.setHoraFin(fichaje.getHoraSalida());
+                        detalleInforme.setTipoHora(tipoHora);
+                        GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 2 - contabilizarEventosParciales", mes);
+
+                        fichaje.setHoraSalida(evento.getHoraIni());
+                        //listaFichajesRecuento.add(i+1, fichajeResto);
+                    }else if(UtilsContabilizar.compararHoras(evento.getHoraIni(),fichaje.getHoraEntrada())<=0
+                            && UtilsContabilizar.compararHoras(evento.getHoraFin(),fichaje.getHoraSalida())<0){
+    //                    System.out.println("Caso 3");
+    //                    System.out.println("Fichaje:   ============");
+    //                    System.out.println("Ficha:  ======");
+                        segundos+=UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),evento.getHoraFin());
+
+                        detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),evento.getHoraFin()));
+                        detalleInforme.setFecha(fichaje.getFecha());
+                        detalleInforme.setHoraIni(fichaje.getHoraEntrada());
+                        detalleInforme.setHoraFin(evento.getHoraFin());
+                        detalleInforme.setTipoHora(tipoHora);
+                        GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 3 - contabilizarEventosParciales", mes);
+
+                        fichaje.setHoraEntrada(evento.getHoraFin());
+                    }else if(UtilsContabilizar.compararHoras(evento.getHoraIni(),fichaje.getHoraEntrada())>=0
+                            && UtilsContabilizar.compararHoras(evento.getHoraFin(),fichaje.getHoraSalida())<0){
+    //                    System.out.println("Fichaje:   =======");
+    //                    System.out.println("Ficha:  =============");
+    //                    System.out.println("Caso 4");
+                        segundos+=UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichaje.getHoraSalida());
+
+                        detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichaje.getHoraSalida()));
+                        detalleInforme.setFecha(fichaje.getFecha());
+                        detalleInforme.setHoraIni(fichaje.getHoraEntrada());
+                        detalleInforme.setHoraFin(fichaje.getHoraSalida());
+                        detalleInforme.setTipoHora(tipoHora);
+                        GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme," Ultimmo caso - contabilizarEventosParciales", mes);
+
+                        //Se ha completado todo el tiempo, se borra el fichaje para no tratarlo más.
+                        listaFichajesRecuento.remove(i);
+                        seguir=false;
+                    }else{
+    //                    System.out.println("ERROR: por aquí no debería pasar, ya se deberían haber tratado todos los casos");
+
+                    }
+                }
+            }
         }
         return segundos;
     }
-    
-
-    
 }
