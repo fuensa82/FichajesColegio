@@ -8,12 +8,14 @@ package com.iteku.recuento;
 import com.iteku.basedatos.GestionDetallesInformesBD;
 import com.iteku.basedatos.GestionEventosBD;
 import com.iteku.basedatos.GestionFichajeBD;
+import com.iteku.basedatos.GestionHorasExtrasBD;
 import com.iteku.basedatos.GestionInformesBD;
 import com.iteku.beans.DetalleInformeBean;
 import com.iteku.beans.EventoBean;
 import com.iteku.beans.FichaBean;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.FichajeRecuentoBean;
+import com.iteku.beans.HoraExtraBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.Utils;
 import java.util.ArrayList;
@@ -67,6 +69,12 @@ public class Contabilizar {
          * Contabilizamos la horas no lectivas (el resto de lo que quede en los fichajes.
          */
         int segundosNLectivos=contabilizaHorasNoLectivas(listaFichajesRecuento, profesor, true, mes);
+        
+        /**
+         * Contabilizamos las horas extra añadidas al profesor
+         */
+        ArrayList<HoraExtraBean> listaHorasExtra=GestionHorasExtrasBD.getHorasExtraProfesor(profesor, mes);
+        HashMap<String, Integer> tablaHorasExtra = contabilizaHorasExtra(listaHorasExtra, profesor, mes);
         
         System.out.println("Segundos de horas lectivas:        "+Utils.convierteSegundos(segundosLectivos));
         System.out.println("Segundos de horas complementarias: "+Utils.convierteSegundos(segundosComplementarios));
@@ -362,5 +370,41 @@ public class Contabilizar {
             }
         }
         return segundos;
+    }
+
+    private HashMap<String, Integer> contabilizaHorasExtra(ArrayList<HoraExtraBean> listaHorasExtra, ProfesorBean profesor, int mes) {
+        HashMap<String, Integer> tabla=new HashMap<String, Integer>();
+        int segundosL=0;
+        int segundosC=0;
+        int segundosNL=0;
+        for (HoraExtraBean horaExtra : listaHorasExtra) {
+//            System.out.println(fichajeRecuento.getFecha()+" "+fichajeRecuento.getHoraEntrada()+"->"+fichajeRecuento.getHoraSalida()+" => "+UtilsContabilizar.dimeDuracion(fichajeRecuento.getHoraEntrada(),fichajeRecuento.getHoraSalida()));
+            
+            
+            DetalleInformeBean detalleInforme=new DetalleInformeBean();
+            detalleInforme.setIdProfesor(profesor.getIdProfesor());
+            detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(horaExtra.getHoraIniMysql(),horaExtra.getHoraFinMysql()));
+            detalleInforme.setFecha(horaExtra.getFecha());
+            detalleInforme.setHoraIni(horaExtra.getHoraIniMysql());
+            detalleInforme.setHoraFin(horaExtra.getHoraFinMysql());
+            
+            if(horaExtra.getTipoHora().equalsIgnoreCase("L")){
+                detalleInforme.setTipoHora("L");
+                segundosL+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIniMysql(),horaExtra.getHoraFinMysql());
+            }else if(horaExtra.getTipoHora().equalsIgnoreCase("C")){
+                detalleInforme.setTipoHora("C");
+                segundosC+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIniMysql(),horaExtra.getHoraFinMysql());
+            }else if(horaExtra.getTipoHora().equalsIgnoreCase("NL")){
+                detalleInforme.setTipoHora("NL");
+                segundosNL+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIniMysql(),horaExtra.getHoraFinMysql());
+            }
+            
+            GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasExtra", mes);
+                    
+        }
+        tabla.put("L", segundosL);
+        tabla.put("C", segundosC);
+        tabla.put("NL", segundosNL);
+        return tabla;
     }
 }
