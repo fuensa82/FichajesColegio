@@ -80,6 +80,8 @@ public class Config {
                     usuario=valores[1];
                 }else if(valores[0].equalsIgnoreCase("contrasenia")){
                     contrasenia=valores[1];
+                }else if(valores[0].equalsIgnoreCase("host")){
+                    hostBaseDatos=valores[1];
                 }
             }
         
@@ -104,6 +106,7 @@ public class Config {
     private static String baseDatos;
     private static String usuario;
     private static String contrasenia;
+    private static String hostBaseDatos;
 
     public static String getBaseDatos() {
         if(baseDatos==null)cargarDatos();
@@ -124,4 +127,9 @@ public class Config {
     private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
     private static String rutaPrograma=System.getProperty("user.dir");
     private static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};
+
+    public static String getHostBaseDatos() {
+        if(hostBaseDatos==null)cargarDatos();
+        return hostBaseDatos;
+    }
 }

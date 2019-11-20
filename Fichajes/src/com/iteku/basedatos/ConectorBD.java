@@ -21,7 +21,7 @@ public class ConectorBD {
         dataSource.setPassword(Config.getContrasenia());
         dataSource.setDatabaseName(Config.getBaseDatos());
         //dataSource.setServerName("");
-        //dataSource.setServerName("192.168.43.253");
+        dataSource.setServerName(Config.getHostBaseDatos());
 
         Connection conexion = dataSource.getConnection();
         return conexion;
