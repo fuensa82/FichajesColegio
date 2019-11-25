@@ -57,7 +57,9 @@ public class Config {
         System.out.println("Cargando datos del fichero de config");
         FileReader fr = null;
         try {
-            File archivo = new File ("config.txt");
+            //File archivo = new File ("/home/pi/Fichajes/config.txt");
+            File archivo = new File ("C:\\Fichajes\\config.txt");
+            //File archivo = new File ("config.txt");
             fr = new FileReader (archivo);
             BufferedReader br = new BufferedReader(fr);
             String linea;
