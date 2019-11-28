@@ -174,6 +174,37 @@ public class GestionProfesoresBD {
         return false;
     }
     
+    public static boolean crearProfesor(ProfesorBean profesor, ProfesorBean profesorHorarios){
+        
+        
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            //UPDATE `colsan`.`profesores` SET `nombre`='Mercedesa', `apellidos`='Palomo Silvaaa', `idTarjeta`='8652711' WHERE  `idProfesor`=3;
+            PreparedStatement update = conexion.prepareStatement(
+                    "UPDATE profesores SET nombre=?, apellidos=?, idTarjeta=?, nombreCorto=? WHERE idProfesor=?");
+
+            update.setString(1, profesor.getNombre());
+            update.setString(2, profesor.getApellidos());
+            update.setString(3, ""+profesor.getIdTarjeta());
+            update.setString(4, profesor.getNombreCorto());
+            update.setString(5, ""+profesor.getIdProfesor());
+            update.executeUpdate();
+
+            return true; //Correcto
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    /**
+     * Dado un id de profesor genera el objeto ProfesorBean con todos sus datos
+     * @param idProfesor
+     * @return 
+     */
     public static ProfesorBean getProfesor(String idProfesor) {
         ProfesorBean profesor = new ProfesorBean();
         Connection conexion = null;

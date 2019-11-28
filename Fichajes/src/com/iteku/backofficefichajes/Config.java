@@ -58,8 +58,8 @@ public class Config {
         FileReader fr = null;
         try {
             //File archivo = new File ("/home/pi/Fichajes/config.txt");
-            File archivo = new File ("C:\\Fichajes\\config.txt");
-            //File archivo = new File ("config.txt");
+            //File archivo = new File ("C:\\Fichajes\\config.txt");
+            File archivo = new File ("config.txt");
             fr = new FileReader (archivo);
             BufferedReader br = new BufferedReader(fr);
             String linea;
@@ -89,8 +89,10 @@ public class Config {
         
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } catch (IOException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }finally {
             try {
                 fr.close();

@@ -1,0 +1,18 @@
+El programa consta de 3 partes, dos hechas en java y una en Nodejs.
+
+Parte 1. Carga de Horarios.
+Es un script hecho en Nodejs que se utilizará para cargar los horarios, que vendrán en formato xml (especificamente en un formato para horarios)
+A este script se le llamará desde la parte Java para que sea más sencillo.
+Requisitos para que funcione:
+    1. Tener instalado Nosejs.
+    2. Tener el script y todos sus componentes (carpeta modules) en c:\Fichajes\cargaHorarios.
+    3. Tener en la carpeta C:\Fichajes el fichero para gestionar la barra de progreso (seguramente sea barra.dat) pero se puede cambiar en el fichero de configuracion.
+
+Parte 2. Aplicacion para fichajes.
+Es parte java y está contenida en el jar del programa pero no es la clase que se ejecutará por defecto al abrir el jar con java -jar Fichajes.
+Hay que llamar al comando java -cp Fichajes.jar com.iteku.fichajes.PantallaFichajes (puede haber algún fallo en el comando)
+Esta parte es la que se ejecutará en los lectores de tarjetas. Hay que tener bien configurado el archivo de configuración con los datos de la base de datos sobre todo.
+
+Parte 3. Aplicacion Backoffice.
+Programa para gestionar mantener los fichajes, consultar o modificar profesores, generar eventos, añadir horas, crear los informes mensuales.
+Tiene que está instalada en la carpeta c:\Fichajes

@@ -107,13 +107,13 @@ public class FechasUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
-
+            ex.printStackTrace();
         } finally {
             try {
                 //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
-                
+                ex.printStackTrace();
             }
         }
         return result;
