@@ -57,9 +57,15 @@ public class Config {
         System.out.println("Cargando datos del fichero de config");
         FileReader fr = null;
         try {
-            //File archivo = new File ("/home/pi/Fichajes/config.txt");
-            //File archivo = new File ("C:\\Fichajes\\config.txt");
-            File archivo = new File ("config.txt");
+            String sistema=System.getProperty("os.name");
+            System.out.println(sistema);
+            String nombreFichero;
+            if(sistema.contains("Windows")){
+                nombreFichero="config.txt";
+            }else{
+                nombreFichero="/home/pi/Fichajes/config.txt";
+            }
+            File archivo = new File (nombreFichero);
             fr = new FileReader (archivo);
             BufferedReader br = new BufferedReader(fr);
             String linea;
