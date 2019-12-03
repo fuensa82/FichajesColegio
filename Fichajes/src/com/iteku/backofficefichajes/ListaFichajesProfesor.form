@@ -109,7 +109,7 @@
                 <Column editable="false" title="Fecha" type="java.lang.Object"/>
                 <Column editable="false" title="Hora En" type="java.lang.String"/>
                 <Column editable="false" title="Hora Sal" type="java.lang.String"/>
-                <Column editable="false" title="Terminal" type="java.lang.Integer"/>
+                <Column editable="false" title="Terminal" type="java.lang.String"/>
                 <Column editable="false" title="Motivo" type="java.lang.String"/>
               </Table>
             </Property>

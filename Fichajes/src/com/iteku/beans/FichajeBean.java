@@ -17,7 +17,7 @@ public class FichajeBean {
     private String fecha;
     private String hora;
     private int idProfesor;
-    private int terminal;
+    private String terminal;
     private boolean esEntrada;
     private String curso;
     private String motivo;
@@ -73,11 +73,11 @@ public class FichajeBean {
         this.idProfesor = idProfesor;
     }
 
-    public int getTerminal() {
+    public String getTerminal() {
         return terminal;
     }
 
-    public void setTerminal(int terminal) {
+    public void setTerminal(String terminal) {
         this.terminal = terminal;
     }
 

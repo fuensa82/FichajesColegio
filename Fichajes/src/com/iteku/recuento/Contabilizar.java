@@ -383,20 +383,20 @@ public class Contabilizar {
             
             DetalleInformeBean detalleInforme=new DetalleInformeBean();
             detalleInforme.setIdProfesor(profesor.getIdProfesor());
-            detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(horaExtra.getHoraIniMysql(),horaExtra.getHoraFinMysql()));
+            detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(horaExtra.getHoraIni(),horaExtra.getHoraFin()));
             detalleInforme.setFecha(horaExtra.getFecha());
-            detalleInforme.setHoraIni(horaExtra.getHoraIniMysql());
-            detalleInforme.setHoraFin(horaExtra.getHoraFinMysql());
+            detalleInforme.setHoraIni(horaExtra.getHoraIni());
+            detalleInforme.setHoraFin(horaExtra.getHoraFin());
             
             if(horaExtra.getTipoHora().equalsIgnoreCase("L")){
                 detalleInforme.setTipoHora("L");
-                segundosL+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIniMysql(),horaExtra.getHoraFinMysql());
+                segundosL+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIni(),horaExtra.getHoraFin());
             }else if(horaExtra.getTipoHora().equalsIgnoreCase("C")){
                 detalleInforme.setTipoHora("C");
-                segundosC+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIniMysql(),horaExtra.getHoraFinMysql());
+                segundosC+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIni(),horaExtra.getHoraFin());
             }else if(horaExtra.getTipoHora().equalsIgnoreCase("NL")){
                 detalleInforme.setTipoHora("NL");
-                segundosNL+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIniMysql(),horaExtra.getHoraFinMysql());
+                segundosNL+=UtilsContabilizar.dimeDuracion(horaExtra.getHoraIni(),horaExtra.getHoraFin());
             }
             
             GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "contabilizaHorasExtra", mes);

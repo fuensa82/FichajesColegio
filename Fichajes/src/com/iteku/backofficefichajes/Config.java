@@ -90,6 +90,16 @@ public class Config {
                     contrasenia=valores[1];
                 }else if(valores[0].equalsIgnoreCase("host")){
                     hostBaseDatos=valores[1];
+                }else if(valores[0].equalsIgnoreCase("nombreCol")){
+                    nombreCol=valores[1];
+                }else if(valores[0].equalsIgnoreCase("nombreApp")){
+                    nombreApp=valores[1];
+                }else if(valores[0].equalsIgnoreCase("maquina")){
+                    maquina=valores[1];
+                }else if(valores[0].equalsIgnoreCase("tiempoCorrecto")){
+                    tiempoCorrecto=valores[1];
+                }else if(valores[0].equalsIgnoreCase("tiempoError")){
+                    tiempoError=valores[1];
                 }
             }
         
@@ -133,10 +143,43 @@ public class Config {
         return contrasenia;
     }
     
+    private static String nombreCol;
+    private static String nombreApp;
+    private static String maquina;
+    private static String tiempoCorrecto;
+    private static String tiempoError;
+    
+    
     private static char dias[]={'D','L','M','X','J','V','S'};
     private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
+    private static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};//El 5 mes es enero, el primero (1) es septiembre
+
+    public static String getNombreCol() {
+        if(nombreCol==null)cargarDatos();
+        return nombreCol;
+    }
+
+    public static String getNombreApp() {
+        if(nombreApp==null)cargarDatos();
+        return nombreApp;
+    }
+
+    public static String getMaquina() {
+        if(maquina==null)cargarDatos();
+        return maquina;
+    }
+
+    public static String getTiempoCorrecto() {
+        if(tiempoCorrecto==null)cargarDatos();
+        return tiempoCorrecto;
+    }
+
+    public static String getTiempoError() {
+        if(tiempoError==null)cargarDatos();
+        return tiempoError;
+    }
     private static String rutaPrograma=System.getProperty("user.dir");
-    private static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};
+    
 
     public static String getHostBaseDatos() {
         if(hostBaseDatos==null)cargarDatos();

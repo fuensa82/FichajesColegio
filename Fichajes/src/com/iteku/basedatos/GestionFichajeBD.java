@@ -5,6 +5,7 @@
  */
 package com.iteku.basedatos;
 
+import com.iteku.backofficefichajes.Config;
 import com.iteku.beans.FichajeBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
@@ -46,7 +47,6 @@ public class GestionFichajeBD {
             profesor.setNombre(resultado.getString(2));
             profesor.setApellidos(resultado.getString(3));
             profesor.setIdTarjeta(resultado.getInt(4));
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
@@ -60,7 +60,8 @@ public class GestionFichajeBD {
         return profesor;
     }
     /**
-     * 
+     * Guarda el fichaje. Se pasa la tarjeta y el metodo busca el profesor correspondiente. Guarda si es entrada, salida, el
+     * nombre de la máquina donde se ejecuta el fichaje
      * @param idTarjeta
      * @param entrada
      * @return 
@@ -70,24 +71,22 @@ public class GestionFichajeBD {
         if(profesor==null){
             return null;
         }
-        
         Connection conexion = null;
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`,`curso`) VALUES (?, ?, ?, ?,2,?,?)");
+                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`,`curso`) VALUES (?, ?, ?, ?, ?, ?, ?)");
             //Long time=System.currentTimeMillis();
             profesor.setCurrentTimeMillis(time);
             insert1.setString(1, ""+time);
             insert1.setString(2, FechasUtils.fechaHoyParaMysql());
             insert1.setString(3, FechasUtils.horaAhora());
             insert1.setString(4, ""+profesor.getIdProfesor());
-            insert1.setString(5, ""+!profesor.isDentro());
-            insert1.setString(6, FechasUtils.getCursoActual());
+            insert1.setString(5, Config.getMaquina());
+            insert1.setString(6, ""+!profesor.isDentro());
+            insert1.setString(7, FechasUtils.getCursoActual());
             insert1.executeUpdate();
-
             return profesor; //Correcto
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
@@ -113,9 +112,7 @@ public class GestionFichajeBD {
             insert1.setString(7, fichaje.getCurso());
             insert1.setString(8, fichaje.getMotivo());
             insert1.executeUpdate();
-
             return true; //Correcto
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
@@ -149,7 +146,7 @@ public class GestionFichajeBD {
                 fichaje.setFecha(FechasUtils.fecha(resultado.getString(3), "/"));
                 fichaje.setHora(resultado.getString(4));
                 fichaje.setIdProfesor(resultado.getInt(5));
-                fichaje.setTerminal(resultado.getInt(6));
+                fichaje.setTerminal(resultado.getString(6));
                 fichaje.setEsEntrada("true".equals(resultado.getString(7).trim())?true:false);
                 fichaje.setCurso(resultado.getString(8));
                 fichaje.setMotivo(resultado.getString(9));
@@ -164,6 +161,7 @@ public class GestionFichajeBD {
                 //System.out.println("Saliendo de la base de datos");
                 conexion.close();
             } catch (SQLException ex) {
+                
             }
         }
         return listaResult;
@@ -185,9 +183,7 @@ public class GestionFichajeBD {
             insert1.setString(6, fichaje.getMotivo());
             insert1.setString(7, ""+fichaje.getIdFichaje());
             insert1.executeUpdate();
-
             return true; //Correcto
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
@@ -204,9 +200,7 @@ public class GestionFichajeBD {
                     "DELETE from `colsan`.`fichajes` where idFichaje=?");
             insert1.setString(1, ""+fichaje.getIdFichaje());
             insert1.executeUpdate();
-
             return true; //Correcto
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException ex) {
@@ -228,23 +222,24 @@ public class GestionFichajeBD {
         int contFichaje=0;
         for(int i=0;i<lista.size() && result;i++){
             if(!lista.get(i).getFecha().equals(fechaAnterior)){
-                if(contFichaje%2!=0){
-                    result=false;
-                }
                 isDentro=true;
+                if(contFichaje%2!=0){
+                    if(!fechaAnterior.equals(FechasUtils.fechaActualString("/"))){
+                        result=false;
+                    }
+                }
                 contFichaje=0;
             }
             if(lista.get(i).isEsEntrada()!=isDentro){
-                result=false;
+                if(!fechaAnterior.equals(FechasUtils.fechaActualString("/"))){
+                    result=false;
+                }
             }else{
                 isDentro=!isDentro;
             }
             fechaAnterior=lista.get(i).getFecha();
             contFichaje++;
         }
-        
         return result;
     }
-    
-    
 }

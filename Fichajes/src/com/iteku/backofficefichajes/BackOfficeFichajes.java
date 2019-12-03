@@ -561,7 +561,7 @@ if (!seleccionFila) {
                 "" + listaProfesores.get(i).getIdTarjeta(),
                 "" + (listaProfesores.get(i).isDentro() ? "Dentro" : "Ausente"),
                 "" + listaProfesores.get(i).getHoraCurrentTime(),
-                GestionFichajeBD.compruebaFichajesProfesor(listaProfesores.get(i), 10)?"":"Contienen errores"
+                GestionFichajeBD.compruebaFichajesProfesor(listaProfesores.get(i), FechasUtils.getNumMesActualInteger())?"":"Fichajes errores"
             });
         }
     }

@@ -198,7 +198,7 @@ public class MttoFichajes extends javax.swing.JPanel {
             fichaje.setEsEntrada(jComboBoxTipoFichaje.getSelectedIndex()==0?true:false);
             fichaje.setIdProfesor(profesor.getIdProfesor());
             fichaje.setMotivo(jTextAreaMotivo.getText());
-            fichaje.setTerminal(0);
+            fichaje.setTerminal(Config.getMaquina());
             boolean result;
             if(nuevo){
                 result=GestionFichajeBD.putFichaje(fichaje);

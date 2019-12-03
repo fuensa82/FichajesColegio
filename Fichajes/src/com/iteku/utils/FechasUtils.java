@@ -270,6 +270,28 @@ public class FechasUtils {
         }
 
     }
+    /**
+     * Devuelve el número del mes en formato string. Enero es el 01, febrero 02, ...
+     * @return
+     * @throws Exception 
+     */
+    public static String getNumMesActualString(){
+        Calendar c = Calendar.getInstance();
+        int m = c.get(2) + 1;
+        String mes;
+        if (m < 10) {
+            mes = "0" + m;
+        } else {
+            mes = "" + m;
+        }
+        return mes;
+    }
+    public static int getNumMesActualInteger() {
+        String mes=FechasUtils.getNumMesActualString();
+        return Integer.parseInt(mes);
+    }
+    
+    
 /**
  * Dado el mes nos devuelve el literal del mes. Si le mandamos un 1 nos devuelve Enero. El caso del 0 devolverá
  * el literal "todos los meses"
