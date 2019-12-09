@@ -300,7 +300,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
-        jMenuItem1.setText("Informes");
+        jMenuItem1.setText("Generar Informes");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -316,7 +316,12 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem5.setText("Crear profesor");
+        jMenuItem5.setText("Crear asignatura");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
@@ -502,6 +507,21 @@ if (!seleccionFila) {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        //Cargar horarios
+        //opcion de menu "Cargar horarios"
+        JDialog frame = new JDialog(this, "Crear asignaturas", true);
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
+        frame.getContentPane().add(new CrearAsignatura());
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        //this.cambiarSesion(sesionSelecionada);
+        cargarListaProfesores();
+        frame.setVisible(false);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments

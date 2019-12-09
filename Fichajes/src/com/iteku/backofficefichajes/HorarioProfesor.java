@@ -11,6 +11,7 @@ import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.Utils;
 import java.awt.Window;
 import java.util.ArrayList;
+import java.util.Comparator;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -152,8 +153,18 @@ public class HorarioProfesor extends javax.swing.JPanel {
 
         }
         //datosTabla.addRow(new String[]{"","","","",""});
+        listaFichas.sort(new Comparator<FichaBean>(){
+            @Override
+            public int compare(FichaBean ficha1, FichaBean ficha2) {
+                int orden1=Config.getOrdenDias().get(""+ficha1.getDia());
+                int orden2=Config.getOrdenDias().get(""+ficha2.getDia());
+                if(orden1<orden2)return -1;
+                else if (orden1==orden2) return 0;
+                else return 1;
+            }
+        });
+        System.out.println("Lista: "+listaFichas.size());
         for (int i = 0; i < listaFichas.size(); i++) {
-            
             datosTabla.addRow(new String[]{
                 "" + listaFichas.get(i).getIdFicha(),
                 listaFichas.get(i).getHoraIni(),
@@ -162,5 +173,6 @@ public class HorarioProfesor extends javax.swing.JPanel {
                 listaFichas.get(i).getTipoHora()
             });
         }
+        //datosTabla.setRowCount(ABORT);
     }
 }

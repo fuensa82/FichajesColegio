@@ -5,6 +5,7 @@
  */
 package com.iteku.basedatos;
 
+import com.iteku.beans.AltaAsignaturaBean;
 import com.iteku.beans.FichaBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
@@ -13,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
@@ -303,5 +306,38 @@ public class GestionProfesoresBD {
             }
         }
         return "";
+    }
+
+    public static void guardaProfesoresAsignatura(ArrayList<ProfesorBean> listaProfesores2, AltaAsignaturaBean asignatura) {
+
+        for (ProfesorBean profesor : listaProfesores2) {
+            Connection conexion = null;
+            try {
+                conexion = ConectorBD.getConnection();
+                
+                for (String dia: asignatura.getDias()) {
+                    PreparedStatement insert1 = conexion.prepareStatement(
+                        "INSERT INTO `colsan`.`horarios` (`horaIni`, `horaFin`, `idProfesor`, `dia`, `tipoHora`, `curso`) VALUES (?, ?, ?, ?, ?, ?);");
+                
+                    insert1.setString(1, asignatura.getHoraIni());
+                    insert1.setString(2, asignatura.getHoraFin());
+                    insert1.setString(3, ""+profesor.getIdProfesor());
+                    insert1.setString(4, dia);
+                    insert1.setString(5, asignatura.getTipoHora());
+                    insert1.setString(6, FechasUtils.getCursoActual());
+                    insert1.executeUpdate();
+                }
+                
+
+            } catch (SQLException | NamingException e) {
+                e.printStackTrace();
+            } finally{
+                try {
+                    conexion.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GestionHorasExtrasBD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 }

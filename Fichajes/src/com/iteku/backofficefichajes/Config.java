@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -153,6 +154,19 @@ public class Config {
     private static char dias[]={'D','L','M','X','J','V','S'};
     private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
     private static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};//El 5 mes es enero, el primero (1) es septiembre
+    //private static int ordenDias[]={7,1,2,3,4,5,6};
+
+    public static HashMap<String,Integer> getOrdenDias() {
+        HashMap<String,Integer> ordenDias=new HashMap<String,Integer>();
+        ordenDias.put("L", 1);
+        ordenDias.put("M", 2);
+        ordenDias.put("X", 3);
+        ordenDias.put("J", 4);
+        ordenDias.put("V", 5);
+        ordenDias.put("S", 6);
+        ordenDias.put("D", 7);
+        return ordenDias;
+    }
 
     public static String getNombreCol() {
         if(nombreCol==null)cargarDatos();
