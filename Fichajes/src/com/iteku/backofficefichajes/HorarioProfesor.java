@@ -12,7 +12,11 @@ import com.iteku.utils.Utils;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Comparator;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,7 +25,28 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HorarioProfesor extends javax.swing.JPanel {
 
+    ArrayList<FichaBean> listaFichas;
     private ProfesorBean profesor;
+    private boolean seleccionFila=false;
+    private FichaBean fichaSel;
+    
+    private void ponerListenerTablaEventos() {
+        tFichas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evento) {
+                ListSelectionModel lsm = (ListSelectionModel) evento.getSource();
+                int indice = lsm.getMinSelectionIndex();
+                if (indice != -1) {
+                    seleccionFila = true;
+                    //System.out.println("Evento: " + indice);
+                    //System.out.println("Id evento: " + listaFichas.get(indice).getIdFicha());
+                    fichaSel = listaFichas.get(indice);
+                    //cargarListaProfesores(fichaSel);
+                }
+            }
+        });
+    }
+    
     /**
      * Creates new form HorarioProfesor
      */
@@ -30,6 +55,7 @@ public class HorarioProfesor extends javax.swing.JPanel {
         initComponents();
         cargarDatos(profesor, "L");
         jComboBox1.setSelectedIndex(1);
+        ponerListenerTablaEventos();
     }
 
     /**
@@ -46,6 +72,7 @@ public class HorarioProfesor extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
 
         tFichas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,6 +118,13 @@ public class HorarioProfesor extends javax.swing.JPanel {
             }
         });
 
+        jButton2.setText("Eliminar hora");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,7 +133,8 @@ public class HorarioProfesor extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE))
                 .addGap(19, 19, 19))
@@ -120,7 +155,9 @@ public class HorarioProfesor extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(8, 8, 8))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -135,9 +172,19 @@ public class HorarioProfesor extends javax.swing.JPanel {
         cargarDatos(profesor, tipoHora);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (!seleccionFila) {
+            JOptionPane.showMessageDialog(null, "Primero debe seleccionar una fila con datos");
+            return;
+        }
+        GestionProfesoresBD.borrarFicha(fichaSel);
+        cargarDatos(profesor, Utils.getTipoHora(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())));
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -145,7 +192,7 @@ public class HorarioProfesor extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void cargarDatos(ProfesorBean profesor, String tipoHora) {
-        ArrayList<FichaBean> listaFichas = GestionProfesoresBD.getListaFichasCurso(profesor, tipoHora);
+        listaFichas = GestionProfesoresBD.getListaFichasCurso(profesor, tipoHora);
         DefaultTableModel datosTabla = (DefaultTableModel) tFichas.getModel();
         for (int i = datosTabla.getRowCount(); i > 0; i--) {
             //filasTabla=0;
@@ -173,6 +220,7 @@ public class HorarioProfesor extends javax.swing.JPanel {
                 listaFichas.get(i).getTipoHora()
             });
         }
+        
         //datosTabla.setRowCount(ABORT);
     }
 }

@@ -6,6 +6,7 @@
 package com.iteku.basedatos;
 
 import com.iteku.beans.AltaAsignaturaBean;
+import com.iteku.beans.EventoBean;
 import com.iteku.beans.FichaBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.utils.FechasUtils;
@@ -339,5 +340,28 @@ public class GestionProfesoresBD {
                 }
             }
         }
+    }
+
+    public static void borrarFicha(FichaBean fichaSel) {
+        Connection conexion = null;
+        try {
+            conexion=ConectorBD.getConnection();
+            PreparedStatement consulta;
+            consulta = conexion.prepareStatement(
+                "DELETE FROM horarios WHERE idFicha=?");
+            consulta.setString(1, ""+fichaSel.getIdFicha());
+            int resultInt=consulta.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+            
+        }finally{
+            try {
+                //System.out.println("Saliendo de la base de datos");
+                conexion.close();
+            } catch (SQLException ex) {
+            }
+        }    
+    
     }
 }
