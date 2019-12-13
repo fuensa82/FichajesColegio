@@ -96,8 +96,9 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -308,21 +309,25 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Cargar horarios");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem2);
+        jMenu2.setText("Cargar horarios");
 
-        jMenuItem5.setText("Crear asignatura");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem6.setText("Automatico");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem5);
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setText("Manual");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
+
+        jMenu1.add(jMenu2);
 
         jMenuBar1.add(jMenu1);
 
@@ -432,20 +437,6 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextIdProfesorActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        //opcion de menu "Cargar horarios"
-        JDialog frame = new JDialog(this, "Cargar horarios", true);
-        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
-        frame.getContentPane().add(new VentanaCargarHorarios());
-        frame.pack();
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);
-        //this.cambiarSesion(sesionSelecionada);
-        cargarListaProfesores();
-        frame.setVisible(false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (!seleccionFila) {
             JOptionPane.showMessageDialog(null, "Primero debe seleccionar una fila con datos");
@@ -508,9 +499,20 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        //Cargar horarios
-        //opcion de menu "Cargar horarios"
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        JDialog frame = new JDialog(this, "Cargar horarios", true);
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
+        frame.getContentPane().add(new VentanaCargarHorarios());
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        //this.cambiarSesion(sesionSelecionada);
+        cargarListaProfesores();
+        frame.setVisible(false);        
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         JDialog frame = new JDialog(this, "Crear asignaturas", true);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
@@ -521,7 +523,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         //this.cambiarSesion(sesionSelecionada);
         cargarListaProfesores();
         frame.setVisible(false);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -600,12 +602,13 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelCurso;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextApellidos;
