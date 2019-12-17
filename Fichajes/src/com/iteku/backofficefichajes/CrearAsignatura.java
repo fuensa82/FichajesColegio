@@ -5,7 +5,6 @@
  */
 package com.iteku.backofficefichajes;
 
-import com.iteku.basedatos.GestionEventosBD;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.AltaAsignaturaBean;
 import com.iteku.beans.EventoBean;

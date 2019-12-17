@@ -172,8 +172,8 @@ public class VentanaCargarHorarios extends javax.swing.JPanel {
                 Utils.generarFichero(Config.getFicheroBarra());
                 jFileText.getText();
                 System.out.println("File: "+jFileText.getText());
-                System.out.println("cmd /C node "+Config.getRutaScriptNode()+" "+jFileText.getText()+" "+FechasUtils.getCursoActual()+" "+tipoHora+" > "+Config.getRutaLog() );
-                Process p = Runtime.getRuntime().exec("cmd /C node "+Config.getRutaScriptNode()+" "+jFileText.getText()+" "+FechasUtils.getCursoActual()+" "+tipoHora+" > "+Config.getRutaLog() );  
+                System.out.println("cmd /C node \""+Config.getRutaScriptNode()+"\" \""+jFileText.getText()+"\" "+FechasUtils.getCursoActual()+" "+tipoHora+" > "+Config.getRutaLog());
+                Process p = Runtime.getRuntime().exec("cmd /C node \""+Config.getRutaScriptNode()+"\" \""+jFileText.getText()+"\" "+FechasUtils.getCursoActual()+" "+tipoHora+" > "+Config.getRutaLog() );  
                 System.out.println("Lanzando comando node");
                 
                 //Thread.sleep(4000);
