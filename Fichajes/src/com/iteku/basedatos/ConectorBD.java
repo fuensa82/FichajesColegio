@@ -20,6 +20,7 @@ public class ConectorBD {
         dataSource.setUser(Config.getUsuario());
         dataSource.setPassword(Config.getContrasenia());
         dataSource.setDatabaseName(Config.getBaseDatos());
+        dataSource.setPort(Config.getPuerto());
         //dataSource.setServerName("");
         dataSource.setServerName(Config.getHostBaseDatos());
 

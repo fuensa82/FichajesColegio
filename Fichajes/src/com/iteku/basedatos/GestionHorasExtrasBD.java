@@ -29,7 +29,7 @@ public class GestionHorasExtrasBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`horasextra` (`fecha`, `horaIni`, `horaFin`, `motivo`, `idProfesor`, `tipoHora`, `curso`) VALUES (?, ?, ?, ?, ?, ?, ?);");
+                    "INSERT INTO horasextra (`fecha`, `horaIni`, `horaFin`, `motivo`, `idProfesor`, `tipoHora`, `curso`) VALUES (?, ?, ?, ?, ?, ?, ?);");
 
             insert1.setString(1, hora.getFechaMysql());
             insert1.setString(2, hora.getHoraIniMysql());

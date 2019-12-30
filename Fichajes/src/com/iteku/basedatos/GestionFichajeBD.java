@@ -75,7 +75,7 @@ public class GestionFichajeBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`,`curso`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO fichajes ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`,`curso`) VALUES (?, ?, ?, ?, ?, ?, ?)");
             //Long time=System.currentTimeMillis();
             profesor.setCurrentTimeMillis(time);
             insert1.setString(1, ""+time);
@@ -100,7 +100,7 @@ public class GestionFichajeBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`fichajes` ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`,`curso`, `motivo`) VALUES (?, ?, ?, ?,?,?,?,?)");
+                    "INSERT INTO fichajes ( `currentTime`, `fecha`, `hora`, `idProfesor`, `terminal`,`dentro`,`curso`, `motivo`) VALUES (?, ?, ?, ?,?,?,?,?)");
             //Long time=System.currentTimeMillis();
             //profesor.setCurrentTimeMillis(time);
             insert1.setString(1, ""+fichaje.getCurrentTime());
@@ -172,7 +172,7 @@ public class GestionFichajeBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "UPDATE `colsan`.`fichajes` set currentTime=?, fecha=?, hora=?, terminal=?,dentro=?, motivo=? where idFichaje=?");
+                    "UPDATE fichajes set currentTime=?, fecha=?, hora=?, terminal=?,dentro=?, motivo=? where idFichaje=?");
             //Long time=System.currentTimeMillis();
             //profesor.setCurrentTimeMillis(time);
             insert1.setString(1, ""+fichaje.getCurrentTime());
@@ -197,7 +197,7 @@ public class GestionFichajeBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "DELETE from `colsan`.`fichajes` where idFichaje=?");
+                    "DELETE from fichajes where idFichaje=?");
             insert1.setString(1, ""+fichaje.getIdFichaje());
             insert1.executeUpdate();
             return true; //Correcto

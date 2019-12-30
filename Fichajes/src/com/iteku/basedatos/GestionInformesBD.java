@@ -54,7 +54,7 @@ public class GestionInformesBD {
         try {
             GestionInformesBD.deleteInforme(p, mes);
             conexion = ConectorBD.getConnection();
-            String sql="INSERT INTO `colsan`.`informes` (`mes`, `idProfesor`, `observaciones`, `curso`, `horasL`, `horasNL`, `horasC`) "
+            String sql="INSERT INTO informes (`mes`, `idProfesor`, `observaciones`, `curso`, `horasL`, `horasNL`, `horasC`) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?);";
             
             PreparedStatement insert1 = conexion.prepareStatement(sql);

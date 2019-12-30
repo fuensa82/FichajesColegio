@@ -243,7 +243,7 @@ public class GestionEventosBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`eventos` (`fecha`, `horaIni`, `horaFin`, `diaCompleto`, `descripcion`, `curso`) VALUES (?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO eventos (`fecha`, `horaIni`, `horaFin`, `diaCompleto`, `descripcion`, `curso`) VALUES (?, ?, ?, ?, ?, ?)");
             //Long time=System.currentTimeMillis();
             //profesor.setCurrentTimeMillis(time);
             insert1.setString(1, FechasUtils.fechaParaMysql(evento.getFecha()));
@@ -269,7 +269,7 @@ public class GestionEventosBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "UPDATE `colsan`.`eventos` SET `fecha`=?, `horaIni`=?, `horaFin`=?, `diaCompleto`=?, `descripcion`=?, `curso`=? WHERE  `idEvento`=?;");
+                    "UPDATE eventos SET `fecha`=?, `horaIni`=?, `horaFin`=?, `diaCompleto`=?, `descripcion`=?, `curso`=? WHERE  `idEvento`=?;");
             insert1.setString(1, FechasUtils.fechaParaMysql(evento.getFecha()));
             insert1.setString(2, evento.isDiaCompleto()?null:evento.getHoraIni());
             insert1.setString(3, evento.isDiaCompleto()?null:evento.getHoraFin());
@@ -293,11 +293,11 @@ public class GestionEventosBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "DELETE from `colsan`.`eventos` where idEvento=?");
+                    "DELETE from eventos where idEvento=?");
             insert1.setString(1, ""+evento.getIdEvento());
             insert1.executeUpdate();
             insert1 = conexion.prepareStatement(
-                    "DELETE from `colsan`.`eventoprofesor` where idEvento=?");
+                    "DELETE from eventoprofesor where idEvento=?");
             insert1.setString(1, ""+evento.getIdEvento());
             insert1.executeUpdate();
 

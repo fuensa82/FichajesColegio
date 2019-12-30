@@ -81,7 +81,7 @@ public class GestionDetallesInformesBD {
             boolean ejecutar=false;
 
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`detallesinformes` (`idProfesor`, `totalHoras`, `horaIni`, `horaFin`,`fecha`,`tipoHora`, `totalHorasString`,`llamada`,`mes`) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?);"
+                    "INSERT INTO detallesinformes (`idProfesor`, `totalHoras`, `horaIni`, `horaFin`,`fecha`,`tipoHora`, `totalHorasString`,`llamada`,`mes`) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?);"
             );
             insert1.setString(1, ""+detalle.getIdProfesor());
             insert1.setString(2, ""+detalle.getTotalHoras());

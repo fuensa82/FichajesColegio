@@ -318,7 +318,7 @@ public class GestionProfesoresBD {
                 
                 for (String dia: asignatura.getDias()) {
                     PreparedStatement insert1 = conexion.prepareStatement(
-                        "INSERT INTO `colsan`.`horarios` (`horaIni`, `horaFin`, `idProfesor`, `dia`, `tipoHora`, `curso`) VALUES (?, ?, ?, ?, ?, ?);");
+                        "INSERT INTO horarios (`horaIni`, `horaFin`, `idProfesor`, `dia`, `tipoHora`, `curso`) VALUES (?, ?, ?, ?, ?, ?);");
                 
                     insert1.setString(1, asignatura.getHoraIni());
                     insert1.setString(2, asignatura.getHoraFin());

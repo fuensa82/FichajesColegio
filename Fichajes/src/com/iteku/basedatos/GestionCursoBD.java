@@ -26,7 +26,7 @@ public class GestionCursoBD {
         try {
             conexion = ConectorBD.getConnection();
             PreparedStatement insert1 = conexion.prepareStatement(
-                    "INSERT INTO `colsan`.`cursos` (`curso`) VALUES (?);");
+                    "INSERT INTO cursos (`curso`) VALUES (?);");
 
             insert1.setString(1, cursoNuevo);
             insert1.executeUpdate();

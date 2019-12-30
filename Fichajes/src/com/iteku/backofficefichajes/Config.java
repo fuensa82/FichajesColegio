@@ -101,6 +101,8 @@ public class Config {
                     tiempoCorrecto=valores[1];
                 }else if(valores[0].equalsIgnoreCase("tiempoError")){
                     tiempoError=valores[1];
+                }else if(valores[0].equalsIgnoreCase("puerto")){
+                    puerto=valores[1];
                 }
             }
         
@@ -128,6 +130,11 @@ public class Config {
     private static String usuario;
     private static String contrasenia;
     private static String hostBaseDatos;
+    private static String puerto;
+
+    public static int getPuerto() {
+        return Integer.parseInt(puerto);
+    }
 
     public static String getBaseDatos() {
         if(baseDatos==null)cargarDatos();

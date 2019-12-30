@@ -1,15 +1,17 @@
 horaMaxima=20:00:00
 horaMinima=07:00:00
-rutaScriptNode=C:\Users\vPalomo\Proyectos\Otros\CargaDeHorarios\index.js
-#rutaScriptNode=C:\Users\Víctor\Proyectos\Colegio\CargaDeHorarios\index.js
-rutaLog=c:\ControlHorario\exit.log
-ficheroBarra=c:\ControlHorario\barra.dat
-baseDatos=colsan
-usuario=root
-contrasenia=Hijo34Luna
-host=localhost
+#rutaScriptNode=C:\Users\vPalomo\Proyectos\Otros\CargaDeHorarios\index.js
+rutaScriptNode=C:\Users\Víctor\Proyectos\Colegio\CargaDeHorarios\index.js
+rutaLog=c:\Fichajes\exit.log
+ficheroBarra=c:\Fichajes\barra.dat
 appName=Control Horario
 colName=Colegio San Jose
 tiempoCorrecto=3000
 tiempoError=10000
 maquina=Secretaria
+### base de datos ###
+baseDatos=colsan
+usuario=vpalomo
+contrasenia=123456
+host=micasa82.ddns.net
+puerto=1106
