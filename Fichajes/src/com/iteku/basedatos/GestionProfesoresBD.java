@@ -178,22 +178,27 @@ public class GestionProfesoresBD {
         return false;
     }
     
-    public static boolean crearProfesor(ProfesorBean profesor, ProfesorBean profesorHorarios){
-        
-        
+    public static boolean crearProfesor(ProfesorBean profesor){        
         Connection conexion = null;
         try {
             conexion = ConectorBD.getConnection();
-            //UPDATE `colsan`.`profesores` SET `nombre`='Mercedesa', `apellidos`='Palomo Silvaaa', `idTarjeta`='8652711' WHERE  `idProfesor`=3;
-            PreparedStatement update = conexion.prepareStatement(
-                    "UPDATE profesores SET nombre=?, apellidos=?, idTarjeta=?, nombreCorto=? WHERE idProfesor=?");
-
-            update.setString(1, profesor.getNombre());
-            update.setString(2, profesor.getApellidos());
-            update.setString(3, ""+profesor.getIdTarjeta());
-            update.setString(4, profesor.getNombreCorto());
-            update.setString(5, ""+profesor.getIdProfesor());
-            update.executeUpdate();
+            if(profesor.getIdTarjeta()!=0){
+                PreparedStatement update = conexion.prepareStatement(
+                        "INSERT INTO profesores (`nombreCorto`, `nombre`, `apellidos`, `idTarjeta`) VALUES (?, ?, ?, ?);");
+                update.setString(1, profesor.getNombreCorto());
+                update.setString(2, profesor.getNombre());
+                update.setString(3, profesor.getApellidos());
+                update.setString(4, ""+profesor.getIdTarjeta());
+                update.executeUpdate();
+            }else{
+                PreparedStatement update = conexion.prepareStatement(
+                        "INSERT INTO profesores (`nombreCorto`, `nombre`, `apellidos`) VALUES (?, ?, ?);");
+                update.setString(1, profesor.getNombreCorto());
+                update.setString(2, profesor.getNombre());
+                update.setString(3, profesor.getApellidos());
+                update.executeUpdate();
+            }
+            
 
             return true; //Correcto
 

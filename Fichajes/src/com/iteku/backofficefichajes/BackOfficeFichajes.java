@@ -8,12 +8,8 @@ package com.iteku.backofficefichajes;
 import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
-import com.iteku.informes.ImpresionInforme;
 import com.iteku.informes.ListaProfesoresInforme;
-import com.iteku.recuento.Contabilizar;
 import com.iteku.utils.FechasUtils;
-import com.itextpdf.text.DocumentException;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,6 +92,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -308,6 +305,14 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Crear personal/profesor");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
 
         jMenu2.setText("Cargar horarios");
 
@@ -525,6 +530,18 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         frame.setVisible(false);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JDialog frame = new JDialog(this, "Crear personal", true);
+        frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        frame.getContentPane().add(new CrearProfesor());
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        iniciarMisComponentes();
+        cargarListaProfesores();
+        frame.setVisible(false);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -605,6 +622,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem6;

@@ -11,7 +11,14 @@ tiempoError=10000
 maquina=Secretaria
 ### base de datos ###
 baseDatos=colsan
-usuario=vpalomo
-contrasenia=123456
-host=micasa82.ddns.net
-puerto=1106
+usuario=root
+contrasenia=Hijo34Luna
+host=localhost
+puerto=3306
+
+### Base de datos raspberry
+#baseDatos=colsan
+#usuario=vpalomo
+#contrasenia=123456
+#host=micasa82.ddns.net
+#puerto=1106

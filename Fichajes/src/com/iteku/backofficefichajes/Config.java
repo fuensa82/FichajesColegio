@@ -130,7 +130,7 @@ public class Config {
     private static String usuario;
     private static String contrasenia;
     private static String hostBaseDatos;
-    private static String puerto;
+    private static String puerto="3306";
 
     public static int getPuerto() {
         return Integer.parseInt(puerto);
