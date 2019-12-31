@@ -91,9 +91,9 @@ public class Config {
                     contrasenia=valores[1];
                 }else if(valores[0].equalsIgnoreCase("host")){
                     hostBaseDatos=valores[1];
-                }else if(valores[0].equalsIgnoreCase("nombreCol")){
+                }else if(valores[0].equalsIgnoreCase("colName")){
                     nombreCol=valores[1];
-                }else if(valores[0].equalsIgnoreCase("nombreApp")){
+                }else if(valores[0].equalsIgnoreCase("appName")){
                     nombreApp=valores[1];
                 }else if(valores[0].equalsIgnoreCase("maquina")){
                     maquina=valores[1];
