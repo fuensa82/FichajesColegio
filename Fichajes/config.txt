@@ -1,7 +1,9 @@
 horaMaxima=20:00:00
 horaMinima=07:00:00
-#rutaScriptNode=C:\Users\vPalomo\Proyectos\Otros\CargaDeHorarios\index.js
-rutaScriptNode=C:\Users\Víctor\Proyectos\Colegio\CargaDeHorarios\index.js
+#Ruta ayto:
+rutaScriptNode=C:\Users\vPalomo\Proyectos\Otros\CargaDeHorarios\index.js
+#Ruta Colegio:
+#rutaScriptNode=C:\Users\Víctor\Proyectos\Colegio\CargaDeHorarios\index.js
 rutaLog=c:\Fichajes\exit.log
 ficheroBarra=c:\Fichajes\barra.dat
 appName=Control Horario

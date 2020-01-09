@@ -19,7 +19,26 @@ import java.util.logging.Logger;
  * @author vPalomo
  */
 public class Config {
+    private static String nombreCol;
+    private static String nombreApp;
+    private static String maquina;
+    private static String tiempoCorrecto;
+    private static String tiempoError;
+    private static String horaMaxima;
+    private static String horaMinima;
+    private static String rutaScriptNode;
+    private static String rutaLog;
+    private static String ficheroBarra;    
+    private static String baseDatos;
+    private static String usuario;
+    private static String contrasenia;
+    private static String hostBaseDatos;
+    private static String puerto="3306";
     
+    private static char dias[]={'D','L','M','X','J','V','S'};
+    private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
+    private static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};//El 5 mes es enero, el primero (1) es septiembre
+    //private static int ordenDias[]={7,1,2,3,4,5,6};
 
     public static String getHoraMaxima() {
         if(horaMaxima==null)cargarDatos();
@@ -120,17 +139,7 @@ public class Config {
             }
         }
     }
-    private static String horaMaxima;
-    private static String horaMinima;
-    private static String rutaScriptNode;
-    private static String rutaLog;
-    private static String ficheroBarra;
     
-    private static String baseDatos;
-    private static String usuario;
-    private static String contrasenia;
-    private static String hostBaseDatos;
-    private static String puerto="3306";
 
     public static int getPuerto() {
         return Integer.parseInt(puerto);
@@ -150,18 +159,6 @@ public class Config {
         if(contrasenia==null)cargarDatos();
         return contrasenia;
     }
-    
-    private static String nombreCol;
-    private static String nombreApp;
-    private static String maquina;
-    private static String tiempoCorrecto;
-    private static String tiempoError;
-    
-    
-    private static char dias[]={'D','L','M','X','J','V','S'};
-    private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
-    private static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};//El 5 mes es enero, el primero (1) es septiembre
-    //private static int ordenDias[]={7,1,2,3,4,5,6};
 
     public static HashMap<String,Integer> getOrdenDias() {
         HashMap<String,Integer> ordenDias=new HashMap<String,Integer>();
