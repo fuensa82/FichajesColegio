@@ -14,7 +14,10 @@ import com.itextpdf.text.DocumentException;
 import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -313,6 +316,15 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
 
     private void cargarListaProfesores() {
         listaProfesores = GestionProfesoresBD.getListaProfesores();
+        listaProfesores.sort(new Comparator<ProfesorBean>(){
+            @Override
+            public int compare(ProfesorBean p1, ProfesorBean p2) {
+                Collator c = Collator.getInstance(new Locale("es"));
+                c.setStrength(Collator.PRIMARY);
+                return c.compare(p1.getApellidos(), p2.getApellidos());
+                //return p1.getApellidos().compareToIgnoreCase(p2.getApellidos());
+            }
+        });
         DefaultTableModel datosTabla = (DefaultTableModel) jTableProfesores.getModel();
         for (int i = datosTabla.getRowCount(); i > 0; i--) {
             datosTabla.removeRow(i - 1);
