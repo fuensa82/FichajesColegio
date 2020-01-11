@@ -7,10 +7,14 @@ package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionProfesoresBD;
+import com.iteku.beans.FichaBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.informes.ListaProfesoresInforme;
 import com.iteku.utils.FechasUtils;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -580,6 +584,15 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
 
     private void cargarListaProfesores() {
         listaProfesores = GestionProfesoresBD.getListaProfesores();
+        listaProfesores.sort(new Comparator<ProfesorBean>(){
+            @Override
+            public int compare(ProfesorBean p1, ProfesorBean p2) {
+                Collator c = Collator.getInstance(new Locale("es"));
+                c.setStrength(Collator.PRIMARY);
+                return c.compare(p1.getApellidos(), p2.getApellidos());
+                //return p1.getApellidos().compareToIgnoreCase(p2.getApellidos());
+            }
+        });
         DefaultTableModel datosTabla = (DefaultTableModel) tProfesores.getModel();
         for (int i = datosTabla.getRowCount(); i > 0; i--) {
             //filasTabla=0;
