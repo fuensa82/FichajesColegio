@@ -33,6 +33,7 @@ public class CrearAsignatura extends javax.swing.JPanel {
     public CrearAsignatura() {
         initComponents();
         cargarListaProfesores();
+        cambiarLiterales();
     }
     
    
@@ -393,5 +394,17 @@ public class CrearAsignatura extends javax.swing.JPanel {
         jCheckBoxViernes.setSelected(false);
         jCheckBoxSabado.setSelected(false);
         jCheckBoxDomingo.setSelected(false);
+    }
+
+    private void cambiarLiterales() {
+        if(Config.getTipoApli()==2){
+            jComboBox1.setEnabled(false);
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Complementaria (C)", "Trabajo (T)", "No lectiva (NL)" }));
+            jComboBox1.setSelectedIndex(1);
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Días del periodo a crear"));
+            jLabel1.setText("Trabajadores a los que añadir el periodo que se va a crear");
+            jButton4.setText("Guardar periodo");
+
+        }
     }
 }

@@ -1,3 +1,5 @@
+#Tipo aplicacion. 1-> Colegios. 2-> Solo horas trabajo
+tipoApli=2
 horaMaxima=20:00:00
 horaMinima=07:00:00
 #Ruta ayto:

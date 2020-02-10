@@ -34,6 +34,7 @@ public class Config {
     private static String contrasenia;
     private static String hostBaseDatos;
     private static String puerto="3306";
+    private static String tipoApli;
     
     private static char dias[]={'D','L','M','X','J','V','S'};
     private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
@@ -65,6 +66,10 @@ public class Config {
     public static String getFicheroBarra() {
         if(ficheroBarra==null)cargarDatos();
         return ficheroBarra;
+    }
+    public static int getTipoApli() {
+        if(tipoApli==null)cargarDatos();
+        return Integer.parseInt(tipoApli);
     }
     public static String getRutaPrograma() {
         return rutaPrograma;
@@ -122,6 +127,8 @@ public class Config {
                     tiempoError=valores[1];
                 }else if(valores[0].equalsIgnoreCase("puerto")){
                     puerto=valores[1];
+                }else if(valores[0].equalsIgnoreCase("tipoApli")){
+                    tipoApli=valores[1];
                 }
             }
         

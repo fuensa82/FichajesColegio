@@ -26,6 +26,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -522,7 +523,11 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        JDialog frame = new JDialog(this, "Crear asignaturas", true);
+        String titulo="Crear asignatura";
+        if(Config.getTipoApli()==2){
+            titulo="Crear periodo de trabajo";
+        }
+        JDialog frame = new JDialog(this, titulo, true);
         frame.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         //frame.setIconImage(new ImageIcon(getClass().getResource(icono)).getImage());
         frame.getContentPane().add(new CrearAsignatura());
@@ -672,11 +677,30 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     }
 
     private void iniciarMisComponentes() {
+        cambioDeLiterales();
+        
         jLabelCurso.setText("".equals(FechasUtils.getCursoActual())?"Debe dar de alta el curso para poder empezar":FechasUtils.getCursoActual());
         jTextApellidos.setText("");
         jTextIdProfesor.setText("");
         jTextNombre.setText("");
         jTextIdTarjeta.setText("");
         jTextNombreCorto.setText("");
+    }
+
+    private void cambioDeLiterales() {
+        
+        if(Config.getTipoApli()==2){
+            //Nombre de la columna id profesor
+            TableColumn c=tProfesores.getColumnModel().getColumn(0);
+            c.setHeaderValue("ID");
+            tProfesores.repaint();
+            //jLabel id profesor del detalle
+            jLabel1.setText("ID:     ");
+            //jPanel
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del trabajador"));
+            //Opcion de menu de Cargar horarios automatico
+            jMenuItem6.setEnabled(false);
+        }
+        
     }
 }
