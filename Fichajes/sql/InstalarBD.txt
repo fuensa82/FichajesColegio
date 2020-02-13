@@ -1,0 +1,8 @@
+CREATE DATABASE fichajes;
+CREATE USER 'afanv' IDENTIFIED BY 'afanv2020';
+GRANT ALL PRIVILEGES ON `fichajes`.* TO 'afanv'@'%';
+
+Editar 
+/etc/mysql/mariadb.conf.d/50-server.cnf
+Cambiar el puerto (si se quiere) y 
+quitar la IP bind-address (vale con comentarla).

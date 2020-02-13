@@ -34,7 +34,7 @@ public class Config {
     private static String contrasenia;
     private static String hostBaseDatos;
     private static String puerto="3306";
-    private static String tipoApli="1";
+    private static String tipoApli;//="1";
     
     private static char dias[]={'D','L','M','X','J','V','S'};
     private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
@@ -68,7 +68,7 @@ public class Config {
         return ficheroBarra;
     }
     public static int getTipoApli() {
-        if(tipoApli==null)cargarDatos();
+        if(tipoApli==null) cargarDatos();
         return Integer.parseInt(tipoApli);
     }
     public static String getRutaPrograma() {

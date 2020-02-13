@@ -14,11 +14,11 @@ tiempoCorrecto=3000
 tiempoError=10000
 maquina=Secretaria
 ### base de datos ###
-baseDatos=colsan
-usuario=root
-contrasenia=Hijo34Luna
-host=localhost
-puerto=3306
+baseDatos=fichajes
+usuario=afanv
+contrasenia=afanv2020
+host=micasa82.ddns.net
+puerto=1106
 
 ### Base de datos raspberry
 #baseDatos=colsan

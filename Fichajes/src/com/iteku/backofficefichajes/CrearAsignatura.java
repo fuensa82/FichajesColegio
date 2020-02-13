@@ -323,6 +323,9 @@ public class CrearAsignatura extends javax.swing.JPanel {
             listaProfesores2.add(profesor);
         }
         String tipo=Utils.getTipoHora(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
+        if(Config.getTipoApli()==2){
+            tipo="T";
+        }
         AltaAsignaturaBean asignatura=new AltaAsignaturaBean();        
         asignatura.setTipoHora(tipo);
         asignatura.setLunes(jCheckBoxLunes.isSelected());
