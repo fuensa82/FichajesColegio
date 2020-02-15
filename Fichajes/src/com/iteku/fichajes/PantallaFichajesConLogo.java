@@ -65,7 +65,7 @@ public class PantallaFichajesConLogo extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(51, 0, 153));
         jLabel1.setText("Control");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(10, 10, 391, 38);
@@ -120,7 +120,7 @@ public class PantallaFichajesConLogo extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(390, 290, 40, 13);
 
-        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iteku/recursos/logo.jpg"))); // NOI18N
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iteku/recursos/logo2.jpg"))); // NOI18N
         fondo.setText("jLabel3");
         fondo.setPreferredSize(new java.awt.Dimension(480, 320));
         getContentPane().add(fondo);
