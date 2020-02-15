@@ -58,6 +58,7 @@ public class PantallaFichajesConLogo extends javax.swing.JFrame {
         sombraReloj = new javax.swing.JLabel();
         sombraTexto = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,10 +66,10 @@ public class PantallaFichajesConLogo extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 0, 153));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Control");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 10, 391, 38);
+        jLabel1.setBounds(21, 10, 380, 38);
 
         relojPantalla.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         relojPantalla.setForeground(new java.awt.Color(255, 255, 255));
@@ -119,6 +120,12 @@ public class PantallaFichajesConLogo extends javax.swing.JFrame {
         jLabel2.setText("v 0.3");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(390, 290, 40, 13);
+
+        jLabel3.setBackground(new java.awt.Color(145, 145, 145));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iteku/recursos/sombra2.png"))); // NOI18N
+        jLabel3.setText("jLabel3");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(10, 10, 360, 40);
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iteku/recursos/logo2.jpg"))); // NOI18N
         fondo.setText("jLabel3");
@@ -208,6 +215,7 @@ public class PantallaFichajesConLogo extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel nombreProfesor;
     private javax.swing.JLabel relojPantalla;
     private javax.swing.JLabel sombraReloj;
