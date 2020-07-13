@@ -1,7 +1,7 @@
 #Tipo aplicacion. 1-> Colegios. 2-> Solo horas trabajo
 tipoApli=2
 horaMaxima=20:00:00
-horaMinima=07:00:00
+horaMinima=00:00:00
 #Ruta ayto:
 rutaScriptNode=C:\Users\vPalomo\Proyectos\Otros\CargaDeHorarios\index.js
 #Ruta Colegio:

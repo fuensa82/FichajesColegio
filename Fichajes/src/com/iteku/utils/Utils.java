@@ -5,6 +5,7 @@
  */
 package com.iteku.utils;
 
+import com.iteku.backofficefichajes.Config;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
@@ -30,14 +31,24 @@ public class Utils {
     
     
     public static String getTipoHora(String texto){
-        if ("Complementaria (C)".equalsIgnoreCase(texto)) {
-            return "C";
-        } else if ("Lectiva (L)".equalsIgnoreCase(texto)) {
-            return "L";
-        } else if ("No lectiva (NL)".equalsIgnoreCase(texto)) {
-            return "NL";
-        }else{ 
-            return "";
+        if (Config.getTipoApli()==2){
+            if ("Terapia (T)".equalsIgnoreCase(texto)) {
+                return "T";
+            } else if ("Despacho (D)".equalsIgnoreCase(texto)) {
+                return "D";
+            }else{ 
+                return "";
+            }
+        }else{
+            if ("Complementaria (C)".equalsIgnoreCase(texto)) {
+                return "C";
+            } else if ("Lectiva (L)".equalsIgnoreCase(texto)) {
+                return "L";
+            } else if ("No lectiva (NL)".equalsIgnoreCase(texto)) {
+                return "NL";
+            }else{ 
+                return "";
+            }
         }
 
     }

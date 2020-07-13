@@ -323,9 +323,9 @@ public class CrearAsignatura extends javax.swing.JPanel {
             listaProfesores2.add(profesor);
         }
         String tipo=Utils.getTipoHora(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
-        if(Config.getTipoApli()==2){
-            tipo="T";
-        }
+        //if(Config.getTipoApli()==2){
+        //    tipo="T";
+        //}
         AltaAsignaturaBean asignatura=new AltaAsignaturaBean();        
         asignatura.setTipoHora(tipo);
         asignatura.setLunes(jCheckBoxLunes.isSelected());
@@ -401,9 +401,7 @@ public class CrearAsignatura extends javax.swing.JPanel {
 
     private void cambiarLiterales() {
         if(Config.getTipoApli()==2){
-            jComboBox1.setEnabled(false);
-            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Complementaria (C)", "Trabajo (T)", "No lectiva (NL)" }));
-            jComboBox1.setSelectedIndex(1);
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terapia (T)", "Despacho (D)" }));
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Días del periodo a crear"));
             jLabel1.setText("Trabajadores a los que añadir el periodo que se va a crear");
             jButton4.setText("Guardar periodo");

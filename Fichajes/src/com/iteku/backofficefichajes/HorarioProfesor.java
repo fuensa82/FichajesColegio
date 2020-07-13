@@ -53,6 +53,7 @@ public class HorarioProfesor extends javax.swing.JPanel {
     public HorarioProfesor(ProfesorBean profesor) {
         this.profesor=profesor;
         initComponents();
+        cambioDeLiterales();
         cargarDatos(profesor, "L");
         jComboBox1.setSelectedIndex(1);
         ponerListenerTablaEventos();
@@ -222,5 +223,14 @@ public class HorarioProfesor extends javax.swing.JPanel {
         }
         
         //datosTabla.setRowCount(ABORT);
+    }
+
+    private void cambioDeLiterales() {
+        if(Config.getTipoApli()==2){
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terapia (T)", "Despacho (D)" }));
+            jComboBox1.setSelectedIndex(0);
+            jComboBox1.repaint();
+
+        }
     }
 }
