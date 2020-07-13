@@ -21,6 +21,7 @@ public class CrearCursoNuevo extends javax.swing.JPanel {
      */
     public CrearCursoNuevo() {
         initComponents();
+        cambioDeLiterales();
     }
 
     /**
@@ -117,24 +118,40 @@ public class CrearCursoNuevo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText())){
-            if(GestionCursoBD.guardarCursoNuevo(jTextField1.getText()+"-"+jTextField2.getText())){
-                JOptionPane.showMessageDialog(null, "Guardado correctamente");
-                Window w = SwingUtilities.getWindowAncestor(this);
-                w.setVisible(false);
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar");
+        if (Config.getTipoApli() == 2) {
+            if (!"".equals(jTextField1.getText())) {
+                if (GestionCursoBD.guardarCursoNuevo(jTextField1.getText())) {
+                    JOptionPane.showMessageDialog(null, "Guardado correctamente");
+                    Window w = SwingUtilities.getWindowAncestor(this);
+                    w.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al guardar");
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe rellenar el campo año");
                 return;
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe rellenar los dos campos del curso");
-            return;
+            if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText())) {
+                if (GestionCursoBD.guardarCursoNuevo(jTextField1.getText() + "-" + jTextField2.getText())) {
+                    JOptionPane.showMessageDialog(null, "Guardado correctamente");
+                    Window w = SwingUtilities.getWindowAncestor(this);
+                    w.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al guardar");
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe rellenar los dos campos del curso");
+                return;
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Window w = SwingUtilities.getWindowAncestor(this);
-                w.setVisible(false);// TODO add your handling code here:
+        w.setVisible(false);// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -148,4 +165,15 @@ public class CrearCursoNuevo extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+    private void cambioDeLiterales() {
+        if (Config.getTipoApli() == 2) {
+            jLabel2.setText("Crear nuevo año");
+            jLabel1.setText("<html>Al crear un año nuevo el año actual se guardará como histórico y ya no se podrán hacer cambios en él</html>");
+            jLabel4.setText(("Año"));
+            jButton1.setText("Crear año");
+            jTextField2.setVisible(false);
+            jLabel3.setVisible(false);
+        }
+    }
 }

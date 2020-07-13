@@ -700,6 +700,9 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del trabajador"));
             //Opcion de menu de Cargar horarios automatico
             jMenuItem6.setEnabled(false);
+            jMenuItem4.setEnabled(false);
+            
+            jMenuItem3.setText("Crear nuevo año");
         }
         
     }
