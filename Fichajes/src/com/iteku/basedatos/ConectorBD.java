@@ -21,6 +21,7 @@ public class ConectorBD {
         dataSource.setPassword(Config.getContrasenia());
         dataSource.setDatabaseName(Config.getBaseDatos());
         dataSource.setPort(Config.getPuerto());
+        dataSource.setServerTimezone("UTC");
         //dataSource.setServerName("");
         dataSource.setServerName(Config.getHostBaseDatos());
 
