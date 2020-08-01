@@ -24,24 +24,25 @@ import javax.naming.NamingException;
  * @author vPalomo
  */
 public class GestionProfesoresBD {
-    public static ArrayList<ProfesorBean> getListaProfesores(){
+    public static ArrayList<ProfesorBean> getListaProfesores(boolean isActivo){
         ArrayList<ProfesorBean> result;
         result = new ArrayList();
         Connection conexion = null;
         try {
             conexion=ConectorBD.getConnection();
             ProfesorBean profesor;
-            PreparedStatement consulta = conexion.prepareStatement(
-                    "select idProfesor, nombre, apellidos, idTarjeta, nombreCorto from profesores");
+            PreparedStatement consulta = conexion.prepareStatement("select idProfesor, nombre, apellidos, idTarjeta, nombreCorto, activo from profesores");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()){
-                profesor=new ProfesorBean();
-                profesor.setIdProfesor(resultado.getInt(1));
-                profesor.setNombre(resultado.getString(2));
-                profesor.setApellidos(resultado.getString(3));
-                profesor.setIdTarjeta(resultado.getInt(4));
-                profesor.setNombreCorto(resultado.getString(5));
-                result.add(profesor);
+                if("true".equals(resultado.getString(6).trim())==isActivo){
+                    profesor=new ProfesorBean();
+                    profesor.setIdProfesor(resultado.getInt(1));
+                    profesor.setNombre(resultado.getString(2));
+                    profesor.setApellidos(resultado.getString(3));
+                    profesor.setIdTarjeta(resultado.getInt(4));
+                    profesor.setNombreCorto(resultado.getString(5));
+                    result.add(profesor);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

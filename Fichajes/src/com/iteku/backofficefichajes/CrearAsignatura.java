@@ -200,8 +200,7 @@ public class CrearAsignatura extends javax.swing.JPanel {
 
         jLabel6.setText("Tipo hora:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Complementaria (C)", "Lectiva (L)", "No lectiva (NL)" }));
-        jComboBox1.setSelectedIndex(1);
+        jComboBox1.setModel(Config.getModeloComboHoras(Config.getTipoApli()));
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("HH:mm:ss"))));
 
@@ -247,7 +246,7 @@ public class CrearAsignatura extends javax.swing.JPanel {
                                         .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(24, 24, 24)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 323, Short.MAX_VALUE)))
+                        .addGap(0, 325, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -371,7 +370,7 @@ public class CrearAsignatura extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void cargarListaProfesores() {
-        listaProfesores = GestionProfesoresBD.getListaProfesores();
+        listaProfesores = GestionProfesoresBD.getListaProfesores(true);
         DefaultTableModel datosTabla = (DefaultTableModel) jTableProfesores.getModel();
         for (int i = datosTabla.getRowCount(); i > 0; i--) {
             datosTabla.removeRow(i - 1);
@@ -401,7 +400,6 @@ public class CrearAsignatura extends javax.swing.JPanel {
 
     private void cambiarLiterales() {
         if(Config.getTipoApli()==2){
-            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terapia (T)", "Despacho (D)" }));
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Días del periodo a crear"));
             jLabel1.setText("Trabajadores a los que añadir el periodo que se va a crear");
             jButton4.setText("Guardar periodo");

@@ -588,7 +588,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     }
 
     private void cargarListaProfesores() {
-        listaProfesores = GestionProfesoresBD.getListaProfesores();
+        listaProfesores = GestionProfesoresBD.getListaProfesores(true);
         listaProfesores.sort(new Comparator<ProfesorBean>(){
             @Override
             public int compare(ProfesorBean p1, ProfesorBean p2) {
@@ -696,6 +696,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             tProfesores.repaint();
             //jLabel id profesor del detalle
             jLabel1.setText("ID:     ");
+            jLabel6.setText("Año: ");
             //jPanel
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del trabajador"));
             //Opcion de menu de Cargar horarios automatico

@@ -36,10 +36,26 @@ public class Config {
     private static String puerto="3306";
     private static String tipoApli;//="1";
     
+    private static String[] tipoHoras1={ "Complementaria (C)", "Lectiva (L)", "No lectiva (NL)" };
+    private static String[] tipoHoras2={ "Terapia (T)", "Despacho (D)" };
+    
     private static char dias[]={'D','L','M','X','J','V','S'};
     private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
     private static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};//El 5 mes es enero, el primero (1) es septiembre
     //private static int ordenDias[]={7,1,2,3,4,5,6};
+    
+    /**
+     * 
+     * @return 
+     */
+    public static javax.swing.DefaultComboBoxModel getModeloComboHoras(int tipoApli){
+        if(tipoApli==2){
+            return new javax.swing.DefaultComboBoxModel<>(tipoHoras2);
+        }else{
+            return new javax.swing.DefaultComboBoxModel<>(tipoHoras1);
+        
+        }
+    }
 
     public static String getHoraMaxima() {
         if(horaMaxima==null)cargarDatos();

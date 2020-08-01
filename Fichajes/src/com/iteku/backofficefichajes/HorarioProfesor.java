@@ -112,7 +112,7 @@ public class HorarioProfesor extends javax.swing.JPanel {
 
         jLabel1.setText("Tipo de horario:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Complementaria (C)", "Lectiva (L)", "No lectiva (NL)" }));
+        jComboBox1.setModel(Config.getModeloComboHoras(Config.getTipoApli()));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -227,9 +227,7 @@ public class HorarioProfesor extends javax.swing.JPanel {
 
     private void cambioDeLiterales() {
         if(Config.getTipoApli()==2){
-            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terapia (T)", "Despacho (D)" }));
-            jComboBox1.setSelectedIndex(0);
-            jComboBox1.repaint();
+            
 
         }
     }

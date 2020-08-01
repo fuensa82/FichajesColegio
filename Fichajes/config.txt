@@ -17,8 +17,8 @@ maquina=Secretaria
 baseDatos=fichajes
 usuario=afanv
 contrasenia=afanv2020
-#host=nuevavida.ddns.net
-host=192.168.1.84
+host=nuevavida.ddns.net
+#host=192.168.1.84
 puerto=1106
 
 ### Base de datos raspberry

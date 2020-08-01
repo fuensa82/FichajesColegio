@@ -26,7 +26,7 @@ public class PonerHoraExtra extends javax.swing.JPanel {
         profesor=p;
         initComponents();
         jLabelNombreProfesor.setText(profesor.getNombre()+" "+profesor.getApellidos());
-        
+        cambiarLiterales();
         
     }
 
@@ -92,7 +92,7 @@ public class PonerHoraExtra extends javax.swing.JPanel {
 
         jLabel7.setText("Motivo:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Complementaria (C)", "Lectiva (L)", "No lectiva (NL)" }));
+        jComboBox1.setModel(Config.getModeloComboHoras(Config.getTipoApli()));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -238,4 +238,12 @@ public class PonerHoraExtra extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelNombreProfesor;
     private javax.swing.JTextField jTextMotivo;
     // End of variables declaration//GEN-END:variables
+
+    private void cambiarLiterales() {
+        if(Config.getTipoApli()==2){
+            jLabel1.setText("Añadir horas a: ");
+            
+
+        }
+    }
 }

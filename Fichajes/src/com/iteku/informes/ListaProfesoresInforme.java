@@ -315,7 +315,7 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonInformeCursoActionPerformed
 
     private void cargarListaProfesores() {
-        listaProfesores = GestionProfesoresBD.getListaProfesores();
+        listaProfesores = GestionProfesoresBD.getListaProfesores(true);
         listaProfesores.sort(new Comparator<ProfesorBean>(){
             @Override
             public int compare(ProfesorBean p1, ProfesorBean p2) {
