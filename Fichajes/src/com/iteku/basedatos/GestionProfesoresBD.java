@@ -260,10 +260,10 @@ public class GestionProfesoresBD {
             conexion=ConectorBD.getConnection();
             FichaBean ficha;
             PreparedStatement consulta = conexion.prepareStatement(
-                    "SELECT idFicha, horaIni, horaFin, idProfesor, dia, tipoHora, curso FROM horarios WHERE idProfesor=? and curso=? and tipoHora=? order by dia, horaIni");
+                    "SELECT idFicha, horaIni, horaFin, idProfesor, dia, tipoHora, curso FROM horarios WHERE idProfesor=? and tipoHora=? order by dia, horaIni");
             consulta.setString(1, ""+profesor.getIdProfesor());
-            consulta.setString(2, FechasUtils.getCursoActual());
-            consulta.setString(3, tipoHora);
+            //consulta.setString(2, FechasUtils.getCursoActual());
+            consulta.setString(2, tipoHora);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()){
                 ficha=new FichaBean();

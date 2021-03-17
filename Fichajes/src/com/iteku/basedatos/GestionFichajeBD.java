@@ -110,6 +110,7 @@ public class GestionFichajeBD {
             insert1.setString(5, ""+fichaje.getTerminal());
             insert1.setString(6, ""+fichaje.isEsEntrada());
             insert1.setString(7, fichaje.getCurso());
+            System.out.println("Curso: "+fichaje.getCurso());
             insert1.setString(8, fichaje.getMotivo());
             insert1.executeUpdate();
             return true; //Correcto

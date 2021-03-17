@@ -9,6 +9,7 @@ import com.iteku.backofficefichajes.Config;
 import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.recuento.Contabilizar;
+import com.iteku.recuento.ContabilizarApli2;
 import com.iteku.utils.FechasUtils;
 import com.itextpdf.text.DocumentException;
 import java.awt.Window;
@@ -359,7 +360,12 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
 
     
     private void hiloContabiliza(ArrayList<ProfesorBean> listaProfesores2, int mes) {
-        Contabilizar conta = new Contabilizar();
+        Contabilizar conta;
+        if(Config.getTipoApli()==2){
+            conta= new ContabilizarApli2();
+        }else{
+            conta=new Contabilizar();
+        }
         System.out.println("Total contabilizaciones: "+totalContabilizaciones);
         for (ProfesorBean profesor : listaProfesores2) {
             System.out.println("Barra progreso: "+barraProgreso);
@@ -434,7 +440,6 @@ public class ListaProfesoresInforme extends javax.swing.JPanel {
     }
     
     private void hiloContabilizaAnual(ArrayList<ProfesorBean> listaProfesores2) {
-        Contabilizar conta = new Contabilizar();
         System.out.println("Total contabilizaciones: "+totalContabilizaciones);
         for (ProfesorBean profesor : listaProfesores2) {
             System.out.println("Barra progreso: "+barraProgreso);

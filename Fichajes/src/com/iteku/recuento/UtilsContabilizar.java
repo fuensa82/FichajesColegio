@@ -67,9 +67,10 @@ public class UtilsContabilizar {
      * @return 
      */
     public static int compararHoras(String horaMayor, String horaMenor){
+        System.out.println("CompararHoras "+horaMayor+" "+horaMenor);
         LocalTime horaM=LocalTime.of(Integer.parseInt(horaMayor.substring(0, 2)), Integer.parseInt(horaMayor.substring(3, 5)), Integer.parseInt(horaMayor.substring(7)));//=new LocalTime()
         LocalTime horam=LocalTime.of(Integer.parseInt(horaMenor.substring(0, 2)), Integer.parseInt(horaMenor.substring(3, 5)), Integer.parseInt(horaMenor.substring(7)));//=new LocalTime()
-        horaM.compareTo(horam);
+        System.out.println("Result:" +horaM.compareTo(horam));
         return horaM.compareTo(horam);
     }
 
@@ -125,7 +126,7 @@ public class UtilsContabilizar {
      */
     public static ArrayList<FichaBean> getHorarioCompacto(ProfesorBean profesor, String tipoHora){
         ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorario(profesor, tipoHora);
-        //UtilsContabilizar.imprimeHorario(listaFichas);
+        UtilsContabilizar.imprimeHorario(listaFichas);
         for(int i=listaFichas.size()-1;i>0;i--){ //Recorremos la lista desde el final al principio
             FichaBean fichaActual=listaFichas.get(i);
             FichaBean fichaAnterior=listaFichas.get(i-1);
@@ -147,7 +148,7 @@ public class UtilsContabilizar {
      * Utilizadad para imprimir un arrayList completo de FichaBean. Para que todo salga "bonito" el objeto debería 
      * implementar el metodo toString
      * @param listaFichas 
-     * @deprecated 
+     *  
      */
     public static void imprimeHorario(ArrayList<FichaBean> listaFichas){
         System.out.println("*******************Imprimendo***********************");
