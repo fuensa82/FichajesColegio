@@ -121,27 +121,27 @@ public class ContabilizarApli2 extends Contabilizar{
             detalleInforme.setIdProfesor(profesor.getIdProfesor());
             fichaje=listaFichajesRecuento.get(i);
             fichasHorario=horario.get(""+fichaje.getDiaSemana());
-            System.out.println("Fichashorarios: "+fichasHorario.size());
+//            System.out.println("Fichashorarios: "+fichasHorario.size());
             boolean seguir=true;
             for(int j=0;j<fichasHorario.size() && seguir;j++){
-                System.out.println("Comparando i="+i+" j="+j);
-                System.out.println("            Fichas      Fichajes");
-                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
-                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
+//                System.out.println("Comparando i="+i+" j="+j);
+//                System.out.println("            Fichas      Fichajes");
+//                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
+//                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
                 //Caso. Se empieza la ficha de horario estando en el centro y se termina la ficha estando en el centro
                 if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraSalida())>=0){
-                    System.out.println("Caso todo antes");
-                    System.out.println("Fichaje:============");
-                    System.out.println("Ficha:                ======");
+//                    System.out.println("Caso todo antes");
+//                    System.out.println("Fichaje:============");
+//                    System.out.println("Ficha:                ======");
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraEntrada())<=0) {
-                    System.out.println("Caso todo despues");
-                    System.out.println("Fichaje:         ============");
-                    System.out.println("Ficha:  ======");
+//                    System.out.println("Caso todo despues");
+//                    System.out.println("Fichaje:         ============");
+//                    System.out.println("Ficha:  ======");
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0 
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
-                    System.out.println("Caso 1");
-                    System.out.println("Fichaje:============");
-                    System.out.println("Ficha:     ======");
+//                    System.out.println("Caso 1");
+//                    System.out.println("Fichaje:============");
+//                    System.out.println("Ficha:     ======");
                     segundos+=UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichasHorario.get(j).getHoraFin());
                     
                     detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichasHorario.get(j).getHoraFin()));
@@ -160,9 +160,9 @@ public class ContabilizarApli2 extends Contabilizar{
                     i++; //Como hemos añadido un item más a la lista y la estamos recorriendo al reves, hay que mantener el indice para que este nuevo item tambien sea tratado.
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())>0){
-                    System.out.println("Caso 2");
-                    System.out.println("Fichaje:============");
-                    System.out.println("Ficha:         ===========");
+//                    System.out.println("Caso 2");
+//                    System.out.println("Fichaje:============");
+//                    System.out.println("Ficha:         ===========");
                     segundos+=UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichaje.getHoraSalida());
                     
                     detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichasHorario.get(j).getHoraIni(), fichaje.getHoraSalida()));
@@ -176,9 +176,9 @@ public class ContabilizarApli2 extends Contabilizar{
                     //listaFichajesRecuento.add(i+1, fichajeResto);
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())<=0
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
-                    System.out.println("Caso 3");
-                    System.out.println("Fichaje:   ============");
-                    System.out.println("Ficha:  ======");
+//                    System.out.println("Caso 3");
+//                    System.out.println("Fichaje:   ============");
+//                    System.out.println("Ficha:  ======");
                     segundos+=UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichasHorario.get(j).getHoraFin());
                     
                     detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichasHorario.get(j).getHoraFin()));
@@ -191,9 +191,9 @@ public class ContabilizarApli2 extends Contabilizar{
                     fichaje.setHoraEntrada(fichasHorario.get(j).getHoraFin());
                 }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())<=0
                         && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())>0){
-                    System.out.println("Fichaje:   =======");
-                    System.out.println("Ficha:  =============");
-                    System.out.println("Caso 4");
+//                    System.out.println("Fichaje:   =======");
+//                    System.out.println("Ficha:  =============");
+//                    System.out.println("Caso 4");
                     segundos+=UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichaje.getHoraSalida());
                     
                     detalleInforme.setTotalHoras(UtilsContabilizar.dimeDuracion(fichaje.getHoraEntrada(),fichaje.getHoraSalida()));
@@ -209,10 +209,10 @@ public class ContabilizarApli2 extends Contabilizar{
                 }else{
                     System.out.println("ERROR: por aquí no debería pasar, ya se deberían haber tratado todos los casos");
                 }
-                System.out.println("Resultado ->Fichas      Fichajes");
-                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
-                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
-                System.out.println("***********************************************************");
+//                System.out.println("Resultado ->Fichas      Fichajes");
+//                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
+//                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
+//                System.out.println("***********************************************************");
             }
         }
         //System.out.println("Hashmap: "+horario.toString());

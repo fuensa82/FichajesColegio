@@ -59,11 +59,11 @@ public class ImpresionInforme {
     }
     
     private void cabecera(Document documento) throws DocumentException{
-        Paragraph p=new Paragraph("COLEGIO SAN JOSE",FuenteCabecera1);
+        Paragraph p=new Paragraph(Config.getNombreCol(),FuenteCabecera1);
         p.setAlignment(Chunk.ALIGN_CENTER);
         documento.add(p);
         if(mes==0){
-            documento.add(new Paragraph("Informe de horas del curso "+curso,FuenteCabecera2));
+            documento.add(new Paragraph("Informe de horas del año "+curso,FuenteCabecera2));
         }else{
             documento.add(new Paragraph("Informe de horas del mes de "+FechasUtils.getMesNum(mes),FuenteCabecera2)); 
         }
@@ -124,21 +124,21 @@ public class ImpresionInforme {
         InformeBean informe=GestionInformesBD.getTotalInformes(profesor, mes);
         
         documento.add(new Paragraph("Resumen total horas:",FuenteTextoNormal));
-        Chunk c1 = new Chunk("Horas lectivas(L):  ", FuenteTextoNormal);
+        Chunk c1 = new Chunk("Horas terapia(T):  ", FuenteTextoNormal);
         Chunk c2 = new Chunk(Utils.convierteSegundos(informe.getHorasL()),FuenteTextoNegrita);
         Paragraph p2=new Paragraph();
         p2.add(c1);
         p2.add(c2);
         documento.add(p2);
 
-        c1 = new Chunk("Horas complementarias(C):  ", FuenteTextoNormal);
+        c1 = new Chunk("Horas despacho(D):  ", FuenteTextoNormal);
         c2 = new Chunk(Utils.convierteSegundos(informe.getHorasC()),FuenteTextoNegrita);
         p2=new Paragraph();
         p2.add(c1);
         p2.add(c2);
         documento.add(p2);
         
-        c1 = new Chunk("Horas no lectivas(NL):  ", FuenteTextoNormal);
+        c1 = new Chunk("Horas no computables(NC):  ", FuenteTextoNormal);
         c2 = new Chunk(Utils.convierteSegundos(informe.getHorasNL()),FuenteTextoNegrita);
         p2=new Paragraph();
         p2.add(c1);
@@ -182,25 +182,26 @@ public class ImpresionInforme {
         for (InformeBean informe: lista){
             documento.add(new Paragraph(FechasUtils.getMesNum(informe.getMes()),FuenteTextoNegritaPe));
             PdfPTable tabla = new PdfPTable(2);
-            tabla.addCell(new Phrase("Horas Lectivas (L):", FuenteTextoNegritaPe));
+            tabla.addCell(new Phrase("Horas terapia(T): ", FuenteTextoNegritaPe));
             tabla.addCell(new Phrase(""+Utils.convierteSegundos(informe.getHorasL()), FuenteTextoNormalPe));
-            tabla.addCell(new Phrase("Horas No Lectivas (NL):", FuenteTextoNegritaPe));
-            tabla.addCell(new Phrase(""+Utils.convierteSegundos(informe.getHorasNL()), FuenteTextoNormalPe));
-            tabla.addCell(new Phrase("Horas Complementarias:", FuenteTextoNegritaPe));
+            tabla.addCell(new Phrase("Horas despacho (D): ", FuenteTextoNegritaPe));
             tabla.addCell(new Phrase(""+Utils.convierteSegundos(informe.getHorasC()), FuenteTextoNormalPe));
+            tabla.addCell(new Phrase("Horas no computables: ", FuenteTextoNegritaPe));
+            tabla.addCell(new Phrase(""+Utils.convierteSegundos(informe.getHorasNL()), FuenteTextoNormalPe));
             documento.add(tabla);
             segL+=informe.getHorasL();
             segNL+=informe.getHorasNL();
             segC+=informe.getHorasC();
         }
-        documento.add(new Paragraph("Total curso "+FechasUtils.getCursoActual(),FuenteTextoNegritaPe));
+        documento.add(new Paragraph("Total año "+FechasUtils.getCursoActual(),FuenteTextoNegritaPe));
         PdfPTable tabla = new PdfPTable(2);
-        tabla.addCell(new Phrase("Horas Lectivas (L):", FuenteTextoNegritaPe));
+        tabla.addCell(new Phrase("Horas terapia(T): ", FuenteTextoNegritaPe));
         tabla.addCell(new Phrase(""+Utils.convierteSegundos(segL), FuenteTextoNormalPe));
-        tabla.addCell(new Phrase("Horas No Lectivas (NL):", FuenteTextoNegritaPe));
-        tabla.addCell(new Phrase(""+Utils.convierteSegundos(segNL), FuenteTextoNormalPe));
-        tabla.addCell(new Phrase("Horas Complementarias:", FuenteTextoNegritaPe));
+        tabla.addCell(new Phrase("Horas despacho (D): ", FuenteTextoNegritaPe));
         tabla.addCell(new Phrase(""+Utils.convierteSegundos(segC), FuenteTextoNormalPe));
+        tabla.addCell(new Phrase("Horas no computables (NC): ", FuenteTextoNegritaPe));
+        tabla.addCell(new Phrase(""+Utils.convierteSegundos(segNL), FuenteTextoNormalPe));
+        
         documento.add(tabla);
     }
 }

@@ -42,7 +42,8 @@ public class Config {
     private static char dias[]={'D','L','M','X','J','V','S'};
     private static int arrayMes[]={1,2,3,4,5,6,7,8,9,10,11,12};
     private static int arrayMesOrdenCurso[]={5,6,7,8,9,10,11,12,1,2,3,4};//El 5 mes es enero, el primero (1) es septiembre
-    //private static int ordenDias[]={7,1,2,3,4,5,6};
+    private static int arrayMesOrdenAnual[]={1,2,3,4,5,6,7,8,9,10,11,12};
+//private static int ordenDias[]={7,1,2,3,4,5,6};
     
     /**
      * 
@@ -91,8 +92,13 @@ public class Config {
         return rutaPrograma;
     }
     public static int[] getArrayMesOrdenCurso() {
-        return arrayMesOrdenCurso;
+        if(Config.getTipoApli()==1){
+            return arrayMesOrdenCurso;
+        }else{
+            return arrayMesOrdenAnual;
+        }
     }
+    
     
     private static void cargarDatos(){
         System.out.println("Cargando datos del fichero de config");

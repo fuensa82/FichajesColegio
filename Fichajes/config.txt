@@ -12,7 +12,7 @@ appName=Control Horario
 colName=AFA Nueva Vida
 tiempoCorrecto=3000
 tiempoError=10000
-maquina=Secretaria
+maquina=Despacho
 ### base de datos ###
 baseDatos=fichajes
 usuario=afanv
