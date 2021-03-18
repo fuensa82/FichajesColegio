@@ -186,8 +186,8 @@ public class Contabilizar {
                     GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 3 - contabilizaHorasLectivasOCmplementarias", mes);
                     
                     fichaje.setHoraEntrada(fichasHorario.get(j).getHoraFin());
-                }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0
-                        && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
+                }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())<=0
+                        && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())>0){
 //                    System.out.println("Fichaje:   =======");
 //                    System.out.println("Ficha:  =============");
 //                    System.out.println("Caso 4");

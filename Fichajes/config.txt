@@ -14,7 +14,7 @@ maquina=Secretaria
 ### base de datos ###
 baseDatos=colsan
 usuario=root
-contrasenia=Hijo34Luna
+contrasenia=03885536
 host=localhost
 puerto=3306
 
