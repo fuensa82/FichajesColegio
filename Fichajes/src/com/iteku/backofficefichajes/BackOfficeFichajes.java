@@ -7,7 +7,6 @@ package com.iteku.backofficefichajes;
 
 import com.iteku.basedatos.GestionFichajeBD;
 import com.iteku.basedatos.GestionProfesoresBD;
-import com.iteku.beans.FichaBean;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.informes.ListaProfesoresInforme;
 import com.iteku.utils.FechasUtils;
@@ -88,6 +87,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabelCurso = new javax.swing.JLabel();
@@ -106,20 +106,20 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
 
         tProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Profesor", "Nombre Corto", "Nombre", "Apellidos", "Tarjeta", "Estado", "Hora Estado", "Alerta"
+                "ID Profesor", "Nombre Corto", "Nombre", "Apellidos", "Tarjeta", "Estado", "Hora Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -130,6 +130,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tProfesores.setColumnSelectionAllowed(true);
         tProfesores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         tProfesores.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tProfesores);
@@ -142,7 +143,6 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             tProfesores.getColumnModel().getColumn(4).setPreferredWidth(60);
             tProfesores.getColumnModel().getColumn(5).setPreferredWidth(30);
             tProfesores.getColumnModel().getColumn(6).setPreferredWidth(30);
-            tProfesores.getColumnModel().getColumn(7).setPreferredWidth(20);
         }
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos profesor seleccionado"));
@@ -201,6 +201,9 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel7.setText("jLabel7");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -223,7 +226,10 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                             .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextIdTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextNombreCorto, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextNombreCorto, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(90, 90, 90)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton1))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -244,7 +250,8 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextNombreCorto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -617,8 +624,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 listaProfesores.get(i).getApellidos(),
                 "" + listaProfesores.get(i).getIdTarjeta(),
                 "" + (listaProfesores.get(i).isDentro() ? "Dentro" : "Ausente"),
-                "" + listaProfesores.get(i).getHoraCurrentTime(),
-                GestionFichajeBD.compruebaFichajesProfesor(listaProfesores.get(i), FechasUtils.getNumMesActualInteger())?"":"Fichajes errores"
+                "" + listaProfesores.get(i).getHoraCurrentTime()
             });
         }
     }
@@ -635,6 +641,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelCurso;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -670,6 +677,14 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                     jTextApellidos.setText("" + listaProfesores.get(indice).getApellidos());
                     jTextIdTarjeta.setText("" + listaProfesores.get(indice).getIdTarjeta());
                     jTextNombreCorto.setText("" + listaProfesores.get(indice).getNombreCorto());
+                    ProfesorBean p=new ProfesorBean();
+                    p.setIdProfesor(listaProfesores.get(indice).getIdProfesor());
+                    if(GestionFichajeBD.compruebaFichajesProfesor(p, FechasUtils.getNumMesActualInteger())){
+                        jLabel7.setText("Fichajes errores");
+                        jLabel7.setVisible(true);
+                    }else{
+                        jLabel7.setVisible(false);
+                    }
                     profesorSeleccionado = listaProfesores.get(indice);
                 }
             }
