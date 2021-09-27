@@ -241,6 +241,7 @@ public class GestionFichajeBD {
             fechaAnterior=lista.get(i).getFecha();
             contFichaje++;
         }
+        System.out.println("Comprobando fichajes: "+p.getIdProfesor()+" - "+result);
         return result;
     }
 }

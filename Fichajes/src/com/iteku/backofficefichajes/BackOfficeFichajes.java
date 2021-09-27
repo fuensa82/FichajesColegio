@@ -130,7 +130,6 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tProfesores.setColumnSelectionAllowed(true);
         tProfesores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         tProfesores.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tProfesores);
@@ -202,7 +201,6 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
         });
 
         jLabel7.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel7.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -679,7 +677,7 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                     jTextNombreCorto.setText("" + listaProfesores.get(indice).getNombreCorto());
                     ProfesorBean p=new ProfesorBean();
                     p.setIdProfesor(listaProfesores.get(indice).getIdProfesor());
-                    if(GestionFichajeBD.compruebaFichajesProfesor(p, FechasUtils.getNumMesActualInteger())){
+                    if(!GestionFichajeBD.compruebaFichajesProfesor(p, FechasUtils.getNumMesActualInteger())){
                         jLabel7.setText("Fichajes errores");
                         jLabel7.setVisible(true);
                     }else{
