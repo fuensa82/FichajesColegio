@@ -5,7 +5,6 @@
  */
 package com.iteku.informes;
 
-//import com.itextpdf.kernel.pdf.PdfName.Document;
 import com.iteku.backofficefichajes.Config;
 import com.iteku.basedatos.GestionDetallesInformesBD;
 import com.iteku.basedatos.GestionInformesBD;
@@ -124,14 +123,23 @@ public class ImpresionInforme {
         InformeBean informe=GestionInformesBD.getTotalInformes(profesor, mes);
         
         documento.add(new Paragraph("Resumen total horas:",FuenteTextoNormal));
-        Chunk c1 = new Chunk("Horas terapia(T):  ", FuenteTextoNormal);
+        Chunk c1;
+        if(Config.getTipoApli()==1){
+            c1 = new Chunk("Horas lectivas(L):  ", FuenteTextoNormal);
+        }else{
+            c1 = new Chunk("Horas terapia(L):  ", FuenteTextoNormal);
+        }
         Chunk c2 = new Chunk(Utils.convierteSegundos(informe.getHorasL()),FuenteTextoNegrita);
         Paragraph p2=new Paragraph();
         p2.add(c1);
         p2.add(c2);
         documento.add(p2);
 
-        c1 = new Chunk("Horas despacho(D):  ", FuenteTextoNormal);
+        if(Config.getTipoApli()==1){
+            c1 = new Chunk("Horas no lectivas(NL):  ", FuenteTextoNormal);
+        }else{
+            c1 = new Chunk("Horas despacho(NL):  ", FuenteTextoNormal);
+        }
         c2 = new Chunk(Utils.convierteSegundos(informe.getHorasC()),FuenteTextoNegrita);
         p2=new Paragraph();
         p2.add(c1);

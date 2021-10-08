@@ -10,6 +10,7 @@ import com.iteku.basedatos.GestionProfesoresBD;
 import com.iteku.beans.ProfesorBean;
 import com.iteku.informes.ListaProfesoresInforme;
 import com.iteku.utils.FechasUtils;
+import java.awt.Color;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -54,11 +55,15 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
             Logger.getLogger(BackOfficeFichajes.class.getName()).log(Level.SEVERE, null, ex);
         }
         listaProfesores = new ArrayList<>();
-        
+        System.out.println("1");
         initComponents();
+                System.out.println("2");
         iniciarMisComponentes();
+                System.out.println("3");
         ponListenerTabla(tProfesores);
+                System.out.println("4");
         cargarListaProfesores();
+                System.out.println("5");
     }
 
     /**
@@ -227,9 +232,9 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTextNombreCorto, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(90, 90, 90)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -678,10 +683,13 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                     ProfesorBean p=new ProfesorBean();
                     p.setIdProfesor(listaProfesores.get(indice).getIdProfesor());
                     if(!GestionFichajeBD.compruebaFichajesProfesor(p, FechasUtils.getNumMesActualInteger())){
-                        jLabel7.setText("Fichajes errores");
-                        jLabel7.setVisible(true);
+                        jLabel7.setForeground(Color.RED);
+                        jLabel7.setText("Contiene errores en los fichajes");
+                        //jLabel7.setVisible(true);
                     }else{
-                        jLabel7.setVisible(false);
+                        jLabel7.setForeground(Color.BLACK);
+                        jLabel7.setText("Fichajes correctos");
+                        //jLabel7.setVisible(false);
                     }
                     profesorSeleccionado = listaProfesores.get(indice);
                 }

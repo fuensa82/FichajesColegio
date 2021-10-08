@@ -67,10 +67,10 @@ public class UtilsContabilizar {
      * @return 
      */
     public static int compararHoras(String horaMayor, String horaMenor){
-        System.out.println("CompararHoras "+horaMayor+" "+horaMenor);
+        //System.out.println("CompararHoras "+horaMayor+" "+horaMenor);
         LocalTime horaM=LocalTime.of(Integer.parseInt(horaMayor.substring(0, 2)), Integer.parseInt(horaMayor.substring(3, 5)), Integer.parseInt(horaMayor.substring(7)));//=new LocalTime()
         LocalTime horam=LocalTime.of(Integer.parseInt(horaMenor.substring(0, 2)), Integer.parseInt(horaMenor.substring(3, 5)), Integer.parseInt(horaMenor.substring(7)));//=new LocalTime()
-        System.out.println("Result:" +horaM.compareTo(horam));
+        //System.out.println("Result:" +horaM.compareTo(horam));
         return horaM.compareTo(horam);
     }
 
@@ -127,21 +127,59 @@ public class UtilsContabilizar {
     public static ArrayList<FichaBean> getHorarioCompacto(ProfesorBean profesor, String tipoHora){
         ArrayList<FichaBean> listaFichas=UtilsContabilizar.getHorario(profesor, tipoHora);
         UtilsContabilizar.imprimeHorario(listaFichas);
+        //System.out.println("Lista:\n"+listaFichas.toString());
         for(int i=listaFichas.size()-1;i>0;i--){ //Recorremos la lista desde el final al principio
-            FichaBean fichaActual=listaFichas.get(i);
-            FichaBean fichaAnterior=listaFichas.get(i-1);
-            if(fichaActual.getDia()==fichaAnterior.getDia()){
-                if(fichaActual.getHoraIni().trim().equals(fichaAnterior.getHoraFin().trim())){
+            System.out.println("Lista ("+listaFichas.size()+")");
+            //UtilsContabilizar.imprimeHorario(listaFichas);
+            FichaBean ficha1=listaFichas.get(i);
+            FichaBean ficha2=listaFichas.get(i-1);
+            if(ficha1.getDia()==ficha2.getDia()){
+                
+                if(UtilsContabilizar.compararHoras(ficha1.getHoraIni().trim(), ficha2.getHoraFin().trim())<0
+                   && UtilsContabilizar.compararHoras(ficha1.getHoraIni().trim(), ficha2.getHoraIni().trim())>=0
+                   && UtilsContabilizar.compararHoras(ficha1.getHoraFin().trim(), ficha2.getHoraFin().trim())>=0 ){
+                        /**  Dibujo del caso
+                        * Ficha2    =====        ======
+                        * Ficha1       ====         ===
+                        */
+                        ficha2.setHoraFin(ficha1.getHoraFin());
+                        listaFichas.remove(i);
+                }else if(UtilsContabilizar.compararHoras(ficha2.getHoraIni().trim(), ficha1.getHoraFin().trim())<0
+                   && UtilsContabilizar.compararHoras(ficha2.getHoraIni().trim(), ficha1.getHoraIni().trim())>=0
+                   && UtilsContabilizar.compararHoras(ficha2.getHoraFin().trim(), ficha1.getHoraFin().trim())>=0){
+                        /**  Dibujo del caso
+                        * Ficha2        =====        ======
+                        * Ficha1      ====           ===
+                        */
+                        ficha2.setHoraIni(ficha1.getHoraIni());
+                        listaFichas.remove(i);
+                }else if(UtilsContabilizar.compararHoras(ficha2.getHoraIni().trim(), ficha1.getHoraIni().trim())<=0
+                   && UtilsContabilizar.compararHoras(ficha2.getHoraFin().trim(), ficha1.getHoraFin().trim())>=0){
+                        /**  Dibujo del caso
+                        * Ficha2      =======
+                        * Ficha1        ==== 
+                        */
+                        listaFichas.remove(i);
+                    
+                }else if(UtilsContabilizar.compararHoras(ficha1.getHoraIni().trim(), ficha2.getHoraIni().trim())<=0
+                   && UtilsContabilizar.compararHoras(ficha1.getHoraFin().trim(), ficha2.getHoraFin().trim())>=0){
+                        /**  Dibujo del caso
+                        * Ficha2        =====
+                        * Ficha1       ======== 
+                        */
+                        listaFichas.remove(i-1);    
+                    
+                }else if(ficha1.getHoraIni().trim().equals(ficha2.getHoraFin().trim())){
                     listaFichas.remove(i);
-                    fichaAnterior.setHoraFin(fichaActual.getHoraFin());
+                    ficha2.setHoraFin(ficha1.getHoraFin());
                 }else{
-                    //System.out.println("No se borra por no coincidir la hora");
+                    System.out.println("No se borra por no coincidir la hora");
                 }
             }else{
-                //System.out.println("No se borra por no coincidir el dia");
+                System.out.println("No se borra por no coincidir el dia");
             }
         }
-        //UtilsContabilizar.imprimeHorario(listaFichas);
+        UtilsContabilizar.imprimeHorario(listaFichas);
         return listaFichas;
     }
     /**

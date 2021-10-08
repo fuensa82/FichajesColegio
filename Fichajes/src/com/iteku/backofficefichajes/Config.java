@@ -86,6 +86,7 @@ public class Config {
     }
     public static int getTipoApli() {
         if(tipoApli==null) cargarDatos();
+        if(tipoApli==null) tipoApli="1";
         return Integer.parseInt(tipoApli);
     }
     public static String getRutaPrograma() {

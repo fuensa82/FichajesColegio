@@ -84,7 +84,7 @@ public class ProfesorBean {
     }
 
     public void cargaCurrentTime() {
-        currentTimeMillis = GestionProfesoresBD.getUltimaCurrentTime(idProfesor, FechasUtils.fechaHoyParaMysql());
+        currentTimeMillis = GestionProfesoresBD.getUltimaCurrentTime(idProfesor);
     }
 
     public String getFechaHoraCurrentTime() {

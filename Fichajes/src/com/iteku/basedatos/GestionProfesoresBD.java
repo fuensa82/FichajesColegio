@@ -105,7 +105,7 @@ public class GestionProfesoresBD {
         return result;
     }
     
-    public static long getUltimaCurrentTime(int idProfesor, String fecha){
+    public static long getUltimaCurrentTime(int idProfesor){
         long currentTime=0;
         Connection conexion = null;
         try {
@@ -113,17 +113,16 @@ public class GestionProfesoresBD {
             PreparedStatement consulta = conexion.prepareStatement(
                     "select idFichaje, currentTime "
                     + "from fichajes "
-                    + "where fecha=? and idProfesor=? "
+                    + "where idProfesor=? "
                     + "ORDER BY idFichaje DESC LIMIT 1");
-            consulta.setString(1, fecha);
-            consulta.setString(2, ""+idProfesor);
+            consulta.setString(1, ""+idProfesor);
             ResultSet resultado = consulta.executeQuery();
             if(!resultado.next()){
                 System.out.println("No hay currentTime, el profesor no está dentro. "+idProfesor);
                 return 0;
             }
             currentTime=resultado.getLong(2);
-            System.out.println("resultado base de datos: "+currentTime);
+            //System.out.println("resultado base de datos: "+currentTime);
             
 
         } catch (SQLException e) {
@@ -260,9 +259,11 @@ public class GestionProfesoresBD {
             conexion=ConectorBD.getConnection();
             FichaBean ficha;
             PreparedStatement consulta = conexion.prepareStatement(
-                    "SELECT idFicha, horaIni, horaFin, idProfesor, dia, tipoHora, curso FROM horarios WHERE idProfesor=? and tipoHora=? order by dia, horaIni");
+                    "SELECT idFicha, horaIni, horaFin, idProfesor, dia, tipoHora, curso FROM horarios "
+                  + "WHERE idProfesor=? and tipoHora=? and curso=? "
+                  + "order by dia, horaIni");
             consulta.setString(1, ""+profesor.getIdProfesor());
-            //consulta.setString(2, FechasUtils.getCursoActual());
+            consulta.setString(3, FechasUtils.getCursoActual());
             consulta.setString(2, tipoHora);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()){

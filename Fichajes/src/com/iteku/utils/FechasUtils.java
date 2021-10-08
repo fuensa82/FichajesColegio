@@ -97,7 +97,6 @@ public class FechasUtils {
         Connection conexion = null;
         try {
             conexion = ConectorBD.getConnection();
-            ProfesorBean profesor;
             PreparedStatement consulta = conexion.prepareStatement(
                     "SELECT curso FROM cursos order by curso desc LIMIT 1");
             ResultSet resultado = consulta.executeQuery();

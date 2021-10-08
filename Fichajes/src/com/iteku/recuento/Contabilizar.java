@@ -58,7 +58,7 @@ public class Contabilizar {
          */
         ArrayList<FichaBean> listaFichasLectivas=UtilsContabilizar.getHorarioCompacto(profesor, "L");
         int segundosLectivos=contabilizaHorasLectivasOCmplementarias(listaFichajesRecuento, listaFichasLectivas, profesor,"L", mes);
-        
+        System.out.println("Segundos lectivos:"+segundosLectivos);
         /**
          * Contabilizar horas complementarias
          */
@@ -121,10 +121,10 @@ public class Contabilizar {
 //            System.out.println("Fichashorarios: "+fichasHorario.size());
             boolean seguir=true;
             for(int j=0;j<fichasHorario.size() && seguir;j++){
-//                System.out.println("Comparando i="+i+" j="+j);
-//                System.out.println("            Fichas      Fichajes");
-//                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
-//                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
+                System.out.println("Comparando i="+i+" j="+j);
+                System.out.println("            Fichas      Fichajes");
+                System.out.println(fichaje.getFecha()+": "+fichasHorario.get(j).getHoraIni()+" -> "+fichaje.getHoraEntrada());
+                System.out.println("            "+fichasHorario.get(j).getHoraFin()+" -> "+fichaje.getHoraSalida() );
                 //Caso. Se empieza la ficha de horario estando en el centro y se termina la ficha estando en el centro
                 if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraSalida())>=0){
 //                    System.out.println("Caso todo antes");
@@ -186,8 +186,8 @@ public class Contabilizar {
                     GestionDetallesInformesBD.guardaDetalleInforme(detalleInforme, "Caso 3 - contabilizaHorasLectivasOCmplementarias", mes);
                     
                     fichaje.setHoraEntrada(fichasHorario.get(j).getHoraFin());
-                }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())>=0
-                        && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())<0){
+                }else if(UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraIni(),fichaje.getHoraEntrada())<=0
+                        && UtilsContabilizar.compararHoras(fichasHorario.get(j).getHoraFin(),fichaje.getHoraSalida())>=0){
 //                    System.out.println("Fichaje:   =======");
 //                    System.out.println("Ficha:  =============");
 //                    System.out.println("Caso 4");
