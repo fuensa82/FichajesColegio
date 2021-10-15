@@ -32,7 +32,10 @@ public class GestionProfesoresBD {
             conexion=ConectorBD.getConnection();
             ProfesorBean profesor;
             PreparedStatement consulta = conexion.prepareStatement("select idProfesor, nombre, apellidos, idTarjeta, nombreCorto, activo from profesores");
+            long t1=System.currentTimeMillis();
             ResultSet resultado = consulta.executeQuery();
+            long t2=System.currentTimeMillis();
+            System.out.println("Tiempo="+(t2-t1)+"ms");
             while (resultado.next()){
                 if("true".equals(resultado.getString(6).trim())==isActivo){
                     profesor=new ProfesorBean();
@@ -79,11 +82,13 @@ public class GestionProfesoresBD {
             PreparedStatement consulta = conexion.prepareStatement(
                     "select idFichaje, dentro "
                     + "from fichajes "
-                    + "where fecha=? and idProfesor=? "
+                    + "where idProfesor=? "
                     + "ORDER BY idFichaje DESC LIMIT 1");
-            consulta.setString(1, fecha);
-            consulta.setString(2, ""+idProfesor);
+            consulta.setString(1, ""+idProfesor);
+            long t1=System.currentTimeMillis();
             ResultSet resultado = consulta.executeQuery();
+            long t2=System.currentTimeMillis();
+            System.out.println("Tiempo="+(t2-t1)+"ms");
             if(!resultado.next()){
                 return false;
             }

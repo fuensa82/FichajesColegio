@@ -598,7 +598,9 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
     }
 
     private void cargarListaProfesores() {
+        System.out.println("5.1");
         listaProfesores = GestionProfesoresBD.getListaProfesores(true);
+        System.out.println("5.2");
         listaProfesores.sort(new Comparator<ProfesorBean>(){
             @Override
             public int compare(ProfesorBean p1, ProfesorBean p2) {
@@ -608,28 +610,32 @@ public class BackOfficeFichajes extends javax.swing.JFrame {
                 //return p1.getApellidos().compareToIgnoreCase(p2.getApellidos());
             }
         });
+        System.out.println("5.3");
         DefaultTableModel datosTabla = (DefaultTableModel) tProfesores.getModel();
         for (int i = datosTabla.getRowCount(); i > 0; i--) {
             //filasTabla=0;
             datosTabla.removeRow(i - 1);
 
         }
+        System.out.println("5.4");
         //datosTabla.addRow(new String[]{"","","","",""});
         for (int i = 0; i < listaProfesores.size(); i++) {
-            if (listaProfesores.get(i).isDentro()) {
+            System.out.println("5.4 "+i);
+            /*if (listaProfesores.get(i).isDentro()) {
                 listaProfesores.get(i).cargaCurrentTime();
             }
-            
+            */
             datosTabla.addRow(new String[]{
                 "" + listaProfesores.get(i).getIdProfesor(),
                 listaProfesores.get(i).getNombreCorto(),
                 listaProfesores.get(i).getNombre(),
                 listaProfesores.get(i).getApellidos(),
                 "" + listaProfesores.get(i).getIdTarjeta(),
-                "" + (listaProfesores.get(i).isDentro() ? "Dentro" : "Ausente"),
-                "" + listaProfesores.get(i).getHoraCurrentTime()
+                "" + (listaProfesores.get(i).isDentro() ? "Dentro" : "Ausente")//,
+                //"" + listaProfesores.get(i).getHoraCurrentTime()
             });
         }
+        System.out.println("5.5");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

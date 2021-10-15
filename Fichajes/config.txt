@@ -15,17 +15,21 @@ tiempoCorrecto=3000
 tiempoError=10000
 maquina=Despacho
 ### base de datos ###
-baseDatos=colsan
-usuario=root
-contrasenia=03885536
+#baseDatos=colsan
+#usuario=root
+#contrasenia=03885536
+baseDatos=fichajes
+usuario=afanv
+contrasenia=afanv2020
+
 #host=nuevavida.ddns.net
 #puerto=1106
 
-host=192.168.1.239
-puerto=3306
+host=192.168.10.214
+#puerto=3306
 ### Base de datos raspberry
 #baseDatos=colsan
 #usuario=vpalomo
 #contrasenia=123456
 #host=micasa82.ddns.net
-#puerto=1106
+puerto=1106
