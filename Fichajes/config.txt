@@ -10,26 +10,9 @@ rutaScriptNode=C:\Users\vpalomo\Proyectos\JavaScript\Clientes\cargaDeHorarios\Ca
 rutaLog=c:\Fichajes\exit.log
 ficheroBarra=c:\Fichajes\barra.dat
 appName=Control Horario
-colName=AFA Nueva Vida
-tiempoCorrecto=3000
-tiempoError=10000
-maquina=Despacho
-### base de datos ###
-#baseDatos=colsan
-#usuario=root
-#contrasenia=03885536
+col
 baseDatos=fichajes
-usuario=afanv
-contrasenia=afanv2020
-
-#host=nuevavida.ddns.net
-#puerto=1106
 
 host=192.168.10.214
-#puerto=3306
-### Base de datos raspberry
-#baseDatos=colsan
-#usuario=vpalomo
-#contrasenia=123456
-#host=micasa82.ddns.net
+
 puerto=1106
