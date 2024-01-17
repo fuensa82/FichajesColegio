@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -19,6 +20,11 @@ import javax.naming.NamingException;
  * @author Víctor
  */
 public class GestionCursoBD {
+    private static String cursoActual="";
+
+    public static void setCursoActual(String cursoActual) {
+        GestionCursoBD.cursoActual = cursoActual;
+    }
     public static boolean guardarCursoNuevo(String cursoNuevo){
         boolean result=false;
         
@@ -51,11 +57,13 @@ public class GestionCursoBD {
      * @return
      */
     public static String getCursoActual() {
+        if(!"".equals(cursoActual)){
+            return cursoActual;
+        }
         String result = "";
         Connection conexion = null;
         try {
             conexion = ConectorBD.getConnection();
-            ProfesorBean profesor;
             PreparedStatement consulta = conexion.prepareStatement(
                     "SELECT curso FROM cursos order by curso desc LIMIT 1");
             ResultSet resultado = consulta.executeQuery();
@@ -72,6 +80,40 @@ public class GestionCursoBD {
                 conexion.close();
             } catch (SQLException ex) {
                 
+            }
+        }
+        return result;
+    }
+    public static javax.swing.DefaultComboBoxModel getModeloComboCursos() {
+        ArrayList<String> lista = getListaCursos();
+        String[] viajes = new String[lista.size()];
+        for (int i = 0; i < lista.size(); i++) {
+            viajes[i] = lista.get(i).toString();
+        }
+
+        return new javax.swing.DefaultComboBoxModel<>(viajes);
+
+    }
+    public static ArrayList<String> getListaCursos() {
+        ArrayList<String> result;
+        result = new ArrayList<String>();
+        Connection conexion = null;
+        try {
+            conexion = ConectorBD.getConnection();
+            PreparedStatement consulta = conexion.prepareStatement("SELECT curso FROM cursos");
+
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                result.add(resultado.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException ex) {
+
+        } finally {
+            try {
+                conexion.close();
+            } catch (SQLException ex) {
             }
         }
         return result;

@@ -7,6 +7,7 @@ package com.iteku.utils;
 
 import com.iteku.backofficefichajes.Config;
 import com.iteku.basedatos.ConectorBD;
+import com.iteku.basedatos.GestionCursoBD;
 import com.iteku.beans.ProfesorBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,34 +89,35 @@ public class FechasUtils {
     }
 
     /**
-     * Busca en la base de datos el ultimo curso dado de alta. Formato 2019-2020
+     * Busca en la base de datos el ultimo curso dado de alta. Formato 2019-2020 o solo año 2020
      *
      * @return
      */
     public static String getCursoActual() {
-        String result = "";
-        Connection conexion = null;
-        try {
-            conexion = ConectorBD.getConnection();
-            PreparedStatement consulta = conexion.prepareStatement(
-                    "SELECT curso FROM cursos order by curso desc LIMIT 1");
-            ResultSet resultado = consulta.executeQuery();
-            if (resultado.next()) {
-                result = resultado.getString(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NamingException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                //System.out.println("Saliendo de la base de datos");
-                conexion.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return result;
+        return GestionCursoBD.getCursoActual();
+//        String result = "";
+//        Connection conexion = null;
+//        try {
+//            conexion = ConectorBD.getConnection();
+//            PreparedStatement consulta = conexion.prepareStatement(
+//                    "SELECT curso FROM cursos order by curso desc LIMIT 1");
+//            ResultSet resultado = consulta.executeQuery();
+//            if (resultado.next()) {
+//                result = resultado.getString(1);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (NamingException ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            try {
+//                //System.out.println("Saliendo de la base de datos");
+//                conexion.close();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//        return result;
     }
 
     /**
